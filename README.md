@@ -30,15 +30,14 @@
 
 
 
-#### Languages : JAVA, JS<br />
+#### Languages : <br />
+JAVA, JS<br />
 
- FrontEnd :
-<br />
+#### FrontEnd :
 React
 <br />
-<br />
 
-BackEnd :  <br />
+#### BackEnd :  <br />
 Spring<br />
 SpringBoot  <br />
 <br />
