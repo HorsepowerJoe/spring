@@ -3,8 +3,8 @@ import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "./Header";
-import SignUpForm from "./Sign/SignUpForm";
-import SignInForm from "./Sign/SignInForm";
+import JoinForm from "./Sign/JoinForm";
+import LoginForm from "./Sign/LoginForm";
 
 function App() {
   const navi = useNavigate();
@@ -14,8 +14,8 @@ function App() {
     <div>
       <Header customerData={customerData} navi={navi}></Header>
       <Routes>
-        <Route path="/sign/in" element={<SignInForm />}></Route>
-        <Route path="/sign/up" element={<SignUpForm />}></Route>
+        <Route path="/login" element={<LoginForm />}></Route>
+        <Route path="/join" element={<JoinForm />}></Route>
       </Routes>
     </div>
   );
