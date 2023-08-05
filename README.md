@@ -58,14 +58,14 @@ QnA 게시판을 통해 궁금한 사항을 미용사들에게 직접 물어볼 
 <br/>
 <br/>
 
-#### Languages : <br />
+## Languages : <br />
 JAVA, JS<br />
 
-#### FrontEnd :
+## FrontEnd :
 React
 <br />
 
-#### BackEnd :  <br />
+## BackEnd :  <br />
 Spring<br />
 SpringBoot  <br />
 <br />
@@ -88,4 +88,15 @@ JPA<br />
 
 
    #### :pencil2: 개발 기록
+   
+ # 2023.08.04
+   클래스 다이어그램 작성<br/>
+   로그인 폼 구현<br/>
+   회원가입 폼 구현<br/>
+ 
+ 
+ # 2023.08.05
+   JPA 도입<br/>
+   회원가입 기능 구현<br/>
+   로그인 기능 구현 50%<br/>
    
