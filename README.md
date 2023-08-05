@@ -75,6 +75,7 @@ OAuth2 Client<br />
 OAuth2 Resource Server<br />
 MySQL Driver<br />
 MyBatis Framework<br />
+JPA<br />
 <br />
 
 
