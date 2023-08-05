@@ -11,14 +11,14 @@ function Header(props) {
         <div>
           <button
             onClick={() => {
-              props.navi("/login");
+              props.navi("/loginForm");
             }}
           >
             로그인
           </button>
           <button
             onClick={() => {
-              props.navi("/join");
+              props.navi("/joinForm");
             }}
           >
             회원가입

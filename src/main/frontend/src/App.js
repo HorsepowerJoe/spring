@@ -14,8 +14,8 @@ function App() {
     <div>
       <Header customerData={customerData} navi={navi}></Header>
       <Routes>
-        <Route path="/login" element={<LoginForm />}></Route>
-        <Route path="/join" element={<JoinForm />}></Route>
+        <Route path="/loginForm" element={<LoginForm navi={navi} />}></Route>
+        <Route path="/joinForm" element={<JoinForm navi={navi} />}></Route>
       </Routes>
     </div>
   );

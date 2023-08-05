@@ -20,7 +20,7 @@ function Login() {
     };
 
     axios
-      .post("/api/sign/up", body)
+      .post("/login", body)
       .then((data) => {
         //로그인 로직 작성
       })
@@ -56,7 +56,7 @@ function Login() {
             onChange={onPasswordHandler}
           />
           <br /> <br /> <br /> <br />
-          <button formAction="">Login</button>
+          <button type="submit">Login</button>
         </form>
         <br />
       </fieldset>
