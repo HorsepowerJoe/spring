@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.UniqueElements;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
@@ -48,4 +48,31 @@ public class Customer {
     private boolean customerIsWithdrawal;
     @NotNull
     private String Role;
+
+    private String provider;
+    private String providerId;
+
+    public Customer() {
+    }
+
+    @Builder
+    public Customer(Long customerNum, @NotNull String customerEmail, @NotNull String customerPassword,
+            @NotNull String customerName, @NotNull String customerGender, @NotNull int customerAge,
+            @NotNull String customerPhone, @NotNull String customerAddress, Timestamp customerRegDate,
+            boolean customerIsWithdrawal, @NotNull String role, String provider, String providerId) {
+        this.customerNum = customerNum;
+        this.customerEmail = customerEmail;
+        this.customerPassword = customerPassword;
+        this.customerName = customerName;
+        this.customerGender = customerGender;
+        this.customerAge = customerAge;
+        this.customerPhone = customerPhone;
+        this.customerAddress = customerAddress;
+        this.customerRegDate = customerRegDate;
+        this.customerIsWithdrawal = customerIsWithdrawal;
+        Role = role;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
+
 }

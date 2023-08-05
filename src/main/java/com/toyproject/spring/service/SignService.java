@@ -1,7 +1,5 @@
 package com.toyproject.spring.service;
 
-import java.util.Optional;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +25,8 @@ public class SignService {
     }
 
     public String emailDupChk(String email) {
-        Optional<Customer> findCustomer = userRepository.findByCustomerEmail(email);
-        System.out.println(email);
-        String result = findCustomer.isEmpty() ? "0" : "1";
-        System.out.println(result);
+        Customer findCustomer = userRepository.findByCustomerEmail(email);
+        String result = findCustomer.getCustomerEmail() == null ? "0" : "1";
         return result;
     }
 

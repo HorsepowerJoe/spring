@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Login() {
+function Login(props) {
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPassword, setCustomerPassword] = useState("");
 
@@ -14,15 +14,18 @@ function Login() {
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
-    let body = {
-      customerEmail: customerEmail,
-      customerPassword: customerPassword,
-    };
-
+    //스프링 시큐리티는 form type으로 받아야 처리 가능한것 같음 Json 쓰지 말기
     axios
-      .post("/login", body)
+      .post(
+        "/login",
+        {
+          customerEmail: customerEmail,
+          customerPassword: customerPassword,
+        },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      )
       .then((data) => {
-        //로그인 로직 작성
+        console.log(data.data);
       })
       .catch((er) => console.log(er));
   };
@@ -57,6 +60,9 @@ function Login() {
           />
           <br /> <br /> <br /> <br />
           <button type="submit">Login</button>
+          <a href="http://localhost:8085/oauth2/authorization/google">
+            구글 로그인
+          </a>
         </form>
         <br />
       </fieldset>
