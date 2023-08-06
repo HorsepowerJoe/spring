@@ -1,5 +1,7 @@
 package com.toyproject.spring.config.oauth;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -10,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.toyproject.spring.auth.PrincipalDetails;
 import com.toyproject.spring.model.Customer;
+import com.toyproject.spring.provider.FacebookUserInfo;
+import com.toyproject.spring.provider.GoogleUserInfo;
+import com.toyproject.spring.provider.NaverUserInfo;
+import com.toyproject.spring.provider.OAuth2UserInfo;
 import com.toyproject.spring.repository.UserRepository;
 
 @Service
@@ -32,10 +38,26 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         // ~AccessToken까지가 userRequest 정보 -> loadUser함수 호출 -> 구글로부터 회원 프로필을 받아 옴
         System.out.println("getAttributes : " + super.loadUser(userRequest).getAttributes());
 
-        String provider = userRequest.getClientRegistration().getClientId();
-        String providerId = oauth2User.getAttribute("sub");
-        String customerEmail = oauth2User.getAttribute("email");
-        String customerName = oauth2User.getAttribute("name");
+        // 회원가입 파트
+        OAuth2UserInfo oAuth2UserInfo = null;
+        if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+            System.out.println("구글 로그인 요청");
+            oAuth2UserInfo = new GoogleUserInfo(oauth2User.getAttributes());
+
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
+            oAuth2UserInfo = new FacebookUserInfo(oauth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+            oAuth2UserInfo = new NaverUserInfo((Map<String, Object>) oauth2User.getAttributes().get("response"));
+            // response 안에 response에 담겨있는 마트료시카 구조이기 때문에 .getAttributes().get("response")를
+            // 하는 것.
+        } else {
+            System.out.println("잘못된 로그인 경로 - " + userRequest.getClientRegistration().getRegistrationId());
+        }
+
+        String provider = oAuth2UserInfo.getProvider(); // 가입한 주체
+        String providerId = oAuth2UserInfo.getProviderId(); // **구글은 sub , 페이스북은 id**
+        String customerEmail = oAuth2UserInfo.getEmail();
+        String customerName = oAuth2UserInfo.getName();
         String customerPassword = bCryptPasswordEncoder.encode("HorsepowerJo");
         String role = "ROLE_USER";
         String customerPhone = "null";

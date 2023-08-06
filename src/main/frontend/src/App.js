@@ -3,8 +3,8 @@ import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "./Header";
-import JoinForm from "./Sign/JoinForm";
-import LoginForm from "./Sign/LoginForm";
+import JoinForm from "./sign/JoinForm";
+import LoginForm from "./sign/LoginForm";
 
 function App() {
   const navi = useNavigate();
