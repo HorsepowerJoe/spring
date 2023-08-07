@@ -99,4 +99,12 @@ JPA<br />
    JPA 도입<br/>
    회원가입 기능 구현<br/>
    로그인 기능 구현 50%<br/>
+
+  # 2023.08.06
+   OAuth 로그인 기능 구현 Naver, Google, Facebook<br/>
+
+  # 2023.08.07
+   레이아웃 변경 Header, Login<br/>
+   JWT 인증 구현 50%<br/>
+   
    
