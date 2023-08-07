@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import backgroundGoogle from "../img/google/btn_google_signin_dark_normal_web.png";
 import backgroundGoogleHover from "../img/google/btn_google_signin_dark_focus_web.png";
 import backgroundImageFacebook from "../img/facebook/ZW4QC.png";
 import backgroundImageNaver from "../img/naver/btnW_완성형.png";
 import backgroundImageNaverHover from "../img/naver/btnG_완성형.png";
+import { GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import FacebookLogin from "react-facebook-login";
+import * as config from "../global_variables";
 
 function Login(props) {
   const [customerEmail, setCustomerEmail] = useState("");
@@ -13,6 +17,9 @@ function Login(props) {
   const [isHoverFacebook, setIsHoverFacebook] = useState(false);
   const [isHoverNaver, setIsHoverNaver] = useState(false);
   const [isHoverLoginBtn, setIsHoverLoginBtn] = useState(false);
+  const GOOGLE_KEY = config.GOOGLE_KEY;
+  const FACEBOOK_KEY = config.FACEBOOK_KEY;
+  const NAVER_KEY = config.NAVER_KEY;
 
   const buttonStyle = {
     padding: "10px 20px",
@@ -49,6 +56,41 @@ function Login(props) {
         console.log(data.data);
       })
       .catch((er) => console.log(er));
+  };
+
+  const NaverLogin = () => {
+    const REDIRECT_URI = "http://localhost:3000/naverLoginSuccessed/";
+    const STATE = "false";
+    const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
+    const NaverLogin = () => {
+      window.location.href = NAVER_AUTH_URL;
+    };
+
+    useEffect(() => {
+      let code = new URL(window.location.href).searchParams.get("code");
+      console.log(code);
+    });
+
+    return (
+      <div
+        onClick={NaverLogin}
+        onMouseOver={() => {
+          setIsHoverNaver(true);
+        }}
+        onMouseLeave={() => {
+          setIsHoverNaver(false);
+        }}
+        style={{
+          height: "50px",
+          backgroundImage: isHoverNaver
+            ? `url(${backgroundImageNaverHover})`
+            : `url(${backgroundImageNaver})`,
+          backgroundSize: "247.5px 46px",
+          backgroundRepeat: "no-repeat",
+          cursor: "pointer",
+        }}
+      ></div>
+    );
   };
 
   return (
@@ -90,6 +132,45 @@ function Login(props) {
           >
             Login
           </button>
+          <GoogleOAuthProvider clientId={`${GOOGLE_KEY}`}>
+            <GoogleLogin
+              width="246px"
+              clientId={`${GOOGLE_KEY}`}
+              onSuccess={(res) => console.log(res, "성공")}
+              onFailure={(res) => console.log(res, "실패")}
+              render={(renderProps) => (
+                <div
+                  className="social_login_box google"
+                  onClick={renderProps.onClick}
+                >
+                  <div className="social_login_image_box"></div>
+                  <div className="social_login_text_box">구글로 시작하기</div>
+                  <div className="social_login_blank_box"> </div>
+                </div>
+              )}
+            />
+          </GoogleOAuthProvider>
+          <span
+            onMouseOver={() => setIsHoverFacebook(true)}
+            onMouseOut={() => setIsHoverFacebook(false)}
+          >
+            <FacebookLogin
+              size="small"
+              appId={`${FACEBOOK_KEY}`}
+              autoLoad={false}
+              fields="name,first_name,last_name,email"
+              callback={(resp) => {
+                console.log(resp);
+              }}
+              disableMobileRedirect={true}
+              render={(renderProps) => (
+                <button onClick={renderProps.onClick}>페이스북 로그인</button>
+              )}
+            />
+            <NaverLogin />
+          </span>
+          {/*
+          JWT 도입으로 미사용
           <a
             href="http://localhost:8085/oauth2/authorization/google"
             style={{
@@ -111,7 +192,7 @@ function Login(props) {
                 height: "46px ",
               }}
             ></div>
-          </a>
+          </a> 
           <a href="http://localhost:8085/oauth2/authorization/facebook">
             <div
               onMouseOver={() => {
@@ -156,6 +237,7 @@ function Login(props) {
               }}
             ></div>
           </a>
+          */}
         </form>
         <br />
       </fieldset>

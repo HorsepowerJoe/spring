@@ -1,6 +1,7 @@
 package com.toyproject.spring.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,7 +48,7 @@ public class Customer {
     @ColumnDefault("false")
     private boolean customerIsWithdrawal;
     @NotNull
-    private String Role;
+    private String role;
 
     private String provider;
     private String providerId;
@@ -70,7 +71,7 @@ public class Customer {
         this.customerAddress = customerAddress;
         this.customerRegDate = customerRegDate;
         this.customerIsWithdrawal = customerIsWithdrawal;
-        Role = role;
+        this.role = role;
         this.provider = provider;
         this.providerId = providerId;
     }
