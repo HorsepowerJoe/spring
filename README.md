@@ -105,6 +105,6 @@ JPA<br />
 
   # 2023.08.07
    레이아웃 변경 Header, Login<br/>
-   JWT 인증 구현 50%<br/>
+   JWT 인증 구현 10%<br/>
    
    
