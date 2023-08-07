@@ -12,6 +12,19 @@ function Login(props) {
   const [isHoverGoogle, setIsHoverGoogle] = useState(false);
   const [isHoverFacebook, setIsHoverFacebook] = useState(false);
   const [isHoverNaver, setIsHoverNaver] = useState(false);
+  const [isHoverLoginBtn, setIsHoverLoginBtn] = useState(false);
+
+  const buttonStyle = {
+    padding: "10px 20px",
+    backgroundColor: isHoverLoginBtn ? "#ff69b4" : "#c33586",
+    color: "#ffffff",
+    borderRadius: "5px",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "bold",
+    transition: "background-color 0.1s ease-in-out",
+  };
 
   const onEmailHandler = (event) => {
     setCustomerEmail(event.currentTarget.value);
@@ -67,7 +80,16 @@ function Login(props) {
             onChange={onPasswordHandler}
           />
           <br /> <br /> <br /> <br />
-          <button type="submit">Login</button>
+          <button
+            onMouseOver={() => {
+              setIsHoverLoginBtn(true);
+            }}
+            onMouseOut={() => setIsHoverLoginBtn(false)}
+            style={buttonStyle}
+            type="submit"
+          >
+            Login
+          </button>
           <a
             href="http://localhost:8085/oauth2/authorization/google"
             style={{
