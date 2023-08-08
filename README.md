@@ -101,11 +101,15 @@ JPA<br />
    로그인 기능 구현 50%<br/>
 
   # 2023.08.06
-   OAuth 로그인 기능 구현 Naver, Google, Facebook<br/>
+   OAuth 로그인 기능 구현 완료 Naver, Google, Facebook<br/>
 
   # 2023.08.07
    레이아웃 변경 Header, Login<br/>
    JWT 인증 구현 10%<br/>
    ↳ 기존 백엔드에서 처리하던 oauth 인증을 JWT 사용을 위해 리액트 단독 로그인으로 변경함.
+
+   # 2023.08.08
+   <span></span>
+    JWT 인증 구현 50%
    
    
