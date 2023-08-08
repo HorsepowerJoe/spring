@@ -1,31 +1,36 @@
 package com.toyproject.spring.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 
-import com.toyproject.spring.config.oauth.PrincipalOauth2UserService;
+import com.toyproject.spring.filter.JwtAuthenticationFilter;
+import com.toyproject.spring.filter.MyFilter1;
 
 @Configuration
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터 체인에 등록됨.
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) // secured 어노테이션 활성화, preAuthorize 어노테이션 활성화
 public class SecurityConfig {
 
-    @Autowired
-    private PrincipalOauth2UserService principalOauth2UserService;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+
+        http.addFilterBefore(new MyFilter1(), SecurityContextHolderFilter.class);
         http.csrf(csrf -> csrf.disable());
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager)) // AuthenticationManager
                 .authorizeRequests()
                 .antMatchers("/api/user/**").authenticated()
                 .antMatchers("/api/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
@@ -34,6 +39,9 @@ public class SecurityConfig {
 
         // JWT 도입으로 인하여 미사용??
         // successHandler로 JWT 토큰 생성해서 던져주기?
+
+        // @Autowired
+        // private PrincipalOauth2UserService principalOauth2UserService;
 
         // .and()
         // .formLogin()

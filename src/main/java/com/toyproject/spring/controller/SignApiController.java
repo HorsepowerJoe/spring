@@ -20,33 +20,39 @@ import lombok.RequiredArgsConstructor;
 public class SignApiController {
     private final SignService signService;
 
-    @PostMapping(value = "/join")
+    @PostMapping(value = "/api/join")
     public String join(@RequestBody Customer customer) {
         return signService.join(customer);
     }
 
-    @GetMapping(value = "emailDupChk")
+    @GetMapping(value = "/api/emailDupChk")
     public String emailDupChk(String customerEmail) {
         return signService.emailDupChk(customerEmail);
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping(value = "/info")
+    @GetMapping(value = "/api/info")
     public String info() {
         // 유저 목록, 밴
         return "";
     }
 
-    @GetMapping(value = "/user")
+    @GetMapping(value = "/api/user")
     public String getMethodName(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         System.out.println("principalUser : " + principalDetails.getCustomer());
         return "";
     }
 
     @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    @GetMapping(value = "/data")
+    @GetMapping(value = "/api/data")
     public @ResponseBody String data() {
         // 상품관리
+        return "";
+    }
+
+    @PostMapping(value = "/api/login")
+    public String token(@RequestBody String token) {
+
         return "";
     }
 

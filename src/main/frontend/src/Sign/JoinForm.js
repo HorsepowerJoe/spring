@@ -95,7 +95,9 @@ function SignUpForm(props) {
 
     if (exptext.test(event.currentTarget.value)) {
       axios
-        .get("/emailDupChk", { params: { customerEmail: event.target.value } })
+        .get("/api/emailDupChk", {
+          params: { customerEmail: event.target.value },
+        })
         .then((data) => {
           if (data.data == 1) {
             // 1 중복 / 0 중복아님
@@ -191,7 +193,7 @@ function SignUpForm(props) {
     console.log(body);
 
     axios
-      .post("/join", body)
+      .post("/api/join", body)
       .then((data) => {
         if (data.data === 1) {
           alert("가입되었습니다.");
