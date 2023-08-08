@@ -42,16 +42,12 @@ function Login(props) {
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
-    //스프링 시큐리티는 form type으로 받아야 처리 가능한것 같음 Json 쓰지 말기
     axios
-      .post(
-        "/login",
-        {
-          customerEmail: customerEmail,
-          customerPassword: customerPassword,
-        },
-        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-      )
+      .post("/login", {
+        username: customerEmail,
+        customerEmail: customerEmail,
+        customerPassword: customerPassword,
+      })
       .then((data) => {
         console.log(data.data);
       })

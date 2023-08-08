@@ -16,9 +16,8 @@ public class SignService {
 
     public String join(Customer customer) {
         customer.setRole("ROLE_USER");
-        String rawPassword = customer.getCustomerPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        customer.setCustomerPassword(encPassword);
+        customer.setCustomerEmail(customer.getUsername());
+        customer.setCustomerPassword(bCryptPasswordEncoder.encode(customer.getCustomerPassword()));
         userRepository.save(customer);
         return "1";
 

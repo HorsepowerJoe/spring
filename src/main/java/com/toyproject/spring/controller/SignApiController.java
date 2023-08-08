@@ -50,10 +50,4 @@ public class SignApiController {
         return "";
     }
 
-    @PostMapping(value = "/api/login")
-    public String token(@RequestBody String token) {
-
-        return "";
-    }
-
 }

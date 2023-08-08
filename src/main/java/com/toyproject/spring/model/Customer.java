@@ -28,6 +28,8 @@ public class Customer {
 
     @NotNull
     @Column(unique = true)
+    private String username;
+
     private String customerEmail;
     @NotNull
     private String customerPassword;

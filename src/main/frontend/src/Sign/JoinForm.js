@@ -174,6 +174,7 @@ function SignUpForm(props) {
     }
 
     let body = {
+      username: customerEmail,
       customerEmail: customerEmail,
       customerName: customerName,
       customerAddress: customerAddress + " " + customerAddressDetail,

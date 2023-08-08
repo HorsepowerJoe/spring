@@ -3,9 +3,11 @@ package com.toyproject.spring;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@PropertySource("classpath:JwtProperties.properties")
 @SpringBootApplication
 public class Application {
 
@@ -18,12 +20,11 @@ public class Application {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
+				registry.addMapping("**")
 						.allowCredentials(true)
-						.allowedOrigins("*")
+						.allowedOriginPatterns("*")
 						.allowedHeaders("*")
-						.allowedMethods("*")
-						.allowCredentials(true);// 쿠키
+						.allowedMethods("*");
 
 			}
 		};
