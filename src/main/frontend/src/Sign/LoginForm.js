@@ -21,31 +21,32 @@ function Login(props) {
   const GOOGLE_KEY = config.GOOGLE_KEY;
   const FACEBOOK_KEY = config.FACEBOOK_KEY;
   const NAVER_KEY = config.NAVER_KEY;
-  const [getToken, setGetToken] = useState("");
-  const [userInfo, setUserInfo] = useState("");
 
   useEffect(() => {
-    const body = {
-      username: userInfo.email,
-      customerEmail: userInfo.email,
-      customerName: userInfo.name,
-    };
-    console.log(body);
-    axios.post("/joinCheck", body).then((data) => {
-      //가입 여부 확인
-      if (data.data == 1) {
-        //가입되어있다면
-        axios
-          .post("/login", body)
-          .then((data) => console.log(data.data)) // 로그인 수행, JWT토큰을 리턴받을 것임.
-          .catch((er) => console.log(er));
-      } else {
-        //가입 정보 없다면
-        alert("추가 회원 정보가 필요합니다.");
-        props.navi("/extraJoin"); //추가 정보 기입받아서 가입시키기
-      }
-    });
-  }, [getToken, userInfo]);
+    if (props.userInfo !== "") {
+      console.log(props.userInfo);
+      const body = {
+        username: props.userInfo.email,
+        customerEmail: props.userInfo.email,
+        customerName: props.userInfo.name,
+      };
+      console.log(body);
+      axios.post("/api/joinCheck", body).then((data) => {
+        //가입 여부 확인
+        if (data.data == 1) {
+          //가입되어있다면
+          axios
+            .post("http://localhost:8085/oauth/jwt/naver", body) // 로그인 수행
+            .then((data) => console.log(data.data))
+            .catch((er) => console.log(er));
+        } else {
+          //가입 정보 없다면
+          alert("추가 회원 정보가 필요합니다.");
+          props.navi("/extraJoin"); //추가 정보 기입받아서 가입시키기
+        }
+      });
+    }
+  }, [props.getToken, props.userInfo]);
 
   const buttonStyle = {
     padding: "10px 20px",
@@ -191,8 +192,8 @@ function Login(props) {
             />
             {/* <NaverLogin /> */}
             <NaverLogin
-              setGetToken={setGetToken}
-              setUserInfo={setUserInfo}
+              setGetToken={props.setGetToken}
+              setUserInfo={props.setUserInfo}
               NAVER_KEY={NAVER_KEY}
             />
           </span>

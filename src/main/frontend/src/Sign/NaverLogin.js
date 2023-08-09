@@ -6,18 +6,25 @@ const NaverLogin = ({ setGetToken, setUserInfo, NAVER_KEY }) => {
   const NAVER_CLIENT_ID = NAVER_KEY;
   const NAVER_CALLBACK_URL = "http://localhost:3000/loginForm/";
 
-  const initializeNaverLogin = () => {
-    const naverLogin = new naver.LoginWithNaverId({
-      clientId: NAVER_CLIENT_ID,
-      callbackUrl: NAVER_CALLBACK_URL,
-      // 팝업창으로 로그인을 진행할 것인지?
-      isPopup: false,
-      // 버튼 타입 ( 색상, 타입, 크기 변경 가능 )
-      loginButton: { color: "green", type: 3, height: 53 },
-      callbackHandle: true,
-    });
-    naverLogin.init();
+  const naverLogin = new naver.LoginWithNaverId({
+    clientId: NAVER_CLIENT_ID,
+    callbackUrl: NAVER_CALLBACK_URL,
+    // 팝업창으로 로그인을 진행할 것인지?
+    isPopup: false,
+    // 버튼 타입 ( 색상, 타입, 크기 변경 가능 )
+    loginButton: {
+      color: "green",
+      type: 3,
+      height: 53,
+    },
+    callbackHandle: true,
+  });
 
+  const init = () => {
+    naverLogin.init();
+  };
+
+  const initializeNaverLogin = () => {
     // 선언된 naverLogin 을 이용하여 유저 (사용자) 정보를 불러오는데
     // 함수 내부에서 naverLogin을 선언하였기에 지역변수처리가 되어
     // userinfo 정보를 추출하는 것은 지역변수와 같은 함수에서 진행주어야한다.
@@ -56,16 +63,22 @@ const NaverLogin = ({ setGetToken, setUserInfo, NAVER_KEY }) => {
     // setGetToken(token)
     setGetToken(token);
   };
+  useEffect(() => {
+    init();
+  }, []);
 
   // 화면 첫 렌더링이후 바로 실행하기 위해 useEffect 를 사용하였다.
-  useEffect(() => {
-    initializeNaverLogin();
-    userAccessToken();
-  }, []);
 
   return (
     <div>
-      <div id="naverIdLogin"> </div>
+      <div
+        id="naverIdLogin"
+        onMouseDown={() => {
+          initializeNaverLogin();
+        }}
+      >
+        {" "}
+      </div>
     </div>
   );
 };

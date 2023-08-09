@@ -46,7 +46,7 @@ function Header(props) {
           style={{ width: "100px", height: "100px", marginLeft: "10px" }}
         />
       </a>
-      {props.customerData == "" ? (
+      {props.userInfo == "" ? (
         <div style={buttonContainerStyle}>
           <button
             style={{ ...buttonStyle, ...(isHoverLogin && buttonHoverStyle) }}
@@ -70,7 +70,9 @@ function Header(props) {
           </button>
         </div>
       ) : (
-        <div>{props.customerData?.customerId}님 안녕하세요.</div>
+        <div style={{ color: "black" }}>
+          {props.userInfo?.name}님 안녕하세요.
+        </div>
       )}
     </header>
   );

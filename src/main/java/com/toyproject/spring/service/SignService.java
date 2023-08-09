@@ -25,8 +25,7 @@ public class SignService {
 
     public String emailDupChk(String email) {
         Customer findCustomer = userRepository.findByCustomerEmail(email);
-        String result = findCustomer.getCustomerEmail() == null ? "0" : "1";
+        String result = findCustomer == null ? "0" : "1";
         return result;
     }
-
 }

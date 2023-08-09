@@ -14,6 +14,7 @@ import com.toyproject.spring.model.Customer;
 import com.toyproject.spring.service.SignService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,6 +49,11 @@ public class SignApiController {
     public @ResponseBody String data() {
         // 상품관리
         return "";
+    }
+
+    @PostMapping(value = "/api/joinCheck")
+    public String joinCheck(@RequestBody Customer customer) {
+        return signService.emailDupChk(customer.getCustomerEmail());
     }
 
 }
