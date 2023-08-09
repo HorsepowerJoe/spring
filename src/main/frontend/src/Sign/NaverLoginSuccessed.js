@@ -9,7 +9,7 @@ function NaverLoginSuccessed(props) {
     console.log(code);
     //백으로 보내기
     // window.location.replace('/') 사용
-    axios.post("/api/login", null, {
+    axios.post("/login", null, {
       headers: {
         Authorization: code,
       },

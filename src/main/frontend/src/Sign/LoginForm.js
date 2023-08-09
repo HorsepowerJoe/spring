@@ -9,6 +9,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login";
 import * as config from "../global_variables";
+import NaverLogin from "./NaverLogin";
 
 function Login(props) {
   const [customerEmail, setCustomerEmail] = useState("");
@@ -20,6 +21,31 @@ function Login(props) {
   const GOOGLE_KEY = config.GOOGLE_KEY;
   const FACEBOOK_KEY = config.FACEBOOK_KEY;
   const NAVER_KEY = config.NAVER_KEY;
+  const [getToken, setGetToken] = useState("");
+  const [userInfo, setUserInfo] = useState("");
+
+  useEffect(() => {
+    const body = {
+      username: userInfo.email,
+      customerEmail: userInfo.email,
+      customerName: userInfo.name,
+    };
+    console.log(body);
+    axios.post("/joinCheck", body).then((data) => {
+      //가입 여부 확인
+      if (data.data == 1) {
+        //가입되어있다면
+        axios
+          .post("/login", body)
+          .then((data) => console.log(data.data)) // 로그인 수행, JWT토큰을 리턴받을 것임.
+          .catch((er) => console.log(er));
+      } else {
+        //가입 정보 없다면
+        alert("추가 회원 정보가 필요합니다.");
+        props.navi("/extraJoin"); //추가 정보 기입받아서 가입시키기
+      }
+    });
+  }, [getToken, userInfo]);
 
   const buttonStyle = {
     padding: "10px 20px",
@@ -54,40 +80,40 @@ function Login(props) {
       .catch((er) => console.log(er));
   };
 
-  const NaverLogin = () => {
-    const REDIRECT_URI = "http://localhost:3000/naverLoginSuccessed/";
-    const STATE = "false";
-    const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
-    const NaverLogin = () => {
-      window.location.href = NAVER_AUTH_URL;
-    };
+  // const NaverLogin = () => {
+  //   const REDIRECT_URI = "http://localhost:3000/naverLoginSuccessed/";
+  //   const STATE = "false";
+  //   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
+  //   const NaverLogin = () => {
+  //     window.location.href = NAVER_AUTH_URL;
+  //   };
 
-    useEffect(() => {
-      let code = new URL(window.location.href).searchParams.get("code");
-      console.log(code);
-    });
+  //   useEffect(() => {
+  //     let code = new URL(window.location.href).searchParams.get("code");
+  //     console.log(code);
+  //   });
 
-    return (
-      <div
-        onClick={NaverLogin}
-        onMouseOver={() => {
-          setIsHoverNaver(true);
-        }}
-        onMouseLeave={() => {
-          setIsHoverNaver(false);
-        }}
-        style={{
-          height: "50px",
-          backgroundImage: isHoverNaver
-            ? `url(${backgroundImageNaverHover})`
-            : `url(${backgroundImageNaver})`,
-          backgroundSize: "247.5px 46px",
-          backgroundRepeat: "no-repeat",
-          cursor: "pointer",
-        }}
-      ></div>
-    );
-  };
+  //   return (
+  //     <div
+  //       onClick={NaverLogin}
+  //       onMouseOver={() => {
+  //         setIsHoverNaver(true);
+  //       }}
+  //       onMouseLeave={() => {
+  //         setIsHoverNaver(false);
+  //       }}
+  //       style={{
+  //         height: "50px",
+  //         backgroundImage: isHoverNaver
+  //           ? `url(${backgroundImageNaverHover})`
+  //           : `url(${backgroundImageNaver})`,
+  //         backgroundSize: "247.5px 46px",
+  //         backgroundRepeat: "no-repeat",
+  //         cursor: "pointer",
+  //       }}
+  //     ></div>
+  //   );
+  // };
 
   return (
     <div
@@ -163,7 +189,12 @@ function Login(props) {
                 <button onClick={renderProps.onClick}>페이스북 로그인</button>
               )}
             />
-            <NaverLogin />
+            {/* <NaverLogin /> */}
+            <NaverLogin
+              setGetToken={setGetToken}
+              setUserInfo={setUserInfo}
+              NAVER_KEY={NAVER_KEY}
+            />
           </span>
           {/*
           JWT 도입으로 미사용

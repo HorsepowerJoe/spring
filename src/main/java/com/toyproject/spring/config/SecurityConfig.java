@@ -1,8 +1,11 @@
 package com.toyproject.spring.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.toyproject.spring.filter.JwtAuthenticationFilter;
+import com.toyproject.spring.jwt.JwtAuthorizationFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +24,14 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager)
+            throws Exception {
 
         // http.addFilterBefore(new MyFilter1(), SecurityContextHolderFilter.class);
         http.csrf(csrf -> csrf.disable());
@@ -28,7 +39,8 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .addFilter(new JwtAuthenticationFilter(http)) // AuthenticationManager
+                .addFilter(new JwtAuthenticationFilter(authenticationManager)) // AuthenticationManager
+                .addFilter(new JwtAuthorizationFilter(authenticationManager))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                 .antMatchers("/api/user/**").authenticated()

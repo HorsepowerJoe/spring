@@ -8,10 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -29,9 +27,8 @@ import lombok.RequiredArgsConstructor;
 // UsernamePasswordAuthenticationFIlter가 동작함
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private final HttpSecurity http;
 
-    // private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
     // private final JwtTokenProvider jwtTokenProvider;
 
     // attemptAuthentication 실행 후 인증이 정상적으로 되었으면 successfulAuthentication 함수가 실행됨.
@@ -39,7 +36,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
         System.out.println("JwtAuthenticationFilter 로그인 시도중..");
         System.out.println(authenticationManager == null);
 
