@@ -15,12 +15,19 @@ public class SignService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public String join(Customer customer) {
-        customer.setRole("ROLE_USER");
-        customer.setCustomerEmail(customer.getUsername());
-        customer.setCustomerPassword(bCryptPasswordEncoder.encode(customer.getCustomerPassword()));
-        userRepository.save(customer);
-        return "1";
+        if (customer.getProvider().equals("naver")) {
+            customer.setRole("ROLE_USER");
+            customer.setCustomerPassword(bCryptPasswordEncoder.encode("HorsepowerJo"));
+            customer.setCustomerEmail(customer.getUsername());
+            userRepository.save(customer);
+        } else {
+            customer.setRole("ROLE_USER");
+            customer.setCustomerEmail(customer.getUsername());
+            customer.setCustomerPassword(bCryptPasswordEncoder.encode(customer.getCustomerPassword()));
+            userRepository.save(customer);
+        }
 
+        return "1";
     }
 
     public String emailDupChk(String email) {

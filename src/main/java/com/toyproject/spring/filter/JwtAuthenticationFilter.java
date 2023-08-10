@@ -19,6 +19,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.spring.auth.PrincipalDetails;
 import com.toyproject.spring.model.Customer;
+import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +38,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         System.out.println("JwtAuthenticationFilter 로그인 시도중..");
-        System.out.println(authenticationManager == null);
 
         // 1. username, password 받아서 authentiationManager로 로그인 시도를 하면
         // 2. PrincipalDetailsService가 호출되고 loadUserByUsername() 함수 실행됨.
@@ -56,16 +56,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             ObjectMapper objm = new ObjectMapper();
             Customer customer = objm.readValue(request.getInputStream(), Customer.class);
-            System.out.println(customer.getCustomerPassword());
+
+            if (customer.getProvider().equals("naver")) {
+                customer.setCustomerPassword("HorsepowerJo");
+            }
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     customer.getCustomerEmail(), customer.getCustomerPassword());
 
             // PrincipalDetailsService의 loadUserByUsername() 함수가 실행됨.
-            Authentication authentication = authenticationManager.authenticate(authenticationToken); // 로그인 정보가 여기에 담긴다
+            Authentication authentication = authenticationManager.authenticate(authenticationToken); // 로그인 정보가 여기에
+                                                                                                     // 담긴다
 
             // authentication 객체가 session 영역에 저장됨. => 로그인이 되었다는 뜻.
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal(); // 값이 있다? 로그인 되었다는 뜻
+            System.out.println("작동됨 : " + principalDetails.getCustomer().getCustomerEmail());
             System.out.println("로그인 완료 : " + principalDetails.getCustomer().getCustomerEmail());
 
             // athentication 객체가 session영역에 저장을 해야하기 때문에 return을 해주는 것.

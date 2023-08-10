@@ -118,9 +118,9 @@ function ExtraJoin(props) {
     }
 
     let body = {
-      username: customerEmail,
-      customerEmail: customerEmail,
-      customerName: customerName,
+      username: event.target.customerEmail.value,
+      customerEmail: event.target.customerEmail.value,
+      customerName: event.target.customerName.value,
       customerAddress: customerAddress + " " + customerAddressDetail,
       customerGender: customerGender,
       customerAge: parseInt(
@@ -178,9 +178,17 @@ function ExtraJoin(props) {
             onSubmit={onSubmitHandler}
           >
             <label>Email</label>
-            <input type="email" value={props.userInfo.email} />
+            <input
+              name="customerEmail"
+              type="email"
+              value={props.userInfo.email}
+            />
             <label>Name</label>
-            <input type="text" value={props.userInfo.name} />
+            <input
+              name="customerName"
+              type="text"
+              value={props.userInfo.name}
+            />
             <label>Gender</label>
             <select name="customerGender" onChange={onGenderHandler}>
               <option disabled selected>

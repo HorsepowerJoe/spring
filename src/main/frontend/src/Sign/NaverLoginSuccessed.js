@@ -16,6 +16,7 @@ function NaverLoginSuccessed(props) {
       console.log(body);
       axios.post("/api/joinCheck", body).then((data) => {
         //가입 여부 확인
+
         if (data.data == 1) {
           //가입되어있다면
           axios
@@ -24,6 +25,7 @@ function NaverLoginSuccessed(props) {
             .catch((er) => console.log(er));
         } else {
           //가입 정보 없다면
+          alert("상태코드" + data.data);
           alert("추가 회원 정보가 필요합니다.");
           props.navi("/extraJoin"); //추가 정보 기입받아서 가입시키기
         }

@@ -29,6 +29,7 @@ function Login(props) {
         username: props.userInfo.email,
         customerEmail: props.userInfo.email,
         customerName: props.userInfo.name,
+        provider: "naver",
       };
       console.log(body);
       axios.post("/api/joinCheck", body).then((data) => {
@@ -36,11 +37,12 @@ function Login(props) {
         if (data.data == 1) {
           //가입되어있다면
           axios
-            .post("http://localhost:8085/oauth/jwt/naver", body) // 로그인 수행
+            .post("/login", body) // 로그인 수행
             .then((data) => console.log(data.data))
             .catch((er) => console.log(er));
         } else {
           //가입 정보 없다면
+          alert(data.data);
           alert("추가 회원 정보가 필요합니다.");
           props.navi("/extraJoin"); //추가 정보 기입받아서 가입시키기
         }
