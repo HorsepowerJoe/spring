@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import backgroundGoogle from "../img/google/btn_google_signin_dark_normal_web.png";
-import backgroundGoogleHover from "../img/google/btn_google_signin_dark_focus_web.png";
-import backgroundImageFacebook from "../img/facebook/ZW4QC.png";
-import backgroundImageNaver from "../img/naver/btnW_완성형.png";
-import backgroundImageNaverHover from "../img/naver/btnG_완성형.png";
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login";
 import * as config from "../global_variables";
 import NaverLogin from "./NaverLogin";
+import jwtDecode from "jwt-decode";
 
 function Login(props) {
   const [customerEmail, setCustomerEmail] = useState("");
@@ -83,40 +79,27 @@ function Login(props) {
       .catch((er) => console.log(er));
   };
 
-  // const NaverLogin = () => {
-  //   const REDIRECT_URI = "http://localhost:3000/naverLoginSuccessed/";
-  //   const STATE = "false";
-  //   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
-  //   const NaverLogin = () => {
-  //     window.location.href = NAVER_AUTH_URL;
-  //   };
+  const axiosConfig = {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  };
 
-  //   useEffect(() => {
-  //     let code = new URL(window.location.href).searchParams.get("code");
-  //     console.log(code);
-  //   });
+  const responseGoogle = async (response) => {
+    console.log(1, response);
+    const decode = jwtDecode(response.credential);
+    console.log("decode", decode);
+    let jwtToken = await axios.post(
+      "/oauth/jwt/google",
+      { profileObj: decode },
+      axiosConfig
+    );
 
-  //   return (
-  //     <div
-  //       onClick={NaverLogin}
-  //       onMouseOver={() => {
-  //         setIsHoverNaver(true);
-  //       }}
-  //       onMouseLeave={() => {
-  //         setIsHoverNaver(false);
-  //       }}
-  //       style={{
-  //         height: "50px",
-  //         backgroundImage: isHoverNaver
-  //           ? `url(${backgroundImageNaverHover})`
-  //           : `url(${backgroundImageNaver})`,
-  //         backgroundSize: "247.5px 46px",
-  //         backgroundRepeat: "no-repeat",
-  //         cursor: "pointer",
-  //       }}
-  //     ></div>
-  //   );
-  // };
+    if (jwtToken.status === 200) {
+      console.log(2, jwtToken.data);
+      localStorage.setItem("jwtToken", jwtToken.data);
+    }
+  };
 
   return (
     <div
@@ -161,8 +144,8 @@ function Login(props) {
             <GoogleLogin
               width="246px"
               clientId={`${GOOGLE_KEY}`}
-              onSuccess={(res) => console.log(res, "성공")}
-              onFailure={(res) => console.log(res, "실패")}
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
               render={(renderProps) => (
                 <div
                   className="social_login_box google"

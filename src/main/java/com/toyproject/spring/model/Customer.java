@@ -62,7 +62,8 @@ public class Customer {
     public Customer(Long customerNum, @NotNull String customerEmail, @NotNull String customerPassword,
             @NotNull String customerName, @NotNull String customerGender, @NotNull int customerAge,
             @NotNull String customerPhone, @NotNull String customerAddress, Timestamp customerRegDate,
-            boolean customerIsWithdrawal, @NotNull String role, String provider, String providerId) {
+            boolean customerIsWithdrawal, @NotNull String role, String provider, String providerId, String username) {
+        this.username = username;
         this.customerNum = customerNum;
         this.customerEmail = customerEmail;
         this.customerPassword = customerPassword;

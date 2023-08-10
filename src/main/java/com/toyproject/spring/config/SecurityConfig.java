@@ -1,6 +1,5 @@
 package com.toyproject.spring.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,8 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.toyproject.spring.filter.JwtAuthenticationFilter;
+import com.toyproject.spring.jwt.JwtAuthenticationFilter;
 import com.toyproject.spring.jwt.JwtAuthorizationFilter;
+import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) // secured 어노테이션 활성화, preAuthorize 어노테이션 활성화
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final UserRepository userRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -40,7 +41,7 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager)) // AuthenticationManager
-                .addFilter(new JwtAuthorizationFilter(authenticationManager))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                 .antMatchers("/api/user/**").authenticated()

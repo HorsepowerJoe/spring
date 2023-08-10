@@ -1,4 +1,4 @@
-package com.toyproject.spring.filter;
+package com.toyproject.spring.jwt;
 
 import java.io.IOException;
 import java.util.Date;
@@ -19,7 +19,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.spring.auth.PrincipalDetails;
 import com.toyproject.spring.model.Customer;
-import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
