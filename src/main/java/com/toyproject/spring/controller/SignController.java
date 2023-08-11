@@ -13,9 +13,4 @@ public class SignController {
         return "forward:/index.html";
     }
 
-    @GetMapping(value = "/joinProc")
-    public @ResponseBody String signupProc() {
-        return "회원가입 완료됨";
-    }
-
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Header from "./Header";
@@ -12,11 +12,21 @@ function App() {
   const [getToken, setGetToken] = useState("");
   const [userInfo, setUserInfo] = useState("");
 
+  useEffect(() => {
+    if (localStorage.getItem("userInfo") !== null) {
+      setUserInfo(JSON.parse(localStorage.getItem("userInfo")));
+    }
+  }, []);
+
   console.log(userInfo);
 
   return (
     <div>
-      <Header userInfo={userInfo} navi={navi}></Header>
+      <Header
+        userInfo={userInfo}
+        navi={navi}
+        setUserInfo={setUserInfo}
+      ></Header>
       <Routes>
         <Route
           path="/loginForm"

@@ -56,19 +56,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             ObjectMapper objm = new ObjectMapper();
             Customer customer = objm.readValue(request.getInputStream(), Customer.class);
 
-            if (customer.getProvider().equals("naver")) {
+            if (customer.getProvider() != null && customer.getProvider().equals("naver")) {
                 customer.setCustomerPassword("HorsepowerJo");
             }
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    customer.getCustomerEmail(), customer.getCustomerPassword());
+                    customer.getUsername(), customer.getCustomerPassword());
 
             // PrincipalDetailsService의 loadUserByUsername() 함수가 실행됨.
+
             Authentication authentication = authenticationManager.authenticate(authenticationToken); // 로그인 정보가 여기에
                                                                                                      // 담긴다
 
             // authentication 객체가 session 영역에 저장됨. => 로그인이 되었다는 뜻.
-            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal(); // 값이 있다? 로그인 되었다는 뜻
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal(); // 값이 있다? 로그인 되었다는
+                                                                                                  // 뜻
             System.out.println("작동됨 : " + principalDetails.getCustomer().getCustomerEmail());
             System.out.println("로그인 완료 : " + principalDetails.getCustomer().getCustomerEmail());
 
@@ -96,11 +98,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 10))) // 만료시간
                 .withClaim("id", principalDetails.getCustomer().getCustomerNum()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                 .withClaim("username", principalDetails.getCustomer().getUsername()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
+                .withClaim("customerEmail", principalDetails.getCustomer().getCustomerEmail()) // 비공개 클레임 넣고싶은 Key,
+                                                                                               // Value 넣으면 됨.
+                .withClaim("customerName", principalDetails.getCustomer().getCustomerName()) // 비공개 클레임 넣고싶은 Key, Value
+                                                                                             // 넣으면 됨.
                 .sign(Algorithm.HMAC512("HorsepowerJo"));
 
         response.addHeader("Authorization", "Bearer " + jwtToken); // Bearer뒤에 한 칸 띄워야 함
-
-        super.successfulAuthentication(request, response, chain, authResult);
     }
 
 }

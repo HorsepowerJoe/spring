@@ -4,7 +4,7 @@ import { useEffect } from "react";
 const NaverLogin = ({ setGetToken, setUserInfo, NAVER_KEY }) => {
   const { naver } = window;
   const NAVER_CLIENT_ID = NAVER_KEY;
-  const NAVER_CALLBACK_URL = "http://localhost:3000/loginForm/";
+  const NAVER_CALLBACK_URL = "http://localhost:3000/naverLoginSuccessed/";
 
   const naverLogin = new naver.LoginWithNaverId({
     clientId: NAVER_CLIENT_ID,

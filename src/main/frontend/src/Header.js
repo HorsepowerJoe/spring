@@ -71,7 +71,15 @@ function Header(props) {
         </div>
       ) : (
         <div style={{ color: "black" }}>
-          {props.userInfo?.name}님 안녕하세요.
+          {props.userInfo?.customerName}님 안녕하세요. <br />
+          <button
+            onClick={() => {
+              localStorage.removeItem("userInfo");
+              props.setUserInfo("");
+            }}
+          >
+            로그아웃
+          </button>
         </div>
       )}
     </header>

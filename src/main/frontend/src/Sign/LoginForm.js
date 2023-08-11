@@ -17,34 +17,14 @@ function Login(props) {
   const GOOGLE_KEY = config.GOOGLE_KEY;
   const FACEBOOK_KEY = config.FACEBOOK_KEY;
   const NAVER_KEY = config.NAVER_KEY;
+  let jwtToken;
 
-  useEffect(() => {
-    if (props.userInfo !== "") {
-      console.log(props.userInfo);
-      const body = {
-        username: props.userInfo.email,
-        customerEmail: props.userInfo.email,
-        customerName: props.userInfo.name,
-        provider: "naver",
-      };
-      console.log(body);
-      axios.post("/api/joinCheck", body).then((data) => {
-        //가입 여부 확인
-        if (data.data == 1) {
-          //가입되어있다면
-          axios
-            .post("/login", body) // 로그인 수행
-            .then((data) => console.log(data.data))
-            .catch((er) => console.log(er));
-        } else {
-          //가입 정보 없다면
-          alert(data.data);
-          alert("추가 회원 정보가 필요합니다.");
-          props.navi("/extraJoin"); //추가 정보 기입받아서 가입시키기
-        }
-      });
-    }
-  }, [props.getToken, props.userInfo]);
+  const successedLogin = (token) => {
+    localStorage.setItem("jwtToken", token.data);
+    localStorage.setItem("userInfo", JSON.stringify(jwtDecode(token.data)));
+    props.setUserInfo(jwtDecode(token.data));
+    props.navi("/");
+  };
 
   const buttonStyle = {
     padding: "10px 20px",
@@ -66,17 +46,27 @@ function Login(props) {
   };
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    login();
+  };
 
-    axios
+  const login = async () => {
+    jwtToken = await axios
       .post("/login", {
         username: customerEmail,
         customerEmail: customerEmail,
         customerPassword: customerPassword,
       })
       .then((data) => {
-        console.log(data.data);
+        jwtToken = data.headers.get("Authorization");
+        localStorage.setItem("jwtToken", jwtToken);
+        let decode = jwtDecode(jwtToken);
+        props.setUserInfo(decode);
+        localStorage.setItem("userInfo", JSON.stringify(decode));
+        props.navi("/");
       })
-      .catch((er) => console.log(er));
+      .catch((er) => {
+        alert(er);
+      });
   };
 
   const axiosConfig = {
@@ -89,7 +79,7 @@ function Login(props) {
     console.log(1, response);
     const decode = jwtDecode(response.credential);
     console.log("decode", decode);
-    let jwtToken = await axios.post(
+    jwtToken = await axios.post(
       "/oauth/jwt/google",
       { profileObj: decode },
       axiosConfig
@@ -97,7 +87,7 @@ function Login(props) {
 
     if (jwtToken.status === 200) {
       console.log(2, jwtToken.data);
-      localStorage.setItem("jwtToken", jwtToken.data);
+      successedLogin(jwtToken);
     }
   };
 
@@ -167,8 +157,18 @@ function Login(props) {
               appId={`${FACEBOOK_KEY}`}
               autoLoad={false}
               fields="name,first_name,last_name,email"
-              callback={(resp) => {
-                console.log(resp);
+              callback={async (resp) => {
+                jwtToken = await axios.post(
+                  "/oauth/jwt/facebook",
+                  {
+                    profileObj: resp,
+                  },
+                  axiosConfig
+                );
+
+                if (jwtToken.status === 200) {
+                  successedLogin(jwtToken);
+                }
               }}
               disableMobileRedirect={true}
               render={(renderProps) => (

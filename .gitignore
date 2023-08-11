@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 *.yml
 *.properties
+JwtProperties.java
 application.properties
 
 ### STS ###

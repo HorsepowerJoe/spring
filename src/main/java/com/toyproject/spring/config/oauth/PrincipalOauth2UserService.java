@@ -54,6 +54,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("잘못된 로그인 경로 - " + userRequest.getClientRegistration().getRegistrationId());
         }
 
+        String username = oAuth2UserInfo.getProvider() + oAuth2UserInfo.getProviderId();
         String provider = oAuth2UserInfo.getProvider(); // 가입한 주체
         String providerId = oAuth2UserInfo.getProviderId(); // **구글은 sub , 페이스북은 id**
         String customerEmail = oAuth2UserInfo.getEmail();
@@ -65,7 +66,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String cutomerGender = "null";
         int customerAge = 0;
 
-        Customer customerEntity = userRepository.findByCustomerEmail(customerEmail);
+        Customer customerEntity = userRepository.findByUsername(username);
 
         if (customerEntity == null) {
             customerEntity = Customer.builder()

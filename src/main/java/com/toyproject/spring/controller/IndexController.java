@@ -9,9 +9,4 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IndexController {
 
-    @GetMapping(value = { "", "/" })
-    public String index() {
-        return "index";
-    }
-
 }

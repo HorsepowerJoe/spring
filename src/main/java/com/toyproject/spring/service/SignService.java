@@ -15,7 +15,7 @@ public class SignService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public String join(Customer customer) {
-        if (customer.getProvider().equals("naver")) {
+        if (customer.getProvider() != null && customer.getProvider().equals("naver")) {
             customer.setRole("ROLE_USER");
             customer.setCustomerPassword(bCryptPasswordEncoder.encode("HorsepowerJo"));
             customer.setCustomerEmail(customer.getUsername());
@@ -24,6 +24,7 @@ public class SignService {
             customer.setRole("ROLE_USER");
             customer.setCustomerEmail(customer.getUsername());
             customer.setCustomerPassword(bCryptPasswordEncoder.encode(customer.getCustomerPassword()));
+            customer.setUsername(customer.getCustomerEmail());
             userRepository.save(customer);
         }
 
