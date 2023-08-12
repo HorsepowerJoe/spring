@@ -6,6 +6,7 @@ import JoinForm from "./sign/JoinForm";
 import LoginForm from "./sign/LoginForm";
 import NaverLoginSuccessed from "./sign/NaverLoginSuccessed";
 import ExtraJoin from "./sign/ExtraJoin";
+import MyPage from "./user/MyPage";
 
 function App() {
   const navi = useNavigate();
@@ -17,8 +18,6 @@ function App() {
       setUserInfo(JSON.parse(localStorage.getItem("userInfo")));
     }
   }, []);
-
-  console.log(userInfo);
 
   return (
     <div>
@@ -61,6 +60,16 @@ function App() {
               userInfo={userInfo}
               getToken={getToken}
             ></ExtraJoin>
+          }
+        />
+        <Route
+          path="/user/mypage"
+          element={
+            <MyPage
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+              navi={navi}
+            ></MyPage>
           }
         />
       </Routes>

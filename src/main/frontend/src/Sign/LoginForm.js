@@ -23,6 +23,7 @@ function Login(props) {
     localStorage.setItem("jwtToken", token.data);
     localStorage.setItem("userInfo", JSON.stringify(jwtDecode(token.data)));
     props.setUserInfo(jwtDecode(token.data));
+    props.setGetToken(token.data);
     props.navi("/");
   };
 

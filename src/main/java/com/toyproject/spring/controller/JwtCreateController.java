@@ -80,6 +80,7 @@ public class JwtCreateController {
                 .withClaim("id", customerEntity.getCustomerNum()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                 .withClaim("username", customerEntity.getUsername()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                 .withClaim("customerName", customerEntity.getCustomerName()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
+                .withClaim("customerEmail", customerEntity.getCustomerEmail()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                 .sign(Algorithm.HMAC512("HorsepowerJo"));
 
         return jwtToken;
