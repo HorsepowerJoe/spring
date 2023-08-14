@@ -20,10 +20,10 @@ function Login(props) {
   let jwtToken;
 
   const successedLogin = (token) => {
-    localStorage.setItem("jwtToken", token.data);
+    localStorage.setItem("jwtToken", "Bearer " + token.data);
     localStorage.setItem("userInfo", JSON.stringify(jwtDecode(token.data)));
     props.setUserInfo(jwtDecode(token.data));
-    props.setGetToken(token.data);
+    props.setGetToken("Bearer " + token.data);
     props.navi("/");
   };
 
@@ -58,7 +58,7 @@ function Login(props) {
         customerPassword: customerPassword,
       })
       .then((data) => {
-        jwtToken = data.headers.get("Authorization");
+        jwtToken = "Bearer " + data.headers.get("Authorization");
         localStorage.setItem("jwtToken", jwtToken);
         let decode = jwtDecode(jwtToken);
         props.setUserInfo(decode);

@@ -36,7 +36,7 @@ function NaverLoginSuccessed(props) {
   const token = window.location.href.split("=")[1].split("&")[0];
 
   axios.post("/naver/getProfile", token).then((data) => {
-    localStorage.setItem("jwtToken", data.data);
+    localStorage.setItem("jwtToken", "Bearer " + data.data);
     localStorage.setItem("userInfo", JSON.stringify(jwtDecode(data.data)));
     props.setUserInfo(jwtDecode(data.data));
     props.navi("/");
