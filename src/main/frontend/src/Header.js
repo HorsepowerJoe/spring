@@ -137,6 +137,7 @@ function Header(props) {
     fontWeight: "bold",
     transition: "background-color 0.1s ease-in-out",
     position: "relative",
+    zIndex: 9999,
   };
 
   const buttonHoverStyle = {
@@ -167,13 +168,41 @@ function Header(props) {
                 top: "1%",
               }}
             >
-              <button style={buttonStyle}>회사소개</button>
+              <button
+                style={buttonStyle}
+                onClick={() => {
+                  props.navi("/intro");
+                }}
+              >
+                회사소개
+              </button>
               <br />
-              <button style={buttonStyle}>훈련사</button>
+              <button
+                style={buttonStyle}
+                onClick={() => {
+                  props.navi("/intro/handler");
+                }}
+              >
+                훈련사
+              </button>
               <br />
-              <button style={buttonStyle}>미용사</button>
+              <button
+                style={buttonStyle}
+                onClick={() => {
+                  props.navi("/intro/groomer");
+                }}
+              >
+                미용사
+              </button>
               <br />
-              <button style={buttonStyle}>호텔</button>
+              <button
+                style={buttonStyle}
+                onClick={() => {
+                  props.navi("/intro/hotel");
+                }}
+              >
+                호텔
+              </button>
               <br />
             </div>
           )}

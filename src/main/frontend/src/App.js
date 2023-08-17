@@ -7,6 +7,7 @@ import LoginForm from "./sign/LoginForm";
 import NaverLoginSuccessed from "./sign/NaverLoginSuccessed";
 import ExtraJoin from "./sign/ExtraJoin";
 import MyPage from "./user/MyPage";
+import Intro from "./intro/Intro";
 
 function App() {
   const navi = useNavigate();
@@ -72,6 +73,10 @@ function App() {
             ></MyPage>
           }
         />
+        <Route path="/intro" element={<Intro navi={navi}></Intro>} />
+        <Route path="/intro/handler" element={<Intro navi={navi}></Intro>} />
+        <Route path="/intro/groomer" element={<Intro navi={navi}></Intro>} />
+        <Route path="/intro/hotel" element={<Intro navi={navi}></Intro>} />
       </Routes>
     </div>
   );
