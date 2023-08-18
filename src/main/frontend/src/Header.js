@@ -108,6 +108,7 @@ function Header(props) {
   const [showDropdownIntro, setShowDropdownIntro] = useState(false);
   const [showDropdownBeauty, setShowDropdownBeauty] = useState(false);
   const [showDropdownCenter, setShowDropdownCenter] = useState(false);
+  const [showDropdownPet, setShowDropdownPet] = useState(false);
 
   const headerStyle = {
     display: "flex",
@@ -230,7 +231,32 @@ function Header(props) {
                 미용 예약
               </button>
               <button style={buttonStyle}>미용 예약 조회</button>
-              <button style={buttonStyle}>애견 정보 등록</button>
+            </div>
+          )}
+        </button>
+        <button
+          style={buttonStyle}
+          onMouseEnter={() => setShowDropdownPet(true)}
+          onMouseLeave={() => setShowDropdownPet(false)}
+        >
+          애견
+          {showDropdownPet && (
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                top: "1%",
+              }}
+            >
+              <button
+                style={buttonStyle}
+                onClick={() => {
+                  props.navi("/addpet");
+                }}
+              >
+                애견 정보 등록
+              </button>
+
               <button style={buttonStyle}>나의 애견</button>
             </div>
           )}
