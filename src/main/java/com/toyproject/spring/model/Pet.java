@@ -22,17 +22,16 @@ public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int petNum;
+    private Long petNum;
 
     @JoinColumn(name = "CUSTOMERTABLE_CUSTOMERNUM")
-    private int customerNum;
+    private Long customerNum;
 
-    @JoinColumn(name = "BREEDTABLE_BREEDNUM")
-    private int BreedNum;
+    private String petBreed;
 
     private String petName;
     private int petAge;
-    private int petGender;
+    private String petGender;
     private int petWeight;
 
     @CreationTimestamp

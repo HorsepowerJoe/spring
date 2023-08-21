@@ -3,8 +3,38 @@ import axios from "axios";
 import { useEffect } from "react";
 
 function AddPet(props) {
+  const axiosConfig = {
+    headers: {
+      Authorization: localStorage.getItem("jwtToken"),
+    },
+  };
+
+  console.log(JSON.parse(localStorage.getItem("userInfo")));
+
   const onSubmitHandler = (event) => {
-    console.log(null);
+    event.preventDefault();
+    const body = {
+      petName: event.target.petName.value,
+      petGender: event.target.petGender.value,
+      petBreed: event.target.petBreed.value,
+      petAge:
+        event.target.petAgeYear.value +
+        event.target.petAgeMonth.value +
+        event.target.petAgeDay.value,
+      petWeight: event.target.petWeight.value,
+      petSnitchy: event.target.petSnitchy.value,
+      extraData: event.target.extraData.value,
+      customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+    };
+
+    axios.post("/api/user/addPet", body, axiosConfig).then((data) => {
+      if (data.status == 200) {
+        alert("등록되었습니다.");
+        props.navi("/");
+      } else {
+        alert("서버 통신 에러!");
+      }
+    });
   };
 
   let YearList = () => {
@@ -82,32 +112,43 @@ function AddPet(props) {
             onSubmit={onSubmitHandler}
           >
             <label>Pet Name</label>
-            <input name="petName" type="text" required />
+            <input
+              name="petName"
+              type="text"
+              placeholder="이름을 입력해주세요."
+              required
+            />
             <label>Pet Gender</label>
-            <select name="customerGender">
+            <select name="petGender">
               <option disabled selected>
                 성별
               </option>
               <option value="male">남아</option>
               <option value="female">여아</option>
             </select>
+            <label>Pet Breed</label>
+            <input
+              type="text"
+              name="petBreed"
+              placeholder="견종을 입력해주세요."
+            />
             <label>Pet Age</label>
             <div
               style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}
             >
-              <select name="PetAgeYear">
+              <select name="petAgeYear">
                 <option selected disabled>
                   출생년도
                 </option>
                 {YearList()}
               </select>
-              <select name="PetAgeMonth">
+              <select name="petAgeMonth">
                 <option selected disabled>
                   월
                 </option>
                 {MonthList()}
               </select>
-              <select name="PetAgeDay">
+              <select name="petAgeDay">
                 <option selected disabled>
                   일
                 </option>
