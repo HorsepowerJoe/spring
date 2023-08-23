@@ -257,7 +257,9 @@ function Header(props) {
                 애견 정보 등록
               </button>
 
-              <button style={buttonStyle}>나의 애견</button>
+              <button style={buttonStyle} onClick={() => props.navi("/myPet")}>
+                나의 애견
+              </button>
             </div>
           )}
         </button>

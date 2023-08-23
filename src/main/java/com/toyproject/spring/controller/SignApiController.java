@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.toyproject.spring.auth.PrincipalDetails;
 import com.toyproject.spring.model.Customer;
-import com.toyproject.spring.model.Pet;
-import com.toyproject.spring.service.PetService;
 import com.toyproject.spring.service.SignService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SignApiController {
     private final SignService signService;
-    private final PetService petService;
 
     // JWT를 사용하면 UserDetailsService를 호출하지 않기 때문에 @AuthenticationPrincipal 사용 불가능.
     // 왜냐하면 @AuthenticationPrincipal은 UserDetailsService에서 리턴될 때 만들어지기 때문이다.
@@ -59,12 +56,6 @@ public class SignApiController {
     @PostMapping(value = "/api/joinCheck")
     public String joinCheck(@RequestBody Customer customer) {
         return signService.emailDupChk(customer.getCustomerEmail());
-    }
-
-    @PostMapping(value = "/api/user/addPet")
-    public String postMethodName(@RequestBody Pet pet) {
-        System.out.println("pet : " + pet);
-        return petService.addPet(pet);
     }
 
 }

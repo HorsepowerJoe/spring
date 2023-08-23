@@ -9,6 +9,7 @@ import ExtraJoin from "./sign/ExtraJoin";
 import MyPage from "./user/MyPage";
 import Intro from "./intro/Intro";
 import AddPet from "./pet/AddPet";
+import MyPet from "./pet/MyPet";
 
 function App() {
   const navi = useNavigate();
@@ -79,6 +80,7 @@ function App() {
         <Route path="/intro/groomer" element={<Intro navi={navi}></Intro>} />
         <Route path="/intro/hotel" element={<Intro navi={navi}></Intro>} />
         <Route path="/addpet" element={<AddPet navi={navi}></AddPet>} />
+        <Route path="/myPet" element={<MyPet navi={navi}></MyPet>} />
       </Routes>
     </div>
   );
