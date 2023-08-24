@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 function MyPet(props) {
   const [pets, setPets] = useState([]);
+  const [eventCounter, setEventCounter] = useState(0);
 
   const axiosConfig = {
     headers: {
@@ -27,21 +28,42 @@ function MyPet(props) {
           alert("불러오기에 실패하였습니다.");
         }
       });
-  }, []);
+  }, [eventCounter]);
 
-  const pet = pets.map((e) => (
-    <tr key={e.petNum}>
-      <td>{e.petName}</td>
-      <td>{e.petBreed}</td>
-      <td>{e.petAge}</td>
-      <td>{e.petWeight}</td>
-      <td>{e.petSnitchy ? "있음" : "없음"}</td>
-      <td>{e.extraData}</td>
+  const pet = pets.map((ele) => (
+    <tr key={ele.petNum} className={ele.petNum}>
+      <td>{ele.petName}</td>
+      <td>{ele.petBreed}</td>
+      <td>{ele.petAge}</td>
+      <td>{ele.petWeight}</td>
+      <td>{ele.petSnitchy ? "있음" : "없음"}</td>
+      <td>{ele.extraData}</td>
       <td>
         <button>수정</button>
       </td>
       <td>
-        <button>삭제</button>
+        <button
+          onClick={(event) => {
+            const petNum = event.target.parentElement.parentElement.className;
+            axios
+              .post(
+                "/api/user/deletePet",
+                {
+                  petNum: petNum,
+                  customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+                },
+                axiosConfig
+              )
+              .then((data) => {
+                if (data.status == 200) {
+                  setEventCounter(Math.random);
+                  alert("삭제되었습니다.");
+                }
+              });
+          }}
+        >
+          삭제
+        </button>
       </td>
     </tr>
   ));

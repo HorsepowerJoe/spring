@@ -33,9 +33,15 @@ public class UserApiController {
     }
 
     @PostMapping(value = "addPet")
-    public String postMethodName(@RequestBody Pet pet) {
+    public String addPet(@RequestBody Pet pet) {
         System.out.println("pet : " + pet);
         return petService.addPet(pet);
+    }
+
+    @PostMapping(value = "deletePet")
+    public String deletePet(@RequestBody Pet pet) {
+
+        return petService.deletePet(pet);
     }
 
     @PostMapping(value = "viewPet")

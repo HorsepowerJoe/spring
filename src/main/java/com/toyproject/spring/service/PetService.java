@@ -39,4 +39,13 @@ public class PetService {
         return null;
     }
 
+    public String deletePet(Pet pet) {
+        Optional<Customer> findCustomer = userRepository.findById(pet.getCustomerNum());
+        if (findCustomer.isEmpty() == false) {
+            petRepository.delete(pet);
+            return "1";
+        }
+        return null;
+    }
+
 }
