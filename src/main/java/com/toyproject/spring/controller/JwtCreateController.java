@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.spring.model.Customer;
+import com.toyproject.spring.model.Token;
 import com.toyproject.spring.provider.FacebookUserInfo;
 import com.toyproject.spring.provider.GoogleUserInfo;
-import com.toyproject.spring.provider.NaverUserInfo;
 import com.toyproject.spring.provider.OAuth2UserInfo;
+import com.toyproject.spring.repository.TokenRepository;
 import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,9 +29,12 @@ public class JwtCreateController {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ObjectMapper objm;
+    private final TokenRepository tokenRepository;
 
     @PostMapping(value = "/oauth/jwt/{provider}")
-    public String jwtCreateGoogle(@RequestBody Map<String, Object> data, @PathVariable("provider") String providerStr) {
+    public String jwtCreateGoogle(@RequestBody Map<String, Object> data, @PathVariable("provider") String providerStr)
+            throws JsonProcessingException {
 
         OAuth2UserInfo userInfo = null;
 
@@ -76,6 +82,7 @@ public class JwtCreateController {
 
         String jwtToken = JWT.create()
                 .withSubject(customerEntity.getUsername())
+                .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 10))) // 만료시간
                 .withClaim("id", customerEntity.getCustomerNum()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                 .withClaim("username", customerEntity.getUsername()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
@@ -83,7 +90,56 @@ public class JwtCreateController {
                 .withClaim("customerEmail", customerEntity.getCustomerEmail()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                 .sign(Algorithm.HMAC512("HorsepowerJo"));
 
-        return jwtToken;
+        String refreshToken = JWT.create()
+                .withClaim("id", customerEntity.getCustomerNum())
+                .withIssuedAt(new Date(System.currentTimeMillis()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 604800000))
+                .sign(Algorithm.HMAC512("HorsepowerJo"));
+
+        Token TokenDto = new Token(
+                jwtToken,
+                refreshToken);
+
+        tokenRepository.save(TokenDto);
+
+        return objm.writeValueAsString(TokenDto);
+    }
+
+    @PostMapping(value = "/oauth/jwt/refresh")
+    public String refreshToken(@RequestBody Token tokenDto) throws JsonProcessingException {
+        // 리프래시 토큰 받아서..
+        // 데이터 검증하고..
+        Token findToken = tokenRepository.findByRefreshToken(tokenDto.getRefreshToken());
+
+        if (findToken != null && findToken.getJwtToken().equals(findToken.getRefreshToken())) {
+
+            String username = JWT.require(Algorithm.HMAC512("HorsepowerJo")).build().verify(findToken.getJwtToken())
+                    .getClaim("username").asString();
+
+            Customer findCustomer = userRepository.findByUsername(username);
+            if (findCustomer != null) {
+                // 일치하면 새로 만들어서..
+                String jwtToken = JWT.create()
+                        .withSubject(findCustomer.getUsername())
+                        .withIssuedAt(new Date(System.currentTimeMillis()))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 10)))
+                        .withClaim("id", findCustomer.getCustomerNum())
+                        .withClaim("username", findCustomer.getUsername())
+                        .withClaim("customerName", findCustomer.getCustomerName())
+                        .withClaim("customerEmail", findCustomer.getCustomerEmail())
+                        .sign(Algorithm.HMAC512("HorsepowerJo"));
+
+                tokenDto.setJwtToken(jwtToken);
+                tokenRepository.save(tokenDto);
+                return objm.writeValueAsString(tokenDto);
+
+            }
+
+        } else {
+            throw new IllegalStateException("잘못된 정보 요청!!");
+        }
+
+        return null;
     }
 
 }
