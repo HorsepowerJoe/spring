@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.toyproject.spring.auth.PrincipalDetails;
 import com.toyproject.spring.model.Customer;
+import com.toyproject.spring.model.Token;
 import com.toyproject.spring.service.SignService;
 
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,12 @@ public class SignApiController {
     @PostMapping(value = "/api/joinCheck")
     public String joinCheck(@RequestBody Customer customer) {
         return signService.emailDupChk(customer.getCustomerEmail());
+    }
+
+    @PostMapping(value = "/api/logout")
+    public String logout(@RequestBody Token token) {
+        signService.logout(token);
+        return "1";
     }
 
 }
