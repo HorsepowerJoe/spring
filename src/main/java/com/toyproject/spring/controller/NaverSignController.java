@@ -28,8 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.spring.jwt.JwtProperties;
 import com.toyproject.spring.model.Customer;
+import com.toyproject.spring.model.Token;
+import com.toyproject.spring.repository.TokenRepository;
 import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -42,6 +45,8 @@ public class NaverSignController {
     private String CLI_SECRET = JwtProperties.NAVER_SECRET; // 애플리케이션 클라이언트 시크릿값";
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final TokenRepository tokenRepository;
+    private final ObjectMapper objm;
 
     /**
      * 로그인 화면이 있는 페이지 컨트롤
@@ -268,18 +273,37 @@ public class NaverSignController {
 
                 jwtToken = JWT.create()
                         .withSubject(customerEntity.getUsername())
+                        .withIssuedAt(new Date(System.currentTimeMillis()))
                         .withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 10))) // 만료시간
                         .withClaim("id", customerEntity.getCustomerNum()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                         .withClaim("username", customerEntity.getUsername()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                         .withClaim("customerName", customerEntity.getCustomerName()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
+                        .withClaim("customerEmail", customerEntity.getCustomerEmail()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                         .sign(Algorithm.HMAC512("HorsepowerJo"));
+
+                String refreshToken = JWT.create()
+                        .withClaim("id", customerEntity.getCustomerNum())
+                        .withIssuedAt(new Date(System.currentTimeMillis()))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 604800000))
+                        .sign(Algorithm.HMAC512("HorsepowerJo"));
+
+                Token tokenDto = new Token();
+                tokenDto.setJwtToken(jwtToken);
+                tokenDto.setRefreshToken(refreshToken);
+
+                if (tokenRepository.findByRefreshToken(refreshToken) == null) {
+                    tokenRepository.save(tokenDto);
+                } else {
+                    System.out.println("중복실행방지");
+                }
+                return objm.writeValueAsString(tokenDto);
 
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
 
-            return jwtToken;
+            }
+            return null;
         } else {
             return null;
         }
