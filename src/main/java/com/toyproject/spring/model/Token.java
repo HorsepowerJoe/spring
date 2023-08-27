@@ -2,6 +2,8 @@ package com.toyproject.spring.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,8 +19,11 @@ public class Token {
     }
 
     @Id
-    @Column(length = 1000)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(columnDefinition = "TEXT")
     private String jwtToken;
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String refreshToken;
 }

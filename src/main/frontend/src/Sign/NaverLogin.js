@@ -73,7 +73,7 @@ const NaverLogin = ({ setGetToken, setUserInfo, NAVER_KEY }) => {
     <div>
       <div
         id="naverIdLogin"
-        onMouseDown={() => {
+        onMouseUp={() => {
           initializeNaverLogin();
         }}
       >

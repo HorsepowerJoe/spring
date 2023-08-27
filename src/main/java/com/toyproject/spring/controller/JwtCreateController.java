@@ -96,13 +96,13 @@ public class JwtCreateController {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 604800000))
                 .sign(Algorithm.HMAC512("HorsepowerJo"));
 
-        Token TokenDto = new Token(
-                jwtToken,
-                refreshToken);
+        Token tokenDto = new Token();
+        tokenDto.setJwtToken(jwtToken);
+        tokenDto.setRefreshToken(refreshToken);
 
-        tokenRepository.save(TokenDto);
+        tokenRepository.save(tokenDto);
 
-        return objm.writeValueAsString(TokenDto);
+        return objm.writeValueAsString(tokenDto);
     }
 
     @PostMapping(value = "/oauth/jwt/refresh")

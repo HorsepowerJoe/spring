@@ -101,6 +101,7 @@
 
 import React, { useState } from "react";
 import logoImg from "/Users/jml/Documents/vscode/spring/src/main/frontend/src/img/logo/logo.png";
+import axios from "axios";
 
 function Header(props) {
   const [isHoverLogin, setIsHoverLogin] = useState(false);
@@ -323,7 +324,14 @@ function Header(props) {
           <button
             style={{ marginTop: "10px", marginLeft: "60px" }}
             onClick={() => {
+              const body = {
+                jwtToken: localStorage.getItem("jwtToken"),
+                refreshToken: localStorage.getItem("refreshToken"),
+              };
+              axios.post("/api/logout", body, props.axiosConfig);
               localStorage.removeItem("userInfo");
+              localStorage.removeItem("jwtToken");
+              localStorage.removeItem("refreshToken");
               props.setUserInfo("");
             }}
           >

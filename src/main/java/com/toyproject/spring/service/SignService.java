@@ -4,6 +4,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.toyproject.spring.model.Customer;
+import com.toyproject.spring.model.Token;
+import com.toyproject.spring.repository.TokenRepository;
 import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class SignService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final TokenRepository tokenRepository;
 
     public String join(Customer customer) {
         if (customer.getProvider() != null && customer.getProvider().equals("naver")) {
@@ -35,5 +38,14 @@ public class SignService {
         Customer findCustomer = userRepository.findByCustomerEmail(email);
         String result = findCustomer == null ? "0" : "1";
         return result;
+    }
+
+    public void logout(Token token) {
+        Token findToken = tokenRepository.findByRefreshToken(token.getRefreshToken());
+        if (findToken != null) {
+            tokenRepository.delete(findToken);
+        } else {
+            throw new IllegalStateException();
+        }
     }
 }

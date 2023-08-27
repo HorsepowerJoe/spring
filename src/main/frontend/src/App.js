@@ -10,11 +10,29 @@ import MyPage from "./user/MyPage";
 import Intro from "./intro/Intro";
 import AddPet from "./pet/AddPet";
 import MyPet from "./pet/MyPet";
+import axios from "axios";
 
 function App() {
   const navi = useNavigate();
   const [getToken, setGetToken] = useState("");
   const [userInfo, setUserInfo] = useState("");
+
+  const axiosConfig = {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  };
+
+  const tokenRefresh = () => {
+    const body = {
+      jwtToken: localStorage.getItem("jwtToken"),
+      refreshToken: localStorage.getItem("refreshToken"),
+    };
+    axios.post("/oauth/jwt/refresh", body, axiosConfig).then((data) => {
+      localStorage.setItem("jwtToken", "Bearer " + data.jwtToken);
+      setTimeout(tokenRefresh, 60000 * 10 - 10000);
+    });
+  };
 
   useEffect(() => {
     if (localStorage.getItem("userInfo") !== null) {
@@ -28,6 +46,7 @@ function App() {
         userInfo={userInfo}
         navi={navi}
         setUserInfo={setUserInfo}
+        axiosConfig={axiosConfig}
       ></Header>
       <Routes>
         <Route
@@ -39,6 +58,7 @@ function App() {
               setUserInfo={setUserInfo}
               userInfo={userInfo}
               getToken={getToken}
+              tokenRefresh={tokenRefresh}
             />
           }
         ></Route>

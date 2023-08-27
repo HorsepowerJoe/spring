@@ -36,9 +36,13 @@ function NaverLoginSuccessed(props) {
   const token = window.location.href.split("=")[1].split("&")[0];
 
   axios.post("/naver/getProfile", token).then((data) => {
-    localStorage.setItem("jwtToken", "Bearer " + data.data);
-    localStorage.setItem("userInfo", JSON.stringify(jwtDecode(data.data)));
-    props.setUserInfo(jwtDecode(data.data));
+    localStorage.setItem("jwtToken", "Bearer " + data.data.jwtToken);
+    localStorage.setItem("refreshToken", data.data.refreshToken);
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify(jwtDecode(data.data.jwtToken))
+    );
+    props.setUserInfo(jwtDecode(data.data.jwtToken));
     props.navi("/");
   });
 

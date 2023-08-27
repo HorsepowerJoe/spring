@@ -20,10 +20,15 @@ function Login(props) {
   let jwtToken;
 
   const successedLogin = (token) => {
-    localStorage.setItem("jwtToken", "Bearer " + token.data);
-    localStorage.setItem("userInfo", JSON.stringify(jwtDecode(token.data)));
-    props.setUserInfo(jwtDecode(token.data));
+    localStorage.setItem("jwtToken", "Bearer " + token.data.jwtToken);
+    localStorage.setItem("refreshToken", token.data.refreshToken);
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify(jwtDecode(token.data.jwtToken))
+    );
+    props.setUserInfo(jwtDecode(token.data.jwtToken));
     props.setGetToken("Bearer " + token.data);
+    setInterval(props.tokenRefresh, 60000 * 10 - 10000);
     props.navi("/");
   };
 
