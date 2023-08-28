@@ -11,15 +11,16 @@ import Intro from "./intro/Intro";
 import AddPet from "./pet/AddPet";
 import MyPet from "./pet/MyPet";
 import axios from "axios";
+import Reservation from "./reservation/Reservation";
 
 function App() {
   const navi = useNavigate();
   const [getToken, setGetToken] = useState("");
   const [userInfo, setUserInfo] = useState("");
-
+  const [isLogined, setIsLogined] = useState(false);
   const axiosConfig = {
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
+      Authorization: localStorage.getItem("jwtToken"),
     },
   };
 
@@ -40,6 +41,13 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isLogined == true)
+      setInterval(() => {
+        tokenRefresh();
+      }, 60000 * 10 - 10000);
+  }, [isLogined]);
+
   return (
     <div>
       <Header
@@ -59,6 +67,7 @@ function App() {
               userInfo={userInfo}
               getToken={getToken}
               tokenRefresh={tokenRefresh}
+              setIsLogined={setIsLogined}
             />
           }
         ></Route>
@@ -72,6 +81,7 @@ function App() {
               setUserInfo={setUserInfo}
               userInfo={userInfo}
               getToken={getToken}
+              setIsLogined={setIsLogined}
             />
           }
         ></Route>
@@ -101,6 +111,16 @@ function App() {
         <Route path="/intro/hotel" element={<Intro navi={navi}></Intro>} />
         <Route path="/addpet" element={<AddPet navi={navi}></AddPet>} />
         <Route path="/myPet" element={<MyPet navi={navi}></MyPet>} />
+        <Route
+          path="/reservation"
+          element={
+            <Reservation
+              navi={navi}
+              axiosConfig={axiosConfig}
+              userInfo={userInfo}
+            ></Reservation>
+          }
+        />
       </Routes>
     </div>
   );

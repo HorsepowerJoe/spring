@@ -43,6 +43,7 @@ function NaverLoginSuccessed(props) {
       JSON.stringify(jwtDecode(data.data.jwtToken))
     );
     props.setUserInfo(jwtDecode(data.data.jwtToken));
+    props.setIsLogined(true);
     props.navi("/");
   });
 

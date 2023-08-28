@@ -28,7 +28,7 @@ function Login(props) {
     );
     props.setUserInfo(jwtDecode(token.data.jwtToken));
     props.setGetToken("Bearer " + token.data);
-    setInterval(props.tokenRefresh, 60000 * 10 - 10000);
+    props.setIsLogined(true);
     props.navi("/");
   };
 
