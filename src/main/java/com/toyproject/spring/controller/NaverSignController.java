@@ -299,7 +299,7 @@ public class NaverSignController {
                 return objm.writeValueAsString(tokenDto);
 
             } catch (ParseException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
 
             }
