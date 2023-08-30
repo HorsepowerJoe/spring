@@ -48,7 +48,7 @@ function Reservation(props) {
     } else {
       const body = {
         visitDate: visitDate,
-        petNum: event.target.petNum.value,
+        petNum: event.target.petNum.value.split(",")[0],
         customerNum: props.userInfo.id,
         g_num: event.target.g_num.value,
       };
@@ -99,8 +99,12 @@ function Reservation(props) {
       });
   }, []);
 
-  const pet = petList.map((pet) => (
-    <option key={pet.petNum} value={pet.petNum} weight={pet.petWeight}>
+  const pet = petList.map((pet, index) => (
+    <option
+      key={pet.petNum}
+      value={pet.petNum + "," + index}
+      weight={pet.petWeight}
+    >
       {pet.petName}
     </option>
   ));
@@ -143,7 +147,11 @@ function Reservation(props) {
   };
 
   const nameChangeHandler = (event) => {
-    setPetName(event.target[event.target.value].getAttribute("weight"));
+    setPetName(
+      event.target[event.target.value.split(",")[1] - "" + 1].getAttribute(
+        "weight"
+      )
+    );
   };
 
   useEffect(() => {

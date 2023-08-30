@@ -31,21 +31,28 @@ function FindReservation(props) {
         <button
           onClick={(event) => {
             const r_num = event.target.parentElement.parentElement.className;
-            axios
-              .post(
-                "/api/reserve/deleteReservation",
-                {
-                  r_num: r_num,
-                  customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
-                },
-                props.axiosConfig
-              )
-              .then((data) => {
-                if (data.status == 200) {
-                  setEventCounter(Math.random);
-                  alert("삭제되었습니다.");
-                }
-              });
+            const boolean = window.confirm(
+              "방문 시간 1시간 이내에 예약을 취소하시면 추후 예약이 어려울 수 있습니다.\n예약을 취소하시겠습니까?"
+            );
+
+            if (boolean) {
+              axios
+                .post(
+                  "/api/reserve/deleteReservation",
+                  {
+                    r_num: r_num,
+                    customerNum: JSON.parse(localStorage.getItem("userInfo"))
+                      .id,
+                  },
+                  props.axiosConfig
+                )
+                .then((data) => {
+                  if (data.status == 200) {
+                    setEventCounter(Math.random);
+                    alert("취소되었습니다.");
+                  }
+                });
+            }
           }}
         >
           취소
