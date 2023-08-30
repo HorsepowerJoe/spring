@@ -30,7 +30,7 @@ public class Reservation {
     private Timestamp r_regDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private Timestamp r_visitDate;
+    private Timestamp visitDate;
 
     @JoinColumn(name = "PETTABLE_PETNUM")
     private Long petNum;

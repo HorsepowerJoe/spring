@@ -231,7 +231,14 @@ function Header(props) {
               >
                 미용 예약
               </button>
-              <button style={buttonStyle}>미용 예약 조회</button>
+              <button
+                style={buttonStyle}
+                onClick={() => {
+                  props.navi("/findReservation");
+                }}
+              >
+                미용 예약 조회
+              </button>
             </div>
           )}
         </button>

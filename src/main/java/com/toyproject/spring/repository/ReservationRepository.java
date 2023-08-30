@@ -10,6 +10,10 @@ import com.toyproject.spring.model.Reservation;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    @Query("SELECT r FROM Reservation r WHERE YEAR(r.r_visitDate) = :year AND MONTH(r.r_visitDate) = :month AND DAY(r.r_visitDate) = :day")
+    @Query("SELECT r FROM Reservation r WHERE YEAR(r.visitDate) = :year AND MONTH(r.visitDate) = :month AND DAY(r.visitDate) = :day")
     List<Reservation> findByDate(@Param("year") int year, @Param("month") int month, @Param("day") int day);
+
+    List<Reservation> findAllByCustomerNum(Long customerNum);
+
+    List<Reservation> findAllByCustomerNumOrderByVisitDateAsc(Long customerNum);
 }

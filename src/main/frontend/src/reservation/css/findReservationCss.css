@@ -1,0 +1,19 @@
+.bordered-table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 100%;
+  }
+  
+  .bordered-table th, .bordered-table td {
+    border-bottom: 1px solid #000000; 
+
+    padding: 8px;
+  }
+
+  .bordered-table tr:nth-child(odd){
+    background-color: #fff;
+  }
+  
+  .bordered-table th {
+    background-color: #f2f2f2;
+  }

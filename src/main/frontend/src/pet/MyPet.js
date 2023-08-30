@@ -39,9 +39,6 @@ function MyPet(props) {
       <td>{ele.petSnitchy ? "있음" : "없음"}</td>
       <td>{ele.extraData}</td>
       <td>
-        <button>수정</button>
-      </td>
-      <td>
         <button
           onClick={(event) => {
             const petNum = event.target.parentElement.parentElement.className;

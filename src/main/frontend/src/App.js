@@ -12,6 +12,7 @@ import AddPet from "./pet/AddPet";
 import MyPet from "./pet/MyPet";
 import axios from "axios";
 import Reservation from "./reservation/Reservation";
+import FindReservation from "./reservation/FindReservation";
 
 function App() {
   const navi = useNavigate();
@@ -38,7 +39,7 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("jwtToken") !== null) {
-      setInterval(tokenRefresh, 60000 * 10 - 30000);
+      setInterval(tokenRefresh, 60000 * 9);
     } else {
       clearInterval(tokenRefresh);
     }
@@ -123,6 +124,10 @@ function App() {
               userInfo={userInfo}
             ></Reservation>
           }
+        />
+        <Route
+          path="/findReservation"
+          element={<FindReservation navi={navi} axiosConfig={axiosConfig} />}
         />
       </Routes>
     </div>
