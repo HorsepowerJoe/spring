@@ -25,28 +25,30 @@ function App() {
   };
 
   const tokenRefresh = () => {
+    console.log("tokenRefresh 실행!!");
+    console.log("isLogined =", isLogined);
     const body = {
-      jwtToken: localStorage.getItem("jwtToken"),
+      jwtToken: localStorage.getItem("jwtToken").replace("Bearer ", ""),
       refreshToken: localStorage.getItem("refreshToken"),
     };
     axios.post("/oauth/jwt/refresh", body, axiosConfig).then((data) => {
       localStorage.setItem("jwtToken", "Bearer " + data.jwtToken);
-      setTimeout(tokenRefresh, 60000 * 10 - 10000);
     });
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("jwtToken") !== null) {
+      setInterval(tokenRefresh, 60000 * 10 - 30000);
+    } else {
+      clearInterval(tokenRefresh);
+    }
+  }, [isLogined]);
 
   useEffect(() => {
     if (localStorage.getItem("userInfo") !== null) {
       setUserInfo(JSON.parse(localStorage.getItem("userInfo")));
     }
   }, []);
-
-  useEffect(() => {
-    if (isLogined == true)
-      setInterval(() => {
-        tokenRefresh();
-      }, 60000 * 10 - 10000);
-  }, [isLogined]);
 
   return (
     <div>
@@ -55,6 +57,7 @@ function App() {
         navi={navi}
         setUserInfo={setUserInfo}
         axiosConfig={axiosConfig}
+        setIsLogined={setIsLogined}
       ></Header>
       <Routes>
         <Route

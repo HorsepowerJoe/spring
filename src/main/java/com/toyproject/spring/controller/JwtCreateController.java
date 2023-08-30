@@ -111,7 +111,10 @@ public class JwtCreateController {
         // 데이터 검증하고..
         Token findToken = tokenRepository.findByRefreshToken(tokenDto.getRefreshToken());
 
-        if (findToken != null && findToken.getJwtToken().equals(findToken.getRefreshToken())) {
+        System.out.println("tkDto : " + tokenDto);
+        System.out.println("findDto : " + findToken);
+
+        if (findToken != null && findToken.getRefreshToken().equals(tokenDto.getRefreshToken())) {
 
             String username = JWT.require(Algorithm.HMAC512("HorsepowerJo")).build().verify(findToken.getJwtToken())
                     .getClaim("username").asString();
@@ -129,9 +132,11 @@ public class JwtCreateController {
                         .withClaim("customerEmail", findCustomer.getCustomerEmail())
                         .sign(Algorithm.HMAC512("HorsepowerJo"));
 
-                tokenDto.setJwtToken(jwtToken);
-                tokenRepository.save(tokenDto);
-                return objm.writeValueAsString(tokenDto);
+                findToken.setJwtToken(jwtToken);
+                tokenRepository.save(findToken);
+
+                System.out.println("갱신 완료!");
+                return objm.writeValueAsString(findToken);
 
             }
 

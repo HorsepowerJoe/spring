@@ -333,6 +333,7 @@ function Header(props) {
               localStorage.removeItem("jwtToken");
               localStorage.removeItem("refreshToken");
               props.setUserInfo("");
+              props.setIsLogined(false);
             }}
           >
             로그아웃
