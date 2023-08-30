@@ -32,7 +32,7 @@ function App() {
       refreshToken: localStorage.getItem("refreshToken"),
     };
     axios.post("/oauth/jwt/refresh", body, axiosConfig).then((data) => {
-      localStorage.setItem("jwtToken", "Bearer " + data.jwtToken);
+      localStorage.setItem("jwtToken", "Bearer " + data.data.jwtToken);
     });
   };
 
