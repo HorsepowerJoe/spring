@@ -207,7 +207,7 @@ function MyPage(props) {
                 alt="접기 버튼"
               />
             </div>
-            <button disabled={regChk}>회원가입</button>
+            <button disabled={regChk}>수정하기</button>
           </form>
           <br />
         </fieldset>
