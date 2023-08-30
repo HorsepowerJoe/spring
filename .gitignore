@@ -6,7 +6,6 @@ target/
 *.yml
 *.properties
 application.properties
-jwt/JwtProperties.java
 
 ### STS ###
 .apt_generated
@@ -35,3 +34,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore JwtProperties.java file
+src/main/java/com/toyproject/spring/jwt/JwtProperties.java
