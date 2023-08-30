@@ -5,8 +5,8 @@ target/
 !**/src/test/**/target/
 *.yml
 *.properties
-JwtProperties.java
 application.properties
+src/main/java/com/toyproject/spring/jwt/JwtProperties.java
 
 ### STS ###
 .apt_generated

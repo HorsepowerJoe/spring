@@ -1,4 +1,4 @@
-package com.toyproject.spring.CommandLineRunner;
+package com.toyproject.spring.commandLineRunner;
 
 import java.math.BigInteger;
 
