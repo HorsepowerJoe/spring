@@ -162,4 +162,10 @@ JWT<br />
   이미 예약된 시간을 받아와 선택 불가능하게 변경<br />
   예약하기 화면에서 amountPrice와 petWeight 확인 가능하게 변경<br />
   예약 목록 보기 및 삭제 기능 추가<br />
+
+  ## 2023.08.30
+  Groomer Table 생성
+  QnATable 생성
+  미용 문의 게시판 구현
+  페이징 구현
   
