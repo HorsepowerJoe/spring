@@ -164,8 +164,8 @@ JWT<br />
   예약 목록 보기 및 삭제 기능 추가<br />
 
   ## 2023.08.30
-  Groomer Table 생성
-  QnATable 생성
-  미용 문의 게시판 구현
-  페이징 구현
+  Groomer Table 생성<br />
+  QnATable 생성<br />
+  미용 문의 게시판 구현<br />
+  페이징 구현<br />
   
