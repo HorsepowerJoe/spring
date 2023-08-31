@@ -1,6 +1,5 @@
-import { useState } from "react";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function MyPet(props) {
   const [pets, setPets] = useState([]);

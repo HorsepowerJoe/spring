@@ -13,6 +13,7 @@ import MyPet from "./pet/MyPet";
 import axios from "axios";
 import Reservation from "./reservation/Reservation";
 import FindReservation from "./reservation/FindReservation";
+import GroomingQna from "./qna/GroomingQna";
 
 function App() {
   const navi = useNavigate();
@@ -128,6 +129,12 @@ function App() {
         <Route
           path="/findReservation"
           element={<FindReservation navi={navi} axiosConfig={axiosConfig} />}
+        />
+        <Route
+          path="/groomingQna"
+          element={
+            <GroomingQna navi={navi} axiosConfig={axiosConfig}></GroomingQna>
+          }
         />
       </Routes>
     </div>
