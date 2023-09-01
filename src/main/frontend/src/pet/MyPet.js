@@ -16,7 +16,7 @@ function MyPet(props) {
     axios
       .post(
         "/api/user/viewPet",
-        { customerNum: userInfo.id, username: userInfo.username },
+        { customerNum: userInfo?.id, username: userInfo?.username },
         axiosConfig
       )
       .then((data) => {
@@ -46,7 +46,7 @@ function MyPet(props) {
                 "/api/user/deletePet",
                 {
                   petNum: petNum,
-                  customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+                  customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
                 },
                 axiosConfig
               )

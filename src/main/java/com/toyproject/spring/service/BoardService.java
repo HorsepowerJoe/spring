@@ -64,6 +64,7 @@ public class BoardService {
         madeDto.setGroomingQnaNum(groomingQna.getGroomingQnaNum());
         madeDto.setGroomingQnaRegDate(groomingQna.getGroomingQnaRegDate());
         madeDto.setGroomingQnaTitle(groomingQna.getGroomingQnaTitle());
+        madeDto.setCustomerNum(groomingQna.getCustomerNum());
         return madeDto;
     }
 

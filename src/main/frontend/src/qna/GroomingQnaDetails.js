@@ -85,6 +85,14 @@ function GroomingQnaDetails(props) {
           >
             {boardDetails.isAnswered ? "답변 완료" : "대기중"}
           </textarea>
+          <br />
+          {boardDetails.customerNum ==
+          JSON.parse(localStorage.getItem("userInfo"))?.id ? (
+            <div style={{ float: "right" }}>
+              <button>수정</button>
+              <button>삭제</button>
+            </div>
+          ) : null}
         </fieldset>
       </div>
     </>

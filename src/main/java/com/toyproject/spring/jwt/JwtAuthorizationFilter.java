@@ -1,6 +1,7 @@
 package com.toyproject.spring.jwt;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -67,7 +68,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             // 강제로 시큐리티의 세션에 접근하여 값 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-
+        System.out.println("인증 성공!");
         chain.doFilter(request, response);
     }
 

@@ -5,7 +5,7 @@ function GroomingqnaForm(props) {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     const body = {
-      customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+      customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
       groomingQnaTitle: event.target.groomingQnaTitle.value,
       groomingQnaContent: event.target.groomingQnaContent.value,
     };

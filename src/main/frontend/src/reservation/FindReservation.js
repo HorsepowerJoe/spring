@@ -8,7 +8,7 @@ function FindReservation(props) {
   //예약 목록 불러와서
   useEffect(() => {
     const body = {
-      customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+      customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
     };
 
     axios
@@ -42,7 +42,7 @@ function FindReservation(props) {
                   {
                     r_num: r_num,
                     customerNum: JSON.parse(localStorage.getItem("userInfo"))
-                      .id,
+                      ?.id,
                   },
                   props.axiosConfig
                 )

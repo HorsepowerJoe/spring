@@ -105,32 +105,104 @@ function App() {
         <Route
           path="/user/mypage"
           element={
-            <MyPage
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-              navi={navi}
-            ></MyPage>
+            localStorage.getItem("userInfo") ? (
+              <MyPage
+                userInfo={userInfo}
+                setUserInfo={setUserInfo}
+                navi={navi}
+              ></MyPage>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
           }
         />
         <Route path="/intro" element={<Intro navi={navi}></Intro>} />
         <Route path="/intro/handler" element={<Intro navi={navi}></Intro>} />
         <Route path="/intro/groomer" element={<Intro navi={navi}></Intro>} />
         <Route path="/intro/hotel" element={<Intro navi={navi}></Intro>} />
-        <Route path="/addpet" element={<AddPet navi={navi}></AddPet>} />
-        <Route path="/myPet" element={<MyPet navi={navi}></MyPet>} />
+        <Route
+          path="/addpet"
+          element={
+            localStorage.getItem("userInfo") ? (
+              <AddPet navi={navi}></AddPet>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/myPet"
+          element={
+            localStorage.getItem("userInfo") ? (
+              <MyPet navi={navi}></MyPet>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
         <Route
           path="/reservation"
           element={
-            <Reservation
-              navi={navi}
-              axiosConfig={axiosConfig}
-              userInfo={userInfo}
-            ></Reservation>
+            localStorage.getItem("userInfo") ? (
+              <Reservation
+                navi={navi}
+                axiosConfig={axiosConfig}
+                userInfo={userInfo}
+              ></Reservation>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
           }
         />
         <Route
           path="/findReservation"
-          element={<FindReservation navi={navi} axiosConfig={axiosConfig} />}
+          element={
+            localStorage.getItem("userInfo") ? (
+              <FindReservation navi={navi} axiosConfig={axiosConfig} />
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
         />
         <Route
           path="/groomingQna"
@@ -150,10 +222,22 @@ function App() {
         <Route
           path="/groomingqnaForm"
           element={
-            <GroomingqnaForm
-              navi={navi}
-              axiosConfig={axiosConfig}
-            ></GroomingqnaForm>
+            localStorage.getItem("userInfo") ? (
+              <GroomingqnaForm
+                navi={navi}
+                axiosConfig={axiosConfig}
+              ></GroomingqnaForm>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
           }
         />
       </Routes>

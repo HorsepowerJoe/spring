@@ -9,6 +9,8 @@ public class GroomingQnaDto {
 
     Long groomingQnaNum;
 
+    Long customerNum;
+
     String customerName;
 
     String groomingQnaTitle;

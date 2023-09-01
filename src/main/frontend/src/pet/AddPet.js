@@ -22,7 +22,7 @@ function AddPet(props) {
       petWeight: event.target.petWeight.value,
       petSnitchy: event.target.petSnitchy.value,
       extraData: event.target.extraData.value,
-      customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+      customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
     };
 
     axios.post("/api/user/addPet", body, axiosConfig).then((data) => {

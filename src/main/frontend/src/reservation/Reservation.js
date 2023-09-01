@@ -49,7 +49,7 @@ function Reservation(props) {
       const body = {
         visitDate: visitDate,
         petNum: event.target.petNum.value.split(",")[0],
-        customerNum: props.userInfo.id,
+        customerNum: props.userInfo?.id,
         g_num: event.target.g_num.value,
       };
       axios
@@ -70,18 +70,16 @@ function Reservation(props) {
     axios
       .post(
         "/api/user/viewPet",
-        { customerNum: JSON.parse(localStorage.getItem("userInfo")).id },
+        { customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id },
         props.axiosConfig
       )
       .then((data) => {
         setPetList(JSON.parse(JSON.stringify(data.data)));
       });
 
-    axios
-      .get("/api/grooming/getStyles", null, props.axiosConfig)
-      .then((data) => {
-        setStyles(JSON.parse(JSON.stringify(data.data)));
-      });
+    axios.get("/api/grooming/getStyles", props.axiosConfig).then((data) => {
+      setStyles(JSON.parse(JSON.stringify(data.data)));
+    });
 
     const day = new Date().toISOString().replace("T", " ").replace(/\..*/, "");
 
