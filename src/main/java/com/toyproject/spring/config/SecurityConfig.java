@@ -58,6 +58,8 @@ public class SecurityConfig {
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/api/board/findAllGroomingQna").permitAll()
                 .antMatchers("/api/board/findBoardDetails").permitAll()
+                .antMatchers("/api/board/findAllHotelQna").permitAll()
+                .antMatchers("/api/board/findHotelBoardDetails").permitAll()
                 .antMatchers("/api/board/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/api/grooming/**")

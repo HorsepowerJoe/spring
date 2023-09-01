@@ -192,7 +192,14 @@ function Header(props) {
               >
                 미용 문의
               </button>
-              <button style={buttonStyle}>호텔 문의</button>
+              <button
+                style={buttonStyle}
+                onClick={() => {
+                  props.navi("/hotelQna");
+                }}
+              >
+                호텔 문의
+              </button>
             </div>
           )}
         </button>

@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.spring.dto.GroomingQnaDto;
+import com.toyproject.spring.dto.HotelQnaDto;
 import com.toyproject.spring.model.GroomingQna;
-import com.toyproject.spring.repository.GroomingQnaCommentRepository;
+import com.toyproject.spring.model.HotelQna;
 import com.toyproject.spring.repository.GroomingQnaRepository;
+import com.toyproject.spring.repository.HotelQnaCommentRepository;
+import com.toyproject.spring.repository.HotelQnaRepository;
 import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +25,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardService {
     private final GroomingQnaRepository groomingQnaRepository;
-    private final GroomingQnaCommentRepository groomingQnaCommentRepository;
+    private final HotelQnaRepository hotelQnaRepository;
+    private final HotelQnaCommentRepository groomingQnaCommentRepository;
     private final UserRepository userRepository;
     private final ObjectMapper objm;
 
@@ -56,6 +60,17 @@ public class BoardService {
         return groomingQnaDto;
     }
 
+    private List<HotelQnaDto> reWriteForDtoHotelType(Page<HotelQna> findHotelPage) {
+        List<HotelQnaDto> hotelQnaDto = findHotelPage.stream().map(hotelQna -> {
+            Long customerNum = hotelQna.getCustomerNum();
+            String customerName = userRepository.findById(customerNum).get().getCustomerName();
+            customerName = customerName.replace(customerName.substring(1, 2), "*");
+
+            return getMadeDto(hotelQna, customerName);
+        }).collect(Collectors.toList());
+        return hotelQnaDto;
+    }
+
     private GroomingQnaDto getMadeDto(GroomingQna groomingQna, String customerName) {
         GroomingQnaDto madeDto = new GroomingQnaDto();
         madeDto.setAnswered(groomingQna.isAnswered());
@@ -68,8 +83,44 @@ public class BoardService {
         return madeDto;
     }
 
+    private HotelQnaDto getMadeDto(HotelQna hotelQna, String customerName) {
+        HotelQnaDto madeDto = new HotelQnaDto();
+        madeDto.setAnswered(hotelQna.isAnswered());
+        madeDto.setCustomerName(customerName);
+        madeDto.setHotelQnaContent(hotelQna.getHotelQnaContent());
+        madeDto.setHotelQnaNum(hotelQna.getHotelQnaNum());
+        madeDto.setHotelQnaRegDate(hotelQna.getHotelQnaRegDate());
+        madeDto.setHotelQnaTitle(hotelQna.getHotelQnaTitle());
+        madeDto.setCustomerNum(hotelQna.getCustomerNum());
+        return madeDto;
+    }
+
     public String writeGroomingQna(GroomingQna groomingQna) {
         groomingQnaRepository.save(groomingQna);
+        return "1";
+    }
+
+    public String findAllHotelQna(Pageable pageable) throws JsonProcessingException {
+        Page<HotelQna> findPage = hotelQnaRepository.findAllByOrderByHotelQnaRegDateDesc(pageable);
+        List<HotelQnaDto> hotelQnaDto = reWriteForDtoHotelType(findPage);
+
+        return objm.writeValueAsString(new PageImpl<>(hotelQnaDto, pageable, findPage.getTotalElements()));
+
+    }
+
+    public String findHotelBoardDetails(Long hotelQnaNum) throws JsonProcessingException {
+        HotelQna findQna = hotelQnaRepository.findById(hotelQnaNum).get();
+
+        Long customerNum = findQna.getCustomerNum();
+        String customerName = userRepository.findById(customerNum).get().getCustomerName();
+        customerName = customerName.replace(customerName.substring(1, 2), "*");
+
+        HotelQnaDto madeDto = getMadeDto(findQna, customerName);
+        return objm.writeValueAsString(madeDto);
+    }
+
+    public String writeHotelQna(HotelQna hotelQna) {
+        hotelQnaRepository.save(hotelQna);
         return "1";
     }
 }

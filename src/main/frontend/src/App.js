@@ -16,6 +16,9 @@ import FindReservation from "./reservation/FindReservation";
 import GroomingQna from "./qna/GroomingQna";
 import GroomingQnaDetails from "./qna/GroomingQnaDetails";
 import GroomingqnaForm from "./qna/GroomingQnaForm";
+import HotelQna from "./qna/HotelQna";
+import HotelQnaDetails from "./qna/HotelQnaDetails";
+import HotelqnaForm from "./qna/HotelQnaForm";
 
 function App() {
   const navi = useNavigate();
@@ -211,12 +214,25 @@ function App() {
           }
         />
         <Route
+          path="/hotelQna"
+          element={<HotelQna navi={navi} axiosConfig={axiosConfig}></HotelQna>}
+        />
+        <Route
           path="/groomingQna/:groomingQnaNum"
           element={
             <GroomingQnaDetails
               navi={navi}
               axiosConfig={axiosConfig}
             ></GroomingQnaDetails>
+          }
+        />
+        <Route
+          path="/hotelQna/:hotelQnaNum"
+          element={
+            <HotelQnaDetails
+              navi={navi}
+              axiosConfig={axiosConfig}
+            ></HotelQnaDetails>
           }
         />
         <Route
@@ -227,6 +243,27 @@ function App() {
                 navi={navi}
                 axiosConfig={axiosConfig}
               ></GroomingqnaForm>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/hotelQnaForm"
+          element={
+            localStorage.getItem("userInfo") ? (
+              <HotelqnaForm
+                navi={navi}
+                axiosConfig={axiosConfig}
+              ></HotelqnaForm>
             ) : (
               <LoginForm
                 navi={navi}

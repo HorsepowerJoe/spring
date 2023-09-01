@@ -2,13 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function GroomingQnaDetails(props) {
-  const { groomingQnaNum } = useParams();
+function HotelQnaDetails(props) {
+  const { hotelQnaNum } = useParams();
   const [boardDetails, setBoardDetails] = useState("");
   useEffect(() => {
     axios
       .get(
-        `/api/board/findGroomingBoardDetails?groomingQnaNum=${groomingQnaNum}`,
+        `/api/board/findHotelBoardDetails?hotelQnaNum=${hotelQnaNum}`,
         props.axiosConfig
       )
       .then((data) => {
@@ -44,25 +44,21 @@ function GroomingQnaDetails(props) {
               <th style={{ minWidth: "50px" }}>작성일</th>
             </tr>
             <tr>
-              <th style={{ minWidth: "50px" }}>
-                {boardDetails.groomingQnaNum}
-              </th>
-              <th style={{ minWidth: "50px" }}>
-                {boardDetails.groomingQnaTitle}
-              </th>
+              <th style={{ minWidth: "50px" }}>{boardDetails.hotelQnaNum}</th>
+              <th style={{ minWidth: "50px" }}>{boardDetails.hotelQnaTitle}</th>
               <th style={{ minWidth: "50px" }}>{boardDetails.customerName}</th>
               <th style={{ minWidth: "50px" }}>
                 {boardDetails.isAnswered ? "답변 완료" : "대기중"}
               </th>
               <th style={{ minWidth: "50px" }}>
-                {new Date(boardDetails.groomingQnaRegDate).toLocaleString()}
+                {new Date(boardDetails.hotelQnaRegDate).toLocaleString()}
               </th>
             </tr>
           </table>
           <hr />
           <textarea
             readOnly
-            value={boardDetails.groomingQnaContent}
+            value={boardDetails.hotelQnaContent}
             style={{
               width: "100%",
               marginBottom: "30px",
@@ -98,4 +94,4 @@ function GroomingQnaDetails(props) {
     </>
   );
 }
-export default GroomingQnaDetails;
+export default HotelQnaDetails;
