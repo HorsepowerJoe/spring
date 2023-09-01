@@ -43,7 +43,7 @@ QnA 게시판을 통해 궁금한 사항을 미용사들에게 직접 물어볼 
 <br />
 
 #### 기술적인 접근:<br />
-'projectDogGroomingCenter'에서는 OAuth와 Spring Security를 활용하여 사용자 인증과 권한 부여를 강화하여 데이터 보안을 강조하고 있습니다.<br />
+'projectDogGroomingCenter'에서는 OAuth와 JWT, Spring Security를 활용하여 사용자 인증과 권한 부여를 강화하여 데이터 보안을 강조하고 있습니다.<br />
 또한, 사용자 데이터의 안전성을 높이기 위해 암호화된 비밀번호를 사용하여 더욱 높은 수준의 보안을 제공합니다.<br />
 <br />
 
