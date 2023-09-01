@@ -30,16 +30,24 @@ function GroomingQna(props) {
   }, [groomingQnaList]);
 
   const viewQnaDetails = (qna) => {
-    props.navi(qna.groomingQnaNum);
+    console.log("clicked", qna.groomingQnaNum);
+    props.navi("/groomingQna/" + qna.groomingQnaNum);
   };
 
   const groomingQna = groomingQnaList.map((qna) => (
-    <tr key={qna.groomingQnaNum}>
+    <tr
+      className="clickable"
+      key={qna.groomingQnaNum}
+      onClick={() => {
+        viewQnaDetails(qna);
+      }}
+      style={{ cursor: "pointer" }}
+    >
       <td>{qna.groomingQnaNum}</td>
-      <td onClick={viewQnaDetails}>{qna.groomingQnaTitle}</td>
+      <td>{qna.groomingQnaTitle}</td>
       <td>{qna.customerName}</td>
       <td>{qna.isAnswered ? "답변완료" : "대기중"}</td>
-      <td>{qna.groomingQnaRegDate}</td>
+      <td>{new Date(qna.groomingQnaRegDate).toLocaleString()}</td>
     </tr>
   ));
 
@@ -73,7 +81,7 @@ function GroomingQna(props) {
           <button
             style={{ width: "100%" }}
             onClick={() => {
-              props.navi("/writeGroomingQnaFrom");
+              props.navi("/groomingqnaForm");
             }}
           >
             문의하기

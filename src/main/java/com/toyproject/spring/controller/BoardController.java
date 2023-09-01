@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.toyproject.spring.model.GroomingQna;
 import com.toyproject.spring.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +25,17 @@ public class BoardController {
             Pageable pageable) throws JsonProcessingException {
 
         return boardService.findAllGroomingQna(pageable);
+    }
+
+    @GetMapping(value = "findBoardDetails")
+    public String findBoardDetails(@RequestParam("groomingQnaNum") Long groomingQnaNum) throws JsonProcessingException {
+        return boardService.findBoardDetails(groomingQnaNum);
+    }
+
+    @PostMapping(value = "writeGroomingQna")
+    public String writeGroomingQna(@RequestBody GroomingQna groomingQna) {
+
+        return boardService.writeGroomingQna(groomingQna);
     }
 
 }

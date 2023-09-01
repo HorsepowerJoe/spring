@@ -85,6 +85,7 @@ function MyPet(props) {
               <th style={{ minWidth: "50px" }}>체중</th>
               <th style={{ minWidth: "50px" }}>입질</th>
               <th style={{ minWidth: "50px" }}>기타</th>
+              <th style={{ minWidth: "50px" }}>삭제</th>
             </tr>
             {pet}
           </table>

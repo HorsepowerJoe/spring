@@ -14,6 +14,8 @@ import axios from "axios";
 import Reservation from "./reservation/Reservation";
 import FindReservation from "./reservation/FindReservation";
 import GroomingQna from "./qna/GroomingQna";
+import GroomingQnaDetails from "./qna/GroomingQnaDetails";
+import GroomingqnaForm from "./qna/GroomingQnaForm";
 
 function App() {
   const navi = useNavigate();
@@ -134,6 +136,24 @@ function App() {
           path="/groomingQna"
           element={
             <GroomingQna navi={navi} axiosConfig={axiosConfig}></GroomingQna>
+          }
+        />
+        <Route
+          path="/groomingQna/:groomingQnaNum"
+          element={
+            <GroomingQnaDetails
+              navi={navi}
+              axiosConfig={axiosConfig}
+            ></GroomingQnaDetails>
+          }
+        />
+        <Route
+          path="/groomingqnaForm"
+          element={
+            <GroomingqnaForm
+              navi={navi}
+              axiosConfig={axiosConfig}
+            ></GroomingqnaForm>
           }
         />
       </Routes>

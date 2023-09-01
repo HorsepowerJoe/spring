@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.toyproject.spring.model.GroomingQna;
 
 public interface GroomingQnaRepository extends JpaRepository<GroomingQna, Long> {
-    Page<GroomingQna> findAll(Pageable pageable);
+    Page<GroomingQna> findAllByOrderByGroomingQnaRegDateDesc(Pageable pageable);
 }

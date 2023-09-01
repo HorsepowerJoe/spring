@@ -28,3 +28,26 @@
     color: white;
 
 }
+
+.pagination li:hover{
+    background-color: #fff;
+}
+
+.pagination li.active:hover{
+    background-color: #c33586;
+    color: white;
+}
+
+table {
+    border-collapse: collapse; 
+    margin-bottom: 10px;
+}
+
+td, th {
+    border: 1px solid #ccc; 
+    padding: 8px; 
+}
+
+.clickable:hover{
+    background-color: #fff;
+}
