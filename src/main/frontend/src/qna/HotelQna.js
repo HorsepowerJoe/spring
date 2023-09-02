@@ -75,7 +75,7 @@ function HotelQna(props) {
               backgroundColor: "lightgray",
             }}
           >
-            미용 문의
+            호텔 문의
           </legend>
           <table style={{ width: "800px", textAlign: "center" }}>
             <tr>
