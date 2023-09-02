@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logoImg from "/Users/jml/Documents/vscode/spring/src/main/frontend/src/img/logo/logo.png";
 import axios from "axios";
+import MyHoverBtn from "./myBtn/MyHoverBtn";
 
 function Header(props) {
   const [isHoverLogin, setIsHoverLogin] = useState(false);
@@ -22,6 +23,10 @@ function Header(props) {
 
   const buttonContainerStyle = {
     display: "flex",
+    gap: "10px",
+  };
+  const signButtonContainerStyle = {
+    float: "right",
     gap: "10px",
   };
 
@@ -47,7 +52,7 @@ function Header(props) {
 
   return (
     <header style={headerStyle}>
-      <a href="/index.html">
+      <a href="/">
         <img
           src={logoImg}
           alt="logoImage"
@@ -69,41 +74,26 @@ function Header(props) {
                 top: "1%",
               }}
             >
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("/intro");
-                }}
-              >
-                회사소개
-              </button>
+              <MyHoverBtn onClick="/intro" navi={props.navi} name="회사소개" />
+
               <br />
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("/intro/handler");
-                }}
-              >
-                훈련사
-              </button>
+              <MyHoverBtn
+                onClick="/intro/handler"
+                navi={props.navi}
+                name="훈련사"
+              />
               <br />
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("/intro/groomer");
-                }}
-              >
-                미용사
-              </button>
+              <MyHoverBtn
+                onClick="/intro/groomer"
+                navi={props.navi}
+                name="미용사"
+              />
               <br />
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("/intro/hotel");
-                }}
-              >
-                호텔
-              </button>
+              <MyHoverBtn
+                onClick="/intro/hotel"
+                navi={props.navi}
+                name="호텔"
+              />
               <br />
             </div>
           )}
@@ -122,22 +112,16 @@ function Header(props) {
                 top: "1%",
               }}
             >
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("reservation");
-                }}
-              >
-                미용 예약
-              </button>
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("/findReservation");
-                }}
-              >
-                미용 예약 조회
-              </button>
+              <MyHoverBtn
+                onClick="reservation"
+                navi={props.navi}
+                name="미용 예약"
+              />
+              <MyHoverBtn
+                onClick="/findReservation"
+                navi={props.navi}
+                name="미용 예약 조회"
+              />
             </div>
           )}
         </button>
@@ -155,18 +139,12 @@ function Header(props) {
                 top: "1%",
               }}
             >
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("/addpet");
-                }}
-              >
-                애견 정보 등록
-              </button>
-
-              <button style={buttonStyle} onClick={() => props.navi("/myPet")}>
-                나의 애견
-              </button>
+              <MyHoverBtn
+                onClick="/addpet"
+                navi={props.navi}
+                name="애견 정보 등록"
+              />
+              <MyHoverBtn onClick="/myPet" navi={props.navi} name="나의 애견" />
             </div>
           )}
         </button>
@@ -184,28 +162,22 @@ function Header(props) {
                 top: "1%",
               }}
             >
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("/groomingQna");
-                }}
-              >
-                미용 문의
-              </button>
-              <button
-                style={buttonStyle}
-                onClick={() => {
-                  props.navi("/hotelQna");
-                }}
-              >
-                호텔 문의
-              </button>
+              <MyHoverBtn
+                onClick="/groomingQna"
+                navi={props.navi}
+                name="미용 문의"
+              />
+              <MyHoverBtn
+                onClick="/hotelQna"
+                navi={props.navi}
+                name="호텔 문의"
+              />
             </div>
           )}
         </button>
       </div>
       {props.userInfo == "" ? (
-        <div style={buttonContainerStyle}>
+        <div style={signButtonContainerStyle}>
           <button
             style={{ ...buttonStyle, ...(isHoverLogin && buttonHoverStyle) }}
             onMouseOver={() => setIsHoverLogin(true)}
@@ -216,6 +188,7 @@ function Header(props) {
           >
             로그인
           </button>
+          <br />
           <button
             style={{ ...buttonStyle, ...(isHoverJoin && buttonHoverStyle) }}
             onMouseOver={() => setIsHoverJoin(true)}
@@ -242,7 +215,13 @@ function Header(props) {
           </span>{" "}
           님 안녕하세요. <br />
           <button
-            style={{ marginTop: "10px", marginLeft: "60px" }}
+            id="myHoverBtn"
+            style={{
+              marginTop: "10px",
+              borderRadius: "5px",
+              height: "30px",
+              width: "200px",
+            }}
             onClick={() => {
               const body = {
                 jwtToken: localStorage.getItem("jwtToken"),

@@ -1,12 +1,15 @@
 .pagination {
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     list-style: none;
 }
 
+
+
 .pagination li {
-    padding: 5px 0px;
+    padding: 3px 0px;
     border-radius: 5px;
     
 }
@@ -34,7 +37,7 @@
 }
 
 .pagination li.active:hover{
-    background-color: #c33586;
+    background-color: #ff69b4;
     color: white;
 }
 
@@ -51,3 +54,4 @@ td, th {
 .clickable:hover{
     background-color: #fff;
 }
+

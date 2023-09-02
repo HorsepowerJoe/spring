@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 function HotelQnaDetails(props) {
@@ -28,7 +29,16 @@ function HotelQnaDetails(props) {
         }}
       >
         <fieldset>
-          <legend style={{ textAlign: "center" }}>미용 문의</legend>
+          <legend
+            style={{
+              textAlign: "center",
+              backgroundColor: "lightgray",
+              border: "1px solid black",
+              borderBottom: "0",
+            }}
+          >
+            호텔 문의
+          </legend>
           <table
             style={{
               width: "800px",
@@ -55,7 +65,7 @@ function HotelQnaDetails(props) {
               </th>
             </tr>
           </table>
-          <hr />
+
           <textarea
             readOnly
             value={boardDetails.hotelQnaContent}
@@ -66,7 +76,7 @@ function HotelQnaDetails(props) {
               minHeight: "300px",
             }}
           ></textarea>
-          <hr />
+
           <legend
             style={{
               textAlign: "center",
@@ -75,6 +85,7 @@ function HotelQnaDetails(props) {
           >
             Answer
           </legend>
+          <hr />
           <textarea
             readOnly
             style={{ width: "800px", minHeight: "300px", marginBottom: "30px" }}
@@ -84,9 +95,11 @@ function HotelQnaDetails(props) {
           <br />
           {boardDetails.customerNum ==
           JSON.parse(localStorage.getItem("userInfo"))?.id ? (
-            <div style={{ float: "right" }}>
-              <button>수정</button>
-              <button>삭제</button>
+            <div style={{ float: "right", marginBottom: "30px" }}>
+              <Button variant="secondary" style={{ marginRight: "5px" }}>
+                수정
+              </Button>
+              <Button variant="secondary">삭제</Button>
             </div>
           ) : null}
         </fieldset>

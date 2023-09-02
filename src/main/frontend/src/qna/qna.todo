@@ -1,0 +1,3 @@
+1. useEffect if isAnswered = true => axios.get('qnaBoardComment.get',some)
+2. comment txt area.value = boardInner.isAnswered is true ? qnaBoardComment : '대기중'
+done

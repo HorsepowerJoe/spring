@@ -1,6 +1,6 @@
 package com.toyproject.spring.model;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,5 +18,5 @@ public class Grooming {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long g_num;
     private String g_styleName;
-    private BigInteger g_pricePerWeight;
+    private BigDecimal g_pricePerWeight;
 }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import axios from "axios";
+import { Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function SignUpForm(props) {
   const [openPostcode, setOpenPostcode] = useState(false);
@@ -226,8 +228,10 @@ function SignUpForm(props) {
           height: "80%",
         }}
       >
-        <fieldset>
-          <legend style={{ textAlign: "center" }}>Join</legend>
+        <fieldset style={{ border: "1px solid black" }}>
+          <legend style={{ textAlign: "center", backgroundColor: "lightgray" }}>
+            Join
+          </legend>
           <form
             style={{ display: "flex", flexDirection: "column", margin: "10px" }}
             onSubmit={onSubmitHandler}
@@ -300,19 +304,25 @@ function SignUpForm(props) {
               style={{ backgroundColor: passwordChk }}
             />
             <br />
+            <label>ZoneCode</label>
             <input
               type="text"
               placeholder="우편번호"
               value={customerAddressZonecode}
               readOnly
             />
-            <input
-              name="findPost"
-              type="button"
-              onClick={postHandle.clickBtn}
-              value="우편번호 찾기"
-            />
             <br />
+            <button
+              id="myHoverBtn"
+              type="button"
+              style={{ borderRadius: "5px", height: "30px" }}
+              name="findPost"
+              onClick={postHandle.clickBtn}
+            >
+              우편번호 찾기
+            </button>
+            <br />
+            <label>Address</label>
             <input
               type="text"
               placeholder="주소"
@@ -351,7 +361,13 @@ function SignUpForm(props) {
                 alt="접기 버튼"
               />
             </div>
-            <button disabled={regChk}>회원가입</button>
+            <button
+              id="myHoverBtn"
+              style={{ borderRadius: "5px", height: "30px" }}
+              disabled={regChk}
+            >
+              회원가입
+            </button>
           </form>
           <br />
         </fieldset>
@@ -359,7 +375,13 @@ function SignUpForm(props) {
       {openPostcode && (
         <DaumPostcode
           className="postcode"
-          style={{ borderTop: "1px solid black", marginTop: "10px" }}
+          style={{
+            borderTop: "1px solid black",
+            marginTop: "10px",
+            position: "absolute",
+            bottom: "0px",
+            height: "300px",
+          }}
           onComplete={postHandle.selectAddress}
           autoClose={false}
         />

@@ -1,5 +1,6 @@
 package com.toyproject.spring.model;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 
@@ -43,6 +44,6 @@ public class Reservation {
     @ColumnDefault("false")
     private boolean r_expired;
 
-    private BigInteger r_filnalAmount;
+    private BigDecimal r_filnalAmount;
 
 }

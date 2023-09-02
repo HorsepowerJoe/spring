@@ -15,11 +15,9 @@ function AddPet(props) {
       petName: event.target.petName.value,
       petGender: event.target.petGender.value,
       petBreed: event.target.petBreed.value,
-      petAge:
-        event.target.petAgeYear.value +
-        event.target.petAgeMonth.value +
-        event.target.petAgeDay.value,
+      petAge: event.target.petAgeYear.value,
       petWeight: event.target.petWeight.value,
+      petNeutered: event.target.petNeutered.value,
       petSnitchy: event.target.petSnitchy.value,
       extraData: event.target.extraData.value,
       customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
@@ -38,43 +36,7 @@ function AddPet(props) {
   let YearList = () => {
     let result = [];
     let Array_Data = [];
-    for (let i = 1990; i <= new Date().getFullYear(); i++) {
-      Array_Data.push(i);
-    }
-
-    Array_Data.map((data, index) => {
-      result.push(
-        <option key={index} value={data}>
-          {data}
-        </option>
-      );
-    });
-    return result;
-  };
-  let MonthList = () => {
-    let result = [];
-    let Array_Data = [];
-    for (let i = 1; i <= 12; i++) {
-      if (i < 10) {
-        Array_Data.push("0" + i);
-      } else {
-        Array_Data.push(i);
-      }
-    }
-
-    Array_Data.map((data, index) => {
-      result.push(
-        <option key={index} value={data}>
-          {data}
-        </option>
-      );
-    });
-    return result;
-  };
-  let DayList = () => {
-    let result = [];
-    let Array_Data = [];
-    for (let i = 1; i <= 31; i++) {
+    for (let i = 1; i <= 50; i++) {
       if (i < 10) {
         Array_Data.push("0" + i);
       } else {
@@ -103,8 +65,10 @@ function AddPet(props) {
           height: "80%",
         }}
       >
-        <fieldset>
-          <legend style={{ textAlign: "center" }}>애견 등록</legend>
+        <fieldset style={{ border: "1px solid black", width: "600px" }}>
+          <legend style={{ textAlign: "center", backgroundColor: "lightgray" }}>
+            애견 등록
+          </legend>
           <form
             style={{ display: "flex", flexDirection: "column", margin: "10px" }}
             onSubmit={onSubmitHandler}
@@ -131,26 +95,12 @@ function AddPet(props) {
               placeholder="견종을 입력해주세요."
             />
             <label>Pet Age</label>
-            <div
-              style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}
-            >
-              <select name="petAgeYear">
+            <div>
+              <select name="petAgeYear" style={{ width: "100%" }}>
                 <option selected disabled>
-                  출생년도
+                  나이
                 </option>
                 {YearList()}
-              </select>
-              <select name="petAgeMonth">
-                <option selected disabled>
-                  월
-                </option>
-                {MonthList()}
-              </select>
-              <select name="petAgeDay">
-                <option selected disabled>
-                  일
-                </option>
-                {DayList()}
               </select>
             </div>
             <label>Pet Weight</label>
@@ -158,6 +108,7 @@ function AddPet(props) {
               <input
                 type="number"
                 name="petWeight"
+                step={0.1}
                 placeholder="Kg단위로 입력해주세요."
                 style={{ width: "98.5%" }}
               />
@@ -174,12 +125,27 @@ function AddPet(props) {
               입질없음
             </label>
             <br />
+            <label>Neutered</label>
+            <label>
+              <input type="radio" name="petNeutered" value="true" />
+              중성화 되어 있음
+            </label>
+            <label>
+              <input type="radio" name="petNeutered" value="false" />
+              중성화 하지 않음
+            </label>
+            <br />
             <br />
             <label>Extra</label>
             특이사항이 있다면 여기에 적어주세요
             <textarea name="extraData" cols="50" rows="10"></textarea>
             <br />
-            <button>등록하기</button>
+            <button
+              id="myHoverBtn"
+              style={{ borderRadius: "5px", height: "30px" }}
+            >
+              등록하기
+            </button>
           </form>
           <br />
         </fieldset>

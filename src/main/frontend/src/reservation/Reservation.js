@@ -3,6 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState } from "react";
 import { setHours, setMinutes, setSeconds } from "date-fns";
 import axios from "axios";
+import { Button } from "react-bootstrap";
 
 function Reservation(props) {
   const [startDate, setStartDate] = useState(
@@ -173,8 +174,10 @@ function Reservation(props) {
           height: "80%",
         }}
       >
-        <fieldset>
-          <legend style={{ textAlign: "center" }}>애견 등록</legend>
+        <fieldset style={{ border: "1px solid black", width: "600px" }}>
+          <legend style={{ textAlign: "center", backgroundColor: "lightgray" }}>
+            미용 예약
+          </legend>
           <form
             style={{ display: "flex", flexDirection: "column", margin: "10px" }}
             onSubmit={onSubmitHandler}
@@ -264,7 +267,12 @@ function Reservation(props) {
               )}
             />
             <br />
-            <button>예약하기</button>
+            <button
+              id="myHoverBtn"
+              style={{ borderRadius: "5px", height: "30px" }}
+            >
+              예약하기
+            </button>
           </form>
         </fieldset>
       </div>

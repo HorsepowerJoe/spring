@@ -67,7 +67,16 @@ function HotelQna(props) {
         }}
       >
         <fieldset>
-          <legend style={{ textAlign: "center" }}>미용 문의</legend>
+          <legend
+            style={{
+              textAlign: "center",
+              border: "1px solid black",
+              borderBottom: "0px",
+              backgroundColor: "lightgray",
+            }}
+          >
+            미용 문의
+          </legend>
           <table style={{ width: "800px", textAlign: "center" }}>
             <tr>
               <th style={{ minWidth: "50px" }}>번호</th>
@@ -79,7 +88,8 @@ function HotelQna(props) {
             {hotelQna}
           </table>
           <button
-            style={{ width: "100%" }}
+            id="myHoverBtn"
+            style={{ borderRadius: "5px", height: "25px", width: "100%" }}
             onClick={() => {
               props.navi("/hotelQnaForm");
             }}

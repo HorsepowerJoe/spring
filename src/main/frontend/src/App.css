@@ -45,3 +45,19 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
+
+#myHoverBtn{
+  color: white;
+  background-color: #c33586;
+  border: 0px;
+}
+#myHoverBtn:hover{
+  color: white;
+  background-color: #ff69b4;
+  border: 0px;
+}
+
+#myHoverBtn:disabled{
+  background-color: #c335863c;
+}
+

@@ -1,6 +1,6 @@
 package com.toyproject.spring.commandLineRunner;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -32,13 +32,13 @@ public class DummyDataLoader implements CommandLineRunner {
             groomingQnaRepository.save(qna);
         }
 
-        grooming.setG_pricePerWeight(new BigInteger("20000"));
+        grooming.setG_pricePerWeight(new BigDecimal("20000"));
         grooming.setG_styleName("스포팅");
 
-        grooming2.setG_pricePerWeight(new BigInteger("30000"));
+        grooming2.setG_pricePerWeight(new BigDecimal("30000"));
         grooming2.setG_styleName("가위컷");
 
-        grooming3.setG_pricePerWeight(new BigInteger("15000"));
+        grooming3.setG_pricePerWeight(new BigDecimal("15000"));
         grooming3.setG_styleName("위생미용");
 
         groomingRepository.save(grooming);

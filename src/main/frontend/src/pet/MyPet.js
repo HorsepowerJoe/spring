@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 
 function MyPet(props) {
   const [pets, setPets] = useState([]);
@@ -38,7 +39,8 @@ function MyPet(props) {
       <td>{ele.petSnitchy ? "있음" : "없음"}</td>
       <td>{ele.extraData}</td>
       <td>
-        <button
+        <Button
+          variant="secondary"
           onClick={(event) => {
             const petNum = event.target.parentElement.parentElement.className;
             axios
@@ -59,7 +61,7 @@ function MyPet(props) {
           }}
         >
           삭제
-        </button>
+        </Button>
       </td>
     </tr>
   ));
@@ -76,7 +78,16 @@ function MyPet(props) {
         }}
       >
         <fieldset>
-          <legend style={{ textAlign: "center" }}>나의 애견</legend>
+          <legend
+            style={{
+              textAlign: "center",
+              border: "1px solid black",
+              borderBottom: "0px",
+              backgroundColor: "lightgray",
+            }}
+          >
+            나의 애견
+          </legend>
           <table style={{ width: "800px", textAlign: "center" }}>
             <tr>
               <th style={{ minWidth: "50px" }}>이름</th>

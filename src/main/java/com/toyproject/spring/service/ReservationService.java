@@ -1,5 +1,6 @@
 package com.toyproject.spring.service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -69,19 +70,19 @@ public class ReservationService {
     }
 
     public String reservation(Reservation reservation) {
-        BigInteger weight = null;
-        BigInteger ppw = null;
-        BigInteger result = null;
+        BigDecimal weight = null;
+        BigDecimal ppw = null;
+        BigDecimal result = null;
 
         // 애견 몸무게 가져와서
         Optional<Pet> findPet = petRepository.findById(reservation.getPetNum());
         if (findPet.isPresent()) {
-            weight = new BigInteger("" + findPet.get().getPetWeight());
+            weight = new BigDecimal(findPet.get().getPetWeight());
         }
 
         Optional<Grooming> findGrooming = groomingRepository.findById(reservation.getG_num());
         if (findGrooming.isPresent()) {
-            ppw = new BigInteger("" + findGrooming.get().getG_pricePerWeight());
+            ppw = new BigDecimal("" + findGrooming.get().getG_pricePerWeight());
         }
         // g_pricePerWeight랑 곱하고
         result = weight.multiply(ppw);
@@ -115,9 +116,9 @@ public class ReservationService {
             Optional<Reservation> findReservation = reservationRepository.findById(r.getR_num());
             Long r_num = null;
             String petName = null;
-            BigInteger r_finalAmount = null;
+            BigDecimal r_finalAmount = null;
             String g_styleName = null;
-            BigInteger g_pricePerWeight = null;
+            BigDecimal g_pricePerWeight = null;
             Timestamp visitDate = null;
 
             if (findPet.isPresent() && findGrooming.isPresent() && findReservation.isPresent()) {

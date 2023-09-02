@@ -6,6 +6,7 @@ import FacebookLogin from "react-facebook-login";
 import * as config from "../global_variables";
 import NaverLogin from "./NaverLogin";
 import jwtDecode from "jwt-decode";
+import Form from "react-bootstrap/Form";
 
 function Login(props) {
   const [customerEmail, setCustomerEmail] = useState("");
@@ -107,8 +108,10 @@ function Login(props) {
         height: "100%",
       }}
     >
-      <fieldset>
-        <legend style={{ textAlign: "center" }}>Login</legend>
+      <fieldset style={{ border: "1px solid black" }}>
+        <legend style={{ textAlign: "center", backgroundColor: "lightgray" }}>
+          Login
+        </legend>
         <form
           style={{
             display: "flex",
@@ -159,6 +162,7 @@ function Login(props) {
             onMouseOut={() => setIsHoverFacebook(false)}
           >
             <FacebookLogin
+              buttonStyle={{ width: "246px", borderRadius: "5px" }}
               size="small"
               appId={`${FACEBOOK_KEY}`}
               autoLoad={false}

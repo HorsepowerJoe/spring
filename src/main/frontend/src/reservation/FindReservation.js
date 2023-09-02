@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./css/findReservationCss.css";
+import { Button } from "react-bootstrap";
 
 function FindReservation(props) {
   const [reservationList, setReservationList] = useState([]);
@@ -28,7 +29,8 @@ function FindReservation(props) {
       <td>{r.g_pricePerWeight}</td>
       <td>{r.r_finalAmount}</td>
       <td>
-        <button
+        <Button
+          variant="secondary"
           onClick={(event) => {
             const r_num = event.target.parentElement.parentElement.className;
             const boolean = window.confirm(
@@ -56,7 +58,7 @@ function FindReservation(props) {
           }}
         >
           취소
-        </button>
+        </Button>
       </td>
     </tr>
   ));
@@ -75,7 +77,16 @@ function FindReservation(props) {
         }}
       >
         <fieldset>
-          <legend style={{ textAlign: "center" }}>나의 미용 예약</legend>
+          <legend
+            style={{
+              textAlign: "center",
+              borderBottom: "0px",
+              backgroundColor: "lightgray",
+              border: "1px solid black",
+            }}
+          >
+            나의 미용 예약
+          </legend>
           <table
             className="bordered-table"
             style={{

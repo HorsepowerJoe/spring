@@ -41,10 +41,15 @@ function GroomingqnaForm(props) {
             <label style={{ textAlign: "center" }}>내용</label>
             <textarea
               name="groomingQnaContent"
-              style={{ width: "800px", minHeight: "300px" }}
+              style={{ width: "100%", minHeight: "300px" }}
             />
             <br />
-            <button>작성</button>
+            <button
+              id="myHoverBtn"
+              style={{ borderRadius: "5px", height: "25px" }}
+            >
+              작성
+            </button>
           </form>
         </fieldset>
       </div>

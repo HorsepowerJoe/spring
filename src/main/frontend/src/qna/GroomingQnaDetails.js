@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 function GroomingQnaDetails(props) {
@@ -28,10 +29,19 @@ function GroomingQnaDetails(props) {
         }}
       >
         <fieldset>
-          <legend style={{ textAlign: "center" }}>미용 문의</legend>
+          <legend
+            style={{
+              textAlign: "center",
+              backgroundColor: "lightgray",
+              border: "1px solid black",
+              borderBottom: "0",
+            }}
+          >
+            미용 문의
+          </legend>
           <table
             style={{
-              width: "800px",
+              width: "100%",
               textAlign: "center",
               margin: "30px 0 30px 0",
             }}
@@ -59,7 +69,7 @@ function GroomingQnaDetails(props) {
               </th>
             </tr>
           </table>
-          <hr />
+
           <textarea
             readOnly
             value={boardDetails.groomingQnaContent}
@@ -70,7 +80,7 @@ function GroomingQnaDetails(props) {
               minHeight: "300px",
             }}
           ></textarea>
-          <hr />
+
           <legend
             style={{
               textAlign: "center",
@@ -79,6 +89,7 @@ function GroomingQnaDetails(props) {
           >
             Answer
           </legend>
+          <hr />
           <textarea
             readOnly
             style={{ width: "800px", minHeight: "300px", marginBottom: "30px" }}
@@ -88,9 +99,11 @@ function GroomingQnaDetails(props) {
           <br />
           {boardDetails.customerNum ==
           JSON.parse(localStorage.getItem("userInfo"))?.id ? (
-            <div style={{ float: "right" }}>
-              <button>수정</button>
-              <button>삭제</button>
+            <div style={{ float: "right", marginBottom: "30px" }}>
+              <Button variant="secondary" style={{ marginRight: "5px" }}>
+                수정
+              </Button>
+              <Button variant="secondary">삭제</Button>
             </div>
           ) : null}
         </fieldset>

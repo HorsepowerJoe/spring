@@ -100,8 +100,15 @@ function MyPage(props) {
           height: "80%",
         }}
       >
-        <fieldset>
-          <legend style={{ textAlign: "center" }}>회원 정보 수정</legend>
+        <fieldset style={{ border: "1px solid black" }}>
+          <legend
+            style={{
+              textAlign: "center",
+              backgroundColor: "lightgray",
+            }}
+          >
+            회원 정보 수정
+          </legend>
           <form
             style={{ display: "flex", flexDirection: "column", margin: "10px" }}
             onSubmit={onSubmitHandler}
@@ -162,12 +169,16 @@ function MyPage(props) {
               value={customerAddressZonecode}
               readOnly
             />
-            <input
+            <br />
+            <button
+              id="myHoverBtn"
+              style={{ borderRadius: "5px", height: "30px" }}
               name="findPost"
               type="button"
               onClick={postHandle.clickBtn}
-              value="우편번호 찾기"
-            />
+            >
+              우편번호 찾기
+            </button>
             <br />
             <input
               type="text"
@@ -207,7 +218,13 @@ function MyPage(props) {
                 alt="접기 버튼"
               />
             </div>
-            <button disabled={regChk}>수정하기</button>
+            <button
+              id="myHoverBtn"
+              style={{ borderRadius: "5px", height: "30px" }}
+              disabled={regChk}
+            >
+              수정하기
+            </button>
           </form>
           <br />
         </fieldset>
@@ -215,7 +232,12 @@ function MyPage(props) {
       {openPostcode && (
         <DaumPostcode
           className="postcode"
-          style={{ borderTop: "1px solid black", marginTop: "10px" }}
+          style={{
+            borderTop: "1px solid black",
+            marginTop: "10px",
+            position: "absolute",
+            bottom: "0",
+          }}
           onComplete={postHandle.selectAddress}
           autoClose={false}
         />

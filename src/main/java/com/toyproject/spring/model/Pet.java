@@ -2,6 +2,7 @@ package com.toyproject.spring.model;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +32,9 @@ public class Pet {
     private String petName;
     private int petAge;
     private String petGender;
-    private int petWeight;
+    @Column(columnDefinition = "double")
+    private Double petWeight;
+    private boolean petNeutered;
 
     @CreationTimestamp
     private Timestamp petRegDate;
