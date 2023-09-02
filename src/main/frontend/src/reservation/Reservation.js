@@ -82,7 +82,10 @@ function Reservation(props) {
       setStyles(JSON.parse(JSON.stringify(data.data)));
     });
 
-    const day = new Date().toISOString().replace("T", " ").replace(/\..*/, "");
+    const day = new Date(+new Date() + 3240 * 10000)
+      .toISOString()
+      .replace("T", " ")
+      .replace(/\..*/, "");
 
     axios
       .get("/api/reserve/timeCheck", {
