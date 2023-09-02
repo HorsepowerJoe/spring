@@ -35,8 +35,9 @@ function MyPet(props) {
       <td>{ele.petName}</td>
       <td>{ele.petBreed}</td>
       <td>{ele.petAge}</td>
-      <td>{ele.petWeight}</td>
+      <td>{ele.petWeight}kg</td>
       <td>{ele.petSnitchy ? "있음" : "없음"}</td>
+      <td>{ele.petNeutered ? "하였음" : "하지않음"}</td>
       <td>{ele.extraData}</td>
       <td>
         <Button
@@ -95,6 +96,7 @@ function MyPet(props) {
               <th style={{ minWidth: "50px" }}>나이</th>
               <th style={{ minWidth: "50px" }}>체중</th>
               <th style={{ minWidth: "50px" }}>입질</th>
+              <th style={{ minWidth: "50px" }}>중성화</th>
               <th style={{ minWidth: "50px" }}>기타</th>
               <th style={{ minWidth: "50px" }}>삭제</th>
             </tr>
