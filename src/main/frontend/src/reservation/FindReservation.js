@@ -80,9 +80,9 @@ function FindReservation(props) {
           <legend
             style={{
               textAlign: "center",
-              borderBottom: "0px",
               backgroundColor: "lightgray",
               border: "1px solid black",
+              borderBottom: "0px",
             }}
           >
             나의 미용 예약
