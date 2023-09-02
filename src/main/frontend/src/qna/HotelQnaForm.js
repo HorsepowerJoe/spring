@@ -30,7 +30,16 @@ function HotelqnaForm(props) {
         }}
       >
         <fieldset>
-          <legend style={{ textAlign: "center" }}>미용 문의</legend>
+          <legend
+            style={{
+              textAlign: "center",
+              backgroundColor: "lightgray",
+              border: "1px solid black",
+              borderBottom: "0",
+            }}
+          >
+            호텔 문의
+          </legend>
           <form
             style={{ display: "flex", flexDirection: "column", margin: "10px" }}
             onSubmit={onSubmitHandler}

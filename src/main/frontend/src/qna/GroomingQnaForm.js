@@ -30,7 +30,16 @@ function GroomingqnaForm(props) {
         }}
       >
         <fieldset>
-          <legend style={{ textAlign: "center" }}>미용 문의</legend>
+          <legend
+            style={{
+              textAlign: "center",
+              backgroundColor: "lightgray",
+              border: "1px solid black",
+              borderBottom: "0",
+            }}
+          >
+            미용 문의
+          </legend>
           <form
             style={{ display: "flex", flexDirection: "column", margin: "10px" }}
             onSubmit={onSubmitHandler}
@@ -41,7 +50,7 @@ function GroomingqnaForm(props) {
             <label style={{ textAlign: "center" }}>내용</label>
             <textarea
               name="groomingQnaContent"
-              style={{ width: "100%", minHeight: "300px" }}
+              style={{ width: "800px", minHeight: "300px" }}
             />
             <br />
             <button
