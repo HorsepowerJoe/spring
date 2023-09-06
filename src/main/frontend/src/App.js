@@ -19,6 +19,7 @@ import GroomingqnaForm from "./qna/GroomingQnaForm";
 import HotelQna from "./qna/HotelQna";
 import HotelQnaDetails from "./qna/HotelQnaDetails";
 import HotelqnaForm from "./qna/HotelQnaForm";
+import FacebookFeed from "./FacebookFeed";
 
 function App() {
   const navi = useNavigate();
@@ -67,6 +68,7 @@ function App() {
         setIsLogined={setIsLogined}
       ></Header>
       <Routes>
+        <Route path="/" element={<FacebookFeed />} />
         <Route
           path="/loginForm"
           element={
