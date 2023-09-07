@@ -6,9 +6,8 @@ function FacebookFeed(props) {
   useEffect(() => {
     axios
       .get(
-        "https://graph.facebook.com/v17.0/me?fields=posts%7Bfull_picture%2Ccreated_time%2Cmessage%7D%2Cphotos&access_token=EAAs5y8RCcF0BO7JZBhZBG54Icu0KitQdzZBV5LVjdKshc8O6uZA6Cz9a28oWGANjbJnAHR5XdLwqPEAxqkN3PZAO7kQUXVqRumTuSS6yVfhd3wAJtCx9gZBY8mzrONPTEJT3WaU0nDmDtcTRzPzaNIoh3lIHPy8CTITmDfgwEtTVztZBS4DIMq6eL6selrLQZCwoKeBbkViu03r90HLcNKc4IESKeuagGNww7HxpMm19zJbmYnSlknuPPCSz9GTpfVzVBZBZCZC3QZDZD"
+        "https://graph.facebook.com/v17.0/me?fields=id%2Cname%2Cposts%7Bcreated_time%2Cfull_picture%2Cmessage%2Clink%7D&access_token=EAAs5y8RCcF0BO6auZCzLwQECZCFgBfBVUOybZBejrrd5HHXrHwTXRa3ytnmx1UOkXidiHYgZAlxMKZBgfnWmUSlwbyLrv5WrsqLAxKwttYlppZASgf1ICc3W8YkDHdC6tONSXdUty9nPSP32zTZBGOHMrXE3ZCBk5RAoZBcPQGBoOAJ8fFw6EiwzoGT069aQAk1Af"
       )
-
       .then((data) => {
         console.log(data.data.posts.data);
         setPosts(data.data.posts.data);
