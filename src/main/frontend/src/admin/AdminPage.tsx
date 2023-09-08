@@ -24,10 +24,10 @@ const AdminPage:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosConf
             style={{ display: "flex", flexDirection: "column", margin: "10px", minWidth: "500px" }}
 >
     <p style={{textAlign:'center'}}>소개 편집</p>
-       <button id='myHoverBtn' style={{borderBottom:"1px solid black"}}>회사 소개 편집</button>
-       <button id='myHoverBtn' style={{borderBottom:"1px solid black"}}>훈련사 소개 편집</button>
-       <button id='myHoverBtn' style={{borderBottom:"1px solid black"}}>미용사 소개 편집</button>
-       <button id='myHoverBtn'>호텔 소개 편집</button>
+       <button id='myHoverBtn' onClick={():void=>{navi('/admin/modifyIntroFrom')}} style={{borderBottom:"1px solid black"}}>회사 소개 편집</button>
+       <button id='myHoverBtn' onClick={():void=>{navi('/admin/ModifyIntroFrom')}} style={{borderBottom:"1px solid black"}}>훈련사 소개 편집</button>
+       <button id='myHoverBtn' onClick={():void=>{navi('/admin/ModifyIntroFrom')}} style={{borderBottom:"1px solid black"}}>미용사 소개 편집</button>
+       <button id='myHoverBtn' onClick={():void=>{navi('/admin/ModifyIntroFrom')}}>호텔 소개 편집</button>
        <hr />
        <p style={{textAlign:'center'}}>목록</p>
        <button id='myHoverBtn' style={{borderBottom:"1px solid black"}}>예약 목록 보기</button>

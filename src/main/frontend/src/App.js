@@ -8,6 +8,9 @@ import NaverLoginSuccessed from "./sign/NaverLoginSuccessed";
 import ExtraJoin from "./sign/ExtraJoin";
 import MyPage from "./user/MyPage";
 import Intro from "./intro/Intro";
+import GroomerIntro from "./intro/Intro";
+import HotelIntro from "./intro/Intro";
+import HandlerIntro from "./intro/Intro";
 import AddPet from "./pet/AddPet";
 import MyPet from "./pet/MyPet";
 import axios from "axios";
@@ -21,6 +24,7 @@ import HotelQnaDetails from "./qna/HotelQnaDetails";
 import HotelqnaForm from "./qna/HotelQnaForm";
 import FacebookFeed from "./FacebookFeed";
 import AdminPage from "./admin/AdminPage.tsx";
+import ModifyIntroForm from "./admin/ModifyIntroForm.tsx";
 
 function App() {
   const navi = useNavigate();
@@ -131,9 +135,18 @@ function App() {
           }
         />
         <Route path="/intro" element={<Intro navi={navi}></Intro>} />
-        <Route path="/intro/handler" element={<Intro navi={navi}></Intro>} />
-        <Route path="/intro/groomer" element={<Intro navi={navi}></Intro>} />
-        <Route path="/intro/hotel" element={<Intro navi={navi}></Intro>} />
+        <Route
+          path="/intro/handler"
+          element={<HandlerIntro navi={navi}></HandlerIntro>}
+        />
+        <Route
+          path="/intro/groomer"
+          element={<GroomerIntro navi={navi}></GroomerIntro>}
+        />
+        <Route
+          path="/intro/hotel"
+          element={<HotelIntro navi={navi}></HotelIntro>}
+        />
         <Route
           path="/addpet"
           element={
@@ -285,6 +298,29 @@ function App() {
           element={
             localStorage.getItem("userInfo") ? (
               <AdminPage
+                navi={navi}
+                userInfo={userInfo}
+                axiosConfig={axiosConfig}
+                getToken={getToken}
+              />
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/admin/modifyIntroFrom"
+          element={
+            localStorage.getItem("userInfo") ? (
+              <ModifyIntroForm
                 navi={navi}
                 userInfo={userInfo}
                 axiosConfig={axiosConfig}
