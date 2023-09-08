@@ -20,6 +20,7 @@ import HotelQna from "./qna/HotelQna";
 import HotelQnaDetails from "./qna/HotelQnaDetails";
 import HotelqnaForm from "./qna/HotelQnaForm";
 import FacebookFeed from "./FacebookFeed";
+import AdminPage from "./admin/AdminPage.tsx";
 
 function App() {
   const navi = useNavigate();
@@ -266,6 +267,29 @@ function App() {
                 navi={navi}
                 axiosConfig={axiosConfig}
               ></HotelqnaForm>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            localStorage.getItem("userInfo") ? (
+              <AdminPage
+                navi={navi}
+                userInfo={userInfo}
+                axiosConfig={axiosConfig}
+                getToken={getToken}
+              />
             ) : (
               <LoginForm
                 navi={navi}
