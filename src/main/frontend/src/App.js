@@ -39,7 +39,7 @@ function App() {
 
   const tokenRefresh = () => {
     console.log("tokenRefresh 실행!!");
-    console.log("isLogined =", isLogined);
+    console.log(new Date().toISOString());
     const body = {
       jwtToken: localStorage.getItem("jwtToken").replace("Bearer ", ""),
       refreshToken: localStorage.getItem("refreshToken"),
@@ -51,6 +51,7 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("jwtToken") !== null) {
+      tokenRefresh();
       setInterval(tokenRefresh, 60000 * 9);
     } else {
       clearInterval(tokenRefresh);
