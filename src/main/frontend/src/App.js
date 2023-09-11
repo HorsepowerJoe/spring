@@ -38,14 +38,21 @@ function App() {
   };
 
   const tokenRefresh = () => {
-    console.log("tokenRefresh 실행!!");
-    console.log(new Date().toISOString());
     const body = {
       jwtToken: localStorage.getItem("jwtToken").replace("Bearer ", ""),
       refreshToken: localStorage.getItem("refreshToken"),
     };
+
+    console.log(
+      new Date().toISOString(),
+      "tokenRefresh 실행!! AccessToken : " + body.jwtToken
+    );
     axios.post("/oauth/jwt/refresh", body, axiosConfig).then((data) => {
       localStorage.setItem("jwtToken", "Bearer " + data.data.jwtToken);
+      console.log(
+        new Date().toISOString(),
+        "tokenRefresh 갱신 완료! AccessToken : " + data.data.jwtToken
+      );
     });
   };
 

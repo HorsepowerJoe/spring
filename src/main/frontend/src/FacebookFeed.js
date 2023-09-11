@@ -18,7 +18,6 @@ function FacebookFeed(props) {
   const post = posts.map((post) => (
     <div
       style={{
-        border: "1px solid black",
         textAlign: "center",
         width: "50%",
         margin: "0 auto",
@@ -30,10 +29,16 @@ function FacebookFeed(props) {
       <img src={post?.full_picture}></img>
       <br />
       <div>{post?.message}</div>
+      <hr />
     </div>
   ));
 
-  return <>{post}</>;
+  return (
+    <>
+      <hr />
+      {post}
+    </>
+  );
 }
 
 export default FacebookFeed;

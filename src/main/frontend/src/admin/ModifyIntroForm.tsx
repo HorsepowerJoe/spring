@@ -1,12 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdminPageProps } from 'model/props';
+import axios, { AxiosRequestConfig } from 'axios';
+
+
 
 const ModifyIntroForm:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosConfig}) => {
     const [images, setImages] = useState<File[]>([]);
-    const [isHoveredLabel, setIsHoveredLabel] = useState<boolean>(false);
+    const [isChoiced, setisChoiced] = useState<boolean>(false);
+    const [selectedCategory, setSelectedCategory] = useState<String>();
+
+
+    const categoryChangeHandler = (e:React.ChangeEvent<HTMLSelectElement>) => {
+      setisChoiced(true);
+      setSelectedCategory(e.target.value);
+    }
+
 
     const onSubmitHandler = (event:React.FormEvent):void => {
-        event.preventDefault();
+      event.preventDefault();
+
+      const formData = new FormData(event.currentTarget as HTMLFormElement);
+      const formDataConfig = axiosConfig;
+      formDataConfig.headers = {
+        ...axiosConfig.headers,
+        'Content-Type': 'multipart/form-data',
+      };
+      console.log("", formDataConfig);
+
+     
+
+
+        axios.post(`/api/admin/modifyIntro/${selectedCategory}`,formData,formDataConfig as AxiosRequestConfig).then(data=>{
+          if(data.status == 200){
+            alert("변경되었습니다.");
+            navi('/admin');
+          }
+        })
     }
 
 
@@ -49,7 +78,18 @@ const ModifyIntroForm:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
             style={{ display: "flex", flexDirection: "column", margin: "10px", textAlign: "center", minWidth: "600px" }}
             onSubmit={onSubmitHandler}
           >
-        
+            <label >카테고리</label>
+            <br />
+            <select name="category" onChange={categoryChangeHandler}>
+              <option value="" selected disabled>카테고리 선택</option>
+              <option value="intro">회사 소개 편집</option>
+              <option value="groomer">미용사 소개 편집</option>
+              <option value="handler">훈련사 소개 편집</option>
+              <option value="hotel">호텔 소개 편집</option>
+            </select>
+            <br />
+            { isChoiced == true ?
+            <>
             <input name="images" type='file' accept='image/*' onChange={onChangeHandler} required multiple style={{margin:"0 auto"}}/>
             <hr />
             <br />
@@ -65,7 +105,7 @@ const ModifyIntroForm:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
               style={{ borderRadius: "5px", height: "25px" }}
             >
               업로드 및 변경
-            </button>
+            </button> </>: null}
           </form>
         </fieldset>
       </div>

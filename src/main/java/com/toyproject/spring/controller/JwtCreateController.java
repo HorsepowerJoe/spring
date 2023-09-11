@@ -138,6 +138,8 @@ public class JwtCreateController {
                 tokenRepository.save(findToken);
 
                 System.out.println("갱신 완료!");
+                System.out.println(new Date(System.currentTimeMillis()));
+                System.out.println(new Date(System.currentTimeMillis() + (60000 * 10)));
                 return objm.writeValueAsString(findToken);
 
             }
