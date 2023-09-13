@@ -25,7 +25,7 @@ const AdminPage:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosConf
 >
     <p style={{textAlign:'center'}}>소개 편집</p>
        <button id='myHoverBtn' onClick={():void=>{navi('/admin/modifyIntroFrom')}} style={{borderBottom:"1px solid black"}}>소개 변경 하기</button>
-       <button id='myHoverBtn' onClick={():void=>{navi('/admin/modifyIntroFrom')}} style={{borderBottom:"1px solid black"}}>사용할 소개 선택하기</button>
+       <button id='myHoverBtn' onClick={():void=>{navi('/admin/chooseIntro')}} style={{borderBottom:"1px solid black"}}>사용할 소개 선택하기</button>
       
        <hr />
        <p style={{textAlign:'center'}}>목록</p>

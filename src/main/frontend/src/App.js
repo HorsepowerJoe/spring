@@ -25,6 +25,7 @@ import HotelqnaForm from "./qna/HotelQnaForm";
 import FacebookFeed from "./FacebookFeed";
 import AdminPage from "./admin/AdminPage.tsx";
 import ModifyIntroForm from "./admin/ModifyIntroForm.tsx";
+import ChooseIntro from "admin/ChooseIntro";
 
 function App() {
   const navi = useNavigate();
@@ -304,7 +305,8 @@ function App() {
         <Route
           path="/admin"
           element={
-            localStorage.getItem("userInfo") ? (
+            JSON.parse(localStorage.getItem("userInfo"))?.role ==
+            "ROLE_ADMIN" ? (
               <AdminPage
                 navi={navi}
                 userInfo={userInfo}
@@ -327,8 +329,33 @@ function App() {
         <Route
           path="/admin/modifyIntroFrom"
           element={
-            localStorage.getItem("userInfo") ? (
+            JSON.parse(localStorage.getItem("userInfo"))?.role ==
+            "ROLE_ADMIN" ? (
               <ModifyIntroForm
+                navi={navi}
+                userInfo={userInfo}
+                axiosConfig={axiosConfig}
+                getToken={getToken}
+              />
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/admin/chooseIntro"
+          element={
+            JSON.parse(localStorage.getItem("userInfo"))?.role ==
+            "ROLE_ADMIN" ? (
+              <ChooseIntro
                 navi={navi}
                 userInfo={userInfo}
                 axiosConfig={axiosConfig}

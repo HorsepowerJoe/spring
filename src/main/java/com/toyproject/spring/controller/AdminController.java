@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.toyproject.spring.service.AdminService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +25,11 @@ public class AdminController {
     public String modifyIntro(@RequestParam("images") List<MultipartFile> files,
             @PathParam(value = "category") String category) {
         return adminService.modifyIntro(files, category);
+    }
+
+    @GetMapping(value = "getIntroImages")
+    public String getIntroImages(@RequestParam("category") String category) {
+        return adminService.getIntroImages(category);
     }
 
 }

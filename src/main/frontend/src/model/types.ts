@@ -10,3 +10,13 @@ export interface CommonUserInfo{
     customerEmail: String,
     customerName: String,
 }
+
+
+export interface Intro{
+    introNum:number,
+    introFileName:String,
+    introFileOriName:String,
+    introFileUrl:string,
+    introCategory:String,
+    isUsed:boolean
+}
