@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import testImage from "../swiper/img/testimage600x400.png";
 
 import "swiper/css";
 import "swiper/css/pagination";

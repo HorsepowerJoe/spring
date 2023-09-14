@@ -6,6 +6,7 @@ target/
 *.yml
 *.properties
 application.properties
+global_variables.js
 
 ### STS ###
 .apt_generated
