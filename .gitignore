@@ -38,3 +38,4 @@ build/
 
 # Ignore JwtProperties.java file
 src/main/java/com/toyproject/spring/jwt/JwtProperties.java
+src/main/frontend/src/global_variables.js
