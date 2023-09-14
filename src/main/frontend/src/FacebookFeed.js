@@ -7,9 +7,8 @@ function FacebookFeed(props) {
   useEffect(() => {
     axios
       .get(
-        "https://graph.facebook.com/v17.0/me?fields=posts%7Bfull_picture%2Ccreated_time%2Cmessage%7D%2Cphotos&access_token=EAAs5y8RCcF0BO6auZCzLwQECZCFgBfBVUOybZBejrrd5HHXrHwTXRa3ytnmx1UOkXidiHYgZAlxMKZBgfnWmUSlwbyLrv5WrsqLAxKwttYlppZASgf1ICc3W8YkDHdC6tONSXdUty9nPSP32zTZBGOHMrXE3ZCBk5RAoZBcPQGBoOAJ8fFw6EiwzoGT069aQAk1Af"
+        "https://graph.facebook.com/v17.0/me?fields=id%2Cname%2Cposts%7Bcreated_time%2Cfull_picture%2Cmessage%2Clink%2Csource%2Cattachments%7Bsubattachments%7D%7D&access_token=EAAs5y8RCcF0BOZCcOmmCcMKAWYwV58BQhRJaJeRlUqT7xrTHsSqDl0eqxApbqKOHcySDzXch2iDpLX8NUumOFyAooh9LNFz0o1vGPLSHQHMnLZC7j0FZAjM4NSa8H3LcfCVpXnafAHJc8Kq0q17wM12HT3miAicyuBx2Y6YHzUNnpmkXnnu36nQqvqMKyb4"
       )
-
       .then((data) => {
         console.log(data.data.posts.data);
         setPosts(data.data.posts.data);
@@ -25,9 +24,19 @@ function FacebookFeed(props) {
           <span className="post-time">
             {new Date(post.created_time).toLocaleString()}
           </span>
+          {post.link ? (
+            <a style={{ float: "right" }} href={post.link} target="_blank">
+              이동
+            </a>
+          ) : null}
         </div>
       </div>
-      {post?.full_picture && (
+      {post?.source && (
+        <video controls style={{ width: "100%" }}>
+          <source src={post.source} type="video/mp4" />
+        </video>
+      )}
+      {!post?.source && !post.attachments?.data && post?.full_picture && (
         <img
           src={post?.full_picture}
           alt="Post Image"
@@ -35,6 +44,17 @@ function FacebookFeed(props) {
           style={{ maxWidth: "100%" }}
         />
       )}
+      {post.attachments?.data?.[0]?.subattachments?.data?.map(
+        (attachment, index) => (
+          <img
+            key={index}
+            src={attachment.media?.image?.src}
+            alt={`Attachment Image ${index}`}
+            style={{ maxWidth: "100%" }}
+          />
+        )
+      )}
+
       <div className="post-content">{post?.message}</div>
     </div>
   ));
