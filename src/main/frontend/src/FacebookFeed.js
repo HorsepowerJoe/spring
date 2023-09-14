@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import logoImg from "/Users/jml/Documents/vscode/spring/src/main/frontend/src/img/logo/logo.png";
 
 function FacebookFeed(props) {
   const [posts, setPosts] = useState([]);
@@ -16,29 +17,29 @@ function FacebookFeed(props) {
   }, []);
 
   const post = posts.map((post) => (
-    <div
-      style={{
-        textAlign: "center",
-        width: "50%",
-        margin: "0 auto",
-      }}
-    >
-      <div key={post.created_time}>
-        {new Date(post.created_time).toLocaleString()}
+    <div key={post.created_time} className="facebook-post">
+      <div className="post-header">
+        <img src={logoImg} alt="Profile" className="profile-image" />
+        <div className="post-info">
+          <span className="post-author">DOGE Center </span>
+          <span className="post-time">
+            {new Date(post.created_time).toLocaleString()}
+          </span>
+        </div>
       </div>
-      <img src={post?.full_picture}></img>
-      <br />
-      <div>{post?.message}</div>
-      <hr />
+      {post?.full_picture && (
+        <img
+          src={post?.full_picture}
+          alt="Post Image"
+          className="post-image"
+          style={{ maxWidth: "100%" }}
+        />
+      )}
+      <div className="post-content">{post?.message}</div>
     </div>
   ));
 
-  return (
-    <>
-      <hr />
-      {post}
-    </>
-  );
+  return <div className="facebook-feed">{post}</div>;
 }
 
 export default FacebookFeed;
