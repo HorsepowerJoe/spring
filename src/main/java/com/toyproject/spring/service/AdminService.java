@@ -79,4 +79,9 @@ public class AdminService {
         });
     }
 
+    public String deleteIntro(Intro intro) {
+        introRepository.delete(intro);
+        return getIntroImages(intro.getIntroCategory());
+    }
+
 }

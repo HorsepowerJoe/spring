@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AdminPageProps } from 'model/props';
 import { Intro } from 'model/types';
-import React, { useEffect, useState } from 'react';
+import React, { ButtonHTMLAttributes, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 
 const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosConfig}) => {
@@ -20,6 +20,18 @@ const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosCo
     useEffect(() => {
         setisChoiced(true);
     },[introImages])
+
+    const deleteIntroHandler = (image:Intro)=>{
+      const answer = window.confirm('정말로 삭제하시겠습니까?');
+      if(answer == true){
+        axios.post('/api/admin/deleteIntro', image, axiosConfig).then(data=>{
+          if(data.status == 200){
+            setIntroImages(JSON.parse(JSON.stringify(data.data)));
+            alert('삭제되었습니다.');
+          }
+        })
+      }
+    }
 
 
     const onSubmitHandler = (event:React.FormEvent):void => {
@@ -42,17 +54,17 @@ const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosCo
 
     }
 
-    const onChangeHandler = (event:React.ChangeEvent<HTMLInputElement>):void => {
-      
-    };
+
 
 
     const previewImage = introImages?.map((image, index) =>(
         <li key={image.introNum}>
-            <label>사용하기  <input type="checkbox" name='isUsed' value={image.introNum} /></label>
+            <label>사용하기  <input type="checkbox" name='isUsed' value={image.introNum} /></label><br /> 
             <p>
                 {image.introFileOriName}<br />{image.introFileName}
             </p>
+            <button id='myHoverBtn' type='button' onClick={()=>{deleteIntroHandler(image)}}>삭제하기</button>
+            <br />
             <br />
             <img src={'/api'+image.introFileUrl.replace('/Users/jml/Documents','')} alt={`privew${image.introFileName}`} width={600} height={400} />
             <hr />

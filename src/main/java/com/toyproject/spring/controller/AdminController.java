@@ -39,4 +39,10 @@ public class AdminController {
         return adminService.chooseIntro(introList);
     }
 
+    @PostMapping(value = "deleteIntro")
+    public String deleteIntro(@RequestBody Intro intro) {
+
+        return adminService.deleteIntro(intro);
+    }
+
 }
