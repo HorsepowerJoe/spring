@@ -24,7 +24,21 @@ const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosCo
 
     const onSubmitHandler = (event:React.FormEvent):void => {
       event.preventDefault();
-      console.log(event.target)
+      const formData = new FormData(event.currentTarget as HTMLFormElement);
+      const usedData = formData.getAll('isUsed');
+      const usedDataArray: { introNum: FormDataEntryValue; }[] = [];
+      usedData.forEach((data) =>{
+        const introData = {
+          introNum: data
+      };
+      usedDataArray.push(introData);
+      })      
+      axios.post('/api/admin/chooseIntro', usedDataArray, axiosConfig).then(data=>{
+        if(data.status == 200){
+          alert("수정되었습니다.");
+          navi('/admin');
+        }
+      })
 
     }
 
@@ -35,7 +49,7 @@ const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosCo
 
     const previewImage = introImages?.map((image, index) =>(
         <li key={image.introNum}>
-            <label>사용하기  <input type="checkbox" /></label>
+            <label>사용하기  <input type="checkbox" name='isUsed' value={image.introNum} /></label>
             <p>
                 {image.introFileOriName}<br />{image.introFileName}
             </p>
@@ -76,8 +90,8 @@ const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosCo
           <select name="category" onChange={categoryChangeHandler}>
             <option value="" selected disabled>카테고리 선택</option>
             <option value="intro">회사 소개 편집</option>
-            <option value="groomer">미용사 소개 편집</option>
             <option value="handler">훈련사 소개 편집</option>
+            <option value="groomer">미용사 소개 편집</option>
             <option value="hotel">호텔 소개 편집</option>
           </select>
           <br />

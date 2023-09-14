@@ -23,13 +23,7 @@ public class AdminService {
     public String modifyIntro(List<MultipartFile> files, String category) {
         String path = "/Users/jml/Documents/upload/";
 
-        List<Intro> list = introRepository.findAll();
-        list.forEach(ele -> {
-            if (ele.isUsed() == true) {
-                ele.setUsed(false);
-                introRepository.save(ele);
-            }
-        });
+        changeAllIsUsedToFalse(category);
 
         files.forEach(file -> {
             Intro modifyIntro = new Intro();
@@ -60,6 +54,29 @@ public class AdminService {
         }
         return null;
 
+    }
+
+    public String chooseIntro(List<Intro> introList) {
+        Intro tmpIntro = introRepository.findById(introList.get(0).getIntroNum()).get();
+        changeAllIsUsedToFalse(tmpIntro.getIntroCategory());
+
+        introList.forEach(intro -> {
+            Intro findIntro = introRepository.findById(intro.getIntroNum()).get();
+            findIntro.setUsed(true);
+            introRepository.save(findIntro);
+        });
+
+        return "1";
+    }
+
+    private void changeAllIsUsedToFalse(String category) {
+        List<Intro> list = introRepository.findAll();
+        list.forEach(ele -> {
+            if (ele.getIntroCategory().equals(category) && ele.isUsed() == true) {
+                System.out.println("사용 변경 완료!!");
+                ele.setUsed(false);
+            }
+        });
     }
 
 }

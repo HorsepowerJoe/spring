@@ -83,8 +83,8 @@ const ModifyIntroForm:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
             <select name="category" onChange={categoryChangeHandler}>
               <option value="" selected disabled>카테고리 선택</option>
               <option value="intro">회사 소개 편집</option>
-              <option value="groomer">미용사 소개 편집</option>
               <option value="handler">훈련사 소개 편집</option>
+              <option value="groomer">미용사 소개 편집</option>
               <option value="hotel">호텔 소개 편집</option>
             </select>
             <br />

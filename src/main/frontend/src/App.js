@@ -48,12 +48,19 @@ function App() {
       new Date().toISOString(),
       "tokenRefresh 실행!! AccessToken : " + body.jwtToken
     );
-    axios.post("/oauth/jwt/refresh", body, axiosConfig).then((data) => {
-      localStorage.setItem("jwtToken", "Bearer " + data.data.jwtToken);
-      console.log(
-        new Date().toISOString(),
-        "tokenRefresh 갱신 완료! AccessToken : " + data.data.jwtToken
-      );
+    axios.post("/oauth/jwt/refresh", body).then((data) => {
+      if (data.status == 200) {
+        localStorage.setItem("jwtToken", "Bearer " + data.data.jwtToken);
+        console.log(
+          new Date().toISOString(),
+          "tokenRefresh 갱신 완료! AccessToken : " + data.data.jwtToken
+        );
+      } else {
+        localStorage.removeItem("jwtToken");
+        setUserInfo("");
+        let copy = isLogined;
+        setIsLogined(!copy);
+      }
     });
   };
 
@@ -143,19 +150,7 @@ function App() {
             )
           }
         />
-        <Route path="/intro" element={<Intro navi={navi}></Intro>} />
-        <Route
-          path="/intro/handler"
-          element={<HandlerIntro navi={navi}></HandlerIntro>}
-        />
-        <Route
-          path="/intro/groomer"
-          element={<GroomerIntro navi={navi}></GroomerIntro>}
-        />
-        <Route
-          path="/intro/hotel"
-          element={<HotelIntro navi={navi}></HotelIntro>}
-        />
+        <Route path="/intro/:category" element={<Intro navi={navi}></Intro>} />
         <Route
           path="/addpet"
           element={

@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository))
                 .authorizeRequests()
                 .antMatchers("/api/upload/**").permitAll()
+                .antMatchers("/oauth/jwt/refresh").permitAll()
                 .antMatchers("/addpet")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/reservation")

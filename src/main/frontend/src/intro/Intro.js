@@ -10,27 +10,29 @@ import "../swiper/css/intro.css";
 
 import { Pagination, Navigation } from "swiper/modules";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function Intro(props) {
   const [introImages, setIntroImages] = useState([]);
+  const { category } = useParams();
 
   useEffect(() => {
-    axios.get("/api/intro/intro", {}).then((data) => {
+    axios.get(`/api/intro/getIntro?category=${category}`).then((data) => {
       if (data.status == 200) {
         setIntroImages(data.data);
       }
     });
-  }, []);
+  }, [category]);
 
   const swiperImage = introImages.map((image) => (
     <SwiperSlide>
       <img
-        src={image}
+        src={"/api" + image.introFileUrl.replace("/Users/jml/Documents", "")}
+        alt={`privew${image.introFileName}`}
         style={{
           width: "600px",
           height: "400px",
         }}
-        alt={image.imageName}
       />
     </SwiperSlide>
   ));

@@ -93,6 +93,7 @@ public class JwtCreateController {
 
         String refreshToken = JWT.create()
                 .withClaim("id", customerEntity.getCustomerNum())
+                .withClaim("username", customerEntity.getUsername())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + 604800000))
                 .sign(Algorithm.HMAC512("HorsepowerJo"));
@@ -117,8 +118,10 @@ public class JwtCreateController {
 
         if (findToken != null && findToken.getRefreshToken().equals(tokenDto.getRefreshToken())) {
 
-            String username = JWT.require(Algorithm.HMAC512("HorsepowerJo")).build().verify(findToken.getJwtToken())
+            String username = JWT.require(Algorithm.HMAC512("HorsepowerJo")).build().verify(findToken.getRefreshToken())
                     .getClaim("username").asString();
+
+            System.out.println("username = " + username);
 
             Customer findCustomer = userRepository.findByUsername(username);
             if (findCustomer != null) {

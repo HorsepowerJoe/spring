@@ -2,21 +2,21 @@
 import { EnumType } from "typescript";
 
 export interface CommonUserInfo{
-    sub: String,
+    sub: string,
     exp: number,
     id: number,
     iat?: number,
-    username: String,
-    customerEmail: String,
-    customerName: String,
+    username: string,
+    customerEmail: string,
+    customerName: string,
 }
 
 
 export interface Intro{
     introNum:number,
-    introFileName:String,
-    introFileOriName:String,
+    introFileName:string,
+    introFileOriName:string,
     introFileUrl:string,
-    introCategory:String,
+    introCategory:string,
     isUsed:boolean
 }

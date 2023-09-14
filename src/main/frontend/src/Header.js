@@ -74,7 +74,11 @@ function Header(props) {
                 top: "1%",
               }}
             >
-              <MyHoverBtn onClick="/intro" navi={props.navi} name="회사소개" />
+              <MyHoverBtn
+                onClick="/intro/intro"
+                navi={props.navi}
+                name="회사소개"
+              />
 
               <br />
               <MyHoverBtn
