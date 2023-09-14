@@ -6,7 +6,6 @@ target/
 *.yml
 *.properties
 application.properties
-global_variables.js
 
 ### STS ###
 .apt_generated
@@ -38,4 +37,7 @@ build/
 
 # Ignore JwtProperties.java file
 src/main/java/com/toyproject/spring/jwt/JwtProperties.java
+
+
+# Ignore global_variables.js file
 src/main/frontend/src/global_variables.js
