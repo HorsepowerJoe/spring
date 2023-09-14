@@ -5,14 +5,10 @@ import logoImg from "/Users/jml/Documents/vscode/spring/src/main/frontend/src/im
 function FacebookFeed(props) {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    axios
-      .get(
-        "https://graph.facebook.com/v17.0/me?fields=id%2Cname%2Cposts%7Bcreated_time%2Cfull_picture%2Cmessage%2Clink%2Csource%2Cattachments%7Bsubattachments%7D%7D&access_token=EAAs5y8RCcF0BOZCcOmmCcMKAWYwV58BQhRJaJeRlUqT7xrTHsSqDl0eqxApbqKOHcySDzXch2iDpLX8NUumOFyAooh9LNFz0o1vGPLSHQHMnLZC7j0FZAjM4NSa8H3LcfCVpXnafAHJc8Kq0q17wM12HT3miAicyuBx2Y6YHzUNnpmkXnnu36nQqvqMKyb4"
-      )
-      .then((data) => {
-        console.log(data.data.posts.data);
-        setPosts(data.data.posts.data);
-      });
+    axios.get("/api/getFeed").then((data) => {
+      console.log(data.data.posts.data);
+      setPosts(data.data.posts.data);
+    });
   }, []);
 
   const post = posts.map((post) => (
