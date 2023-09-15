@@ -17,7 +17,7 @@ const AdminPage:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosConf
       }}
     >
      <fieldset style={{ border: "1px solid black" }}>
-          <legend style={{ textAlign: "center", backgroundColor: "lightgray" }}>
+          <legend style={{ textAlign: "center", backgroundColor: "lightgray", border:"0" }}>
             Admin Page
           </legend>
           <div

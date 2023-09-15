@@ -128,7 +128,7 @@ function HotelQnaDetails(props) {
               minHeight: "300px",
             }}
           ></textarea>
-
+          <hr />
           <legend
             style={{
               textAlign: "center",
@@ -137,7 +137,9 @@ function HotelQnaDetails(props) {
           >
             Answer
           </legend>
-          <hr />
+          <br />
+          <br />
+
           {JSON.parse(localStorage.getItem("userInfo"))?.role == "ROLE_ADMIN" ||
           JSON.parse(localStorage.getItem("userInfo"))?.role ==
             "ROLE_MANAGER" ? (

@@ -66,7 +66,13 @@ function AddPet(props) {
         }}
       >
         <fieldset style={{ border: "1px solid black", width: "600px" }}>
-          <legend style={{ textAlign: "center", backgroundColor: "lightgray" }}>
+          <legend
+            style={{
+              textAlign: "center",
+              backgroundColor: "lightgray",
+              border: "0",
+            }}
+          >
             애견 등록
           </legend>
           <form

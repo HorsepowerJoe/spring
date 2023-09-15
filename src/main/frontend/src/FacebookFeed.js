@@ -46,11 +46,10 @@ function FacebookFeed(props) {
             key={index}
             src={attachment.media?.image?.src}
             alt={`Attachment Image ${index}`}
-            style={{ maxWidth: "100%" }}
+            style={{ maxWidth: "100%", marginBottom: "10px" }}
           />
         )
       )}
-
       <div className="post-content">{post?.message}</div>
     </div>
   ));

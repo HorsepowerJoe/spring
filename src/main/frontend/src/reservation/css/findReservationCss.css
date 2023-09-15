@@ -1,6 +1,7 @@
 .bordered-table {
     border-collapse: collapse;
-    border: 1px solid black;
+  
+    
     width: 100%;
   }
   
@@ -16,4 +17,5 @@
   
   .bordered-table th {
     background-color: #f2f2f2;
+
   }

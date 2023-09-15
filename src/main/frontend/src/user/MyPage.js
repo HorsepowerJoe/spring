@@ -107,6 +107,7 @@ function MyPage(props) {
             style={{
               textAlign: "center",
               backgroundColor: "lightgray",
+              border: "0",
             }}
           >
             회원 정보 수정

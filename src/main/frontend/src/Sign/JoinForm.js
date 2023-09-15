@@ -229,7 +229,13 @@ function SignUpForm(props) {
         }}
       >
         <fieldset style={{ border: "1px solid black" }}>
-          <legend style={{ textAlign: "center", backgroundColor: "lightgray" }}>
+          <legend
+            style={{
+              textAlign: "center",
+              backgroundColor: "lightgray",
+              border: 0,
+            }}
+          >
             Join
           </legend>
           <form

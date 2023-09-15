@@ -69,10 +69,12 @@ input[type="number"]::-webkit-inner-spin-button {
 
   height:80vh;
   overflow-y:scroll;
+  border: 1px solid #ddd;
 }
 
 .facebook-post {
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+ 
   padding: 16px;
   margin-bottom: 16px;
   background-color: #fff;
@@ -80,10 +82,13 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .facebook-feed::-webkit-scrollbar {
   width: 10px; 
+
+ 
 }
 
 .facebook-feed::-webkit-scrollbar-thumb {
   background-color: #c33586; 
+  border-radius: 5px;
 }
 
 .facebook-feed::-webkit-scrollbar-thumb:hover {
@@ -93,7 +98,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .post-header {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 5%;
 }
 
 .profile-image {
@@ -101,6 +106,7 @@ input[type="number"]::-webkit-inner-spin-button {
   height: 40px;
   border-radius: 50%;
   margin-right: 8px;
+ 
 }
 
 .post-info {
@@ -119,4 +125,19 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 18px;
   line-height: 1.4;
   text-align: center;
+  padding-bottom: 10%;
+  padding-top: 10%;
+
 }
+
+legend {
+  border: 1px solid #000;
+  border-bottom: 0 solid #000;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(to top, white, lightgray)
+}
+
+fieldset{
+  border-radius: 5px;
+}
+
