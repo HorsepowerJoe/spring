@@ -46,7 +46,7 @@ function GroomingQna(props) {
       <td>{qna.groomingQnaNum}</td>
       <td>{qna.groomingQnaTitle}</td>
       <td>{qna.customerName}</td>
-      <td>{qna.isAnswered ? "답변완료" : "대기중"}</td>
+      <td>{qna.answered ? "답변완료" : "대기중"}</td>
       <td>{new Date(qna.groomingQnaRegDate).toLocaleString()}</td>
     </tr>
   ));

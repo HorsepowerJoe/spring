@@ -6,4 +6,6 @@ import com.toyproject.spring.model.HotelQnaComment;
 
 public interface HotelQnaCommentRepository extends JpaRepository<HotelQnaComment, Long> {
 
+    HotelQnaComment findByHotelQnaNum(Long hotelQnaNum);
+
 }

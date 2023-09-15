@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 function GroomingQnaDetails(props) {
   const { groomingQnaNum } = useParams();
   const [boardDetails, setBoardDetails] = useState("");
+  const [comment, setComment] = useState();
   useEffect(() => {
     axios
       .get(
@@ -14,8 +15,40 @@ function GroomingQnaDetails(props) {
       )
       .then((data) => {
         setBoardDetails(data.data);
+        console.log("boarddata", data.data);
       });
   }, []);
+
+  useEffect(() => {
+    if (boardDetails?.answered) {
+      axios
+        .get(
+          `/api/comment/findGroomingBoardComment?groomingQnaNum=${groomingQnaNum}`,
+          props.axiosConfig
+        )
+        .then((data) => {
+          console.log("data", data.data);
+          setComment(data.data);
+        });
+    }
+  }, [boardDetails]);
+
+  const commentSubmitHandler = (event) => {
+    event.preventDefault();
+    const body = {
+      groomingQnaComment: event.target.groomingQnaComment.value,
+      groomingQnaNum: boardDetails.groomingQnaNum,
+      customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+    };
+    axios
+      .post("/api/comment/addGroomingComment", body, props.axiosConfig)
+      .then((data) => {
+        if (data.status == 200) {
+          alert("작성되었습니다.");
+          setBoardDetails(data.data);
+        }
+      });
+  };
 
   return (
     <>
@@ -62,7 +95,7 @@ function GroomingQnaDetails(props) {
               </th>
               <th style={{ minWidth: "50px" }}>{boardDetails.customerName}</th>
               <th style={{ minWidth: "50px" }}>
-                {boardDetails.isAnswered ? "답변 완료" : "대기중"}
+                {boardDetails.answered ? "답변 완료" : "대기중"}
               </th>
               <th style={{ minWidth: "50px" }}>
                 {new Date(boardDetails.groomingQnaRegDate).toLocaleString()}
@@ -90,12 +123,47 @@ function GroomingQnaDetails(props) {
             Answer
           </legend>
           <hr />
-          <textarea
-            readOnly
-            style={{ width: "800px", minHeight: "300px", marginBottom: "30px" }}
-          >
-            {boardDetails.isAnswered ? "답변 완료" : "대기중"}
-          </textarea>
+          {JSON.parse(localStorage.getItem("userInfo"))?.role == "ROLE_ADMIN" ||
+          JSON.parse(localStorage.getItem("userInfo"))?.role ==
+            "ROLE_MANAGER" ? (
+            <form onSubmit={commentSubmitHandler}>
+              <textarea
+                name="groomingQnaComment"
+                style={{
+                  width: "800px",
+                  minHeight: "300px",
+                  marginBottom: "30px",
+                }}
+                readOnly={boardDetails.answered ? true : false}
+                placeholder={boardDetails?.answered ? null : "답변 대기중"}
+                defaultValue={
+                  boardDetails.answered ? comment?.groomingQnaComment : null
+                }
+              ></textarea>
+              <br />
+              {boardDetails.answered ? null : (
+                <Button
+                  id="myHoverBtn"
+                  style={{ float: "right" }}
+                  type="submit"
+                >
+                  답변 작성
+                </Button>
+              )}
+              <br />
+            </form>
+          ) : (
+            <textarea
+              readOnly
+              style={{
+                width: "800px",
+                minHeight: "300px",
+                marginBottom: "30px",
+              }}
+            >
+              {boardDetails.answered ? comment.groomingQnaComment : "대기중"}
+            </textarea>
+          )}
           <br />
           {boardDetails.customerNum ==
           JSON.parse(localStorage.getItem("userInfo"))?.id ? (

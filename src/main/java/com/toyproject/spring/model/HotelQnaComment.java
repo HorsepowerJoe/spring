@@ -20,10 +20,10 @@ public class HotelQnaComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long hotelQnaCommentNum;
-    @JoinColumn(name = "HOTELQNATABLE_HOTELQNABOARDNUM")
-    Long HotelQnaBoardNum;
-    @JoinColumn(name = "GROOMERTABLE_GROOMERNUM")
-    Long groomerNum;
+    @JoinColumn(name = "HOTELQNATABLE_HOTELQNANUM")
+    Long hotelQnaNum;
+    @JoinColumn(name = "CUSTOMERTABLE_CUSTOMERNUM")
+    Long customerNum;
     String hotelQnaComment;
     @CreationTimestamp
     Timestamp HotelQnaCommentDate;

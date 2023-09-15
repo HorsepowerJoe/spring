@@ -6,4 +6,6 @@ import com.toyproject.spring.model.GroomingQnaComment;
 
 public interface GroomingQnaCommentRepository extends JpaRepository<GroomingQnaComment, Long> {
 
+    GroomingQnaComment findByGroomingQnaNum(Long groomingQnaNum);
+
 }

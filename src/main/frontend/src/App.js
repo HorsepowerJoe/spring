@@ -230,12 +230,38 @@ function App() {
         <Route
           path="/groomingQna"
           element={
-            <GroomingQna navi={navi} axiosConfig={axiosConfig}></GroomingQna>
+            localStorage.getItem("userInfo") ? (
+              <GroomingQna navi={navi} axiosConfig={axiosConfig}></GroomingQna>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
           }
         />
         <Route
           path="/hotelQna"
-          element={<HotelQna navi={navi} axiosConfig={axiosConfig}></HotelQna>}
+          element={
+            localStorage.getItem("userInfo") ? (
+              <HotelQna navi={navi} axiosConfig={axiosConfig}></HotelQna>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
         />
         <Route
           path="/groomingQna/:groomingQnaNum"

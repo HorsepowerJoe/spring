@@ -46,7 +46,7 @@ function HotelQna(props) {
       <td>{qna.hotelQnaNum}</td>
       <td>{qna.hotelQnaTitle}</td>
       <td>{qna.customerName}</td>
-      <td>{qna.isAnswered ? "답변완료" : "대기중"}</td>
+      <td>{qna.answered ? "답변완료" : "대기중"}</td>
       <td>{new Date(qna.hotelQnaRegDate).toLocaleString()}</td>
     </tr>
   ));

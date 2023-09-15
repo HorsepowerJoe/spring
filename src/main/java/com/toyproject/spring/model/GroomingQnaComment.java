@@ -22,8 +22,8 @@ public class GroomingQnaComment {
     Long groomingQnaCommentNum;
     @JoinColumn(name = "GROOMINGQNATABLE_GROOMINGQNANUM")
     Long groomingQnaNum;
-    @JoinColumn(name = "GROOMERTABLE_GROOMERNUM")
-    Long groomerNum;
+    @JoinColumn(name = "CUSTOMERTABLE_CUSTOMERNUM")
+    Long customerNum;
     String groomingQnaComment;
     @CreationTimestamp
     Timestamp groomingQnaCommentDate;

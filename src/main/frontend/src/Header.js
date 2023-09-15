@@ -218,6 +218,27 @@ function Header(props) {
             {props.userInfo?.customerName}
           </span>{" "}
           님 안녕하세요. <br />
+          {props.userInfo?.role == "ROLE_ADMIN" ||
+          props.userInfo?.role == "ROLE_MANAGER" ? (
+            <>
+              <button
+                id="myHoverBtn"
+                style={{
+                  marginTop: "5px",
+                  marginRight: "10px",
+                  borderRadius: "5px",
+                  height: "30px",
+                  width: "200px",
+                }}
+                onClick={() => {
+                  props.navi("/admin");
+                }}
+              >
+                어드민 페이지
+              </button>
+              <br />
+            </>
+          ) : null}
           <button
             id="myHoverBtn"
             style={{
