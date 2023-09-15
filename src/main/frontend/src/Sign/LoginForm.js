@@ -64,8 +64,10 @@ function Login(props) {
         customerPassword: customerPassword,
       })
       .then((data) => {
-        jwtToken = "Bearer " + data.headers.get("Authorization");
+        const jwtToken = "Bearer " + data.headers.get("Authorization");
+        const refreshToken = data.headers.get("RefreshToken");
         localStorage.setItem("jwtToken", jwtToken);
+        localStorage.setItem("refreshToken", refreshToken);
         let decode = jwtDecode(jwtToken);
         props.setUserInfo(decode);
         localStorage.setItem("userInfo", JSON.stringify(decode));

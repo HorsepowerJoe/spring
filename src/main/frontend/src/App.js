@@ -1,37 +1,35 @@
+import ChooseIntro from "admin/ChooseIntro";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
+import FacebookFeed from "./FacebookFeed";
 import Header from "./Header";
-import JoinForm from "./sign/JoinForm";
-import LoginForm from "./sign/LoginForm";
-import NaverLoginSuccessed from "./sign/NaverLoginSuccessed";
-import ExtraJoin from "./sign/ExtraJoin";
-import MyPage from "./user/MyPage";
+import AdminPage from "./admin/AdminPage.tsx";
+import ModifyIntroForm from "./admin/ModifyIntroForm.tsx";
 import Intro from "./intro/Intro";
-import GroomerIntro from "./intro/Intro";
-import HotelIntro from "./intro/Intro";
-import HandlerIntro from "./intro/Intro";
 import AddPet from "./pet/AddPet";
 import MyPet from "./pet/MyPet";
-import axios from "axios";
-import Reservation from "./reservation/Reservation";
-import FindReservation from "./reservation/FindReservation";
 import GroomingQna from "./qna/GroomingQna";
 import GroomingQnaDetails from "./qna/GroomingQnaDetails";
 import GroomingqnaForm from "./qna/GroomingQnaForm";
 import HotelQna from "./qna/HotelQna";
 import HotelQnaDetails from "./qna/HotelQnaDetails";
 import HotelqnaForm from "./qna/HotelQnaForm";
-import FacebookFeed from "./FacebookFeed";
-import AdminPage from "./admin/AdminPage.tsx";
-import ModifyIntroForm from "./admin/ModifyIntroForm.tsx";
-import ChooseIntro from "admin/ChooseIntro";
+import FindReservation from "./reservation/FindReservation";
+import Reservation from "./reservation/Reservation";
+import JoinForm from "./sign/JoinForm";
+import LoginForm from "./sign/LoginForm";
+import NaverLoginSuccessed from "./sign/NaverLoginSuccessed";
+import MyPage from "./user/MyPage";
 
 function App() {
   const navi = useNavigate();
   const [getToken, setGetToken] = useState("");
   const [userInfo, setUserInfo] = useState("");
   const [isLogined, setIsLogined] = useState(false);
+  const location = useLocation();
   const axiosConfig = {
     headers: {
       Authorization: localStorage.getItem("jwtToken"),
@@ -44,24 +42,42 @@ function App() {
       refreshToken: localStorage.getItem("refreshToken"),
     };
 
-    console.log(
-      new Date().toISOString(),
-      "tokenRefresh 실행!! AccessToken : " + body.jwtToken
-    );
-    axios.post("/oauth/jwt/refresh", body).then((data) => {
-      if (data.status == 200) {
-        localStorage.setItem("jwtToken", "Bearer " + data.data.jwtToken);
-        console.log(
-          new Date().toISOString(),
-          "tokenRefresh 갱신 완료! AccessToken : " + data.data.jwtToken
-        );
-      } else {
-        localStorage.removeItem("jwtToken");
-        setUserInfo("");
-        let copy = isLogined;
-        setIsLogined(!copy);
-      }
-    });
+    console.log(new Date().toISOString(), "tokenRefresh 실행!!");
+    axios
+      .post("/oauth/jwt/refresh", body)
+      .then((data) => {
+        if (data.status == 200) {
+          localStorage.setItem("jwtToken", "Bearer " + data.data.jwtToken);
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify(jwtDecode(data.data.jwtToken))
+          );
+          console.log(new Date().toISOString(), "tokenRefresh 갱신 완료!");
+        } else {
+          localStorage.removeItem("jwtToken");
+          setUserInfo("");
+          let copy = isLogined;
+          setIsLogined(!copy);
+        }
+      })
+      .catch((er) => {
+        alert("만료된 인증입니다.");
+        axios
+          .post("/api/logout", {
+            jwtToken: localStorage.getItem("jwtToken"),
+            refreshToken: localStorage.getItem("refreshToken"),
+          })
+          .then((data) => {
+            if (data.status == 200) {
+              localStorage.removeItem("userInfo");
+              localStorage.removeItem("jwtToken");
+              localStorage.removeItem("refreshToken");
+              setUserInfo("");
+              setIsLogined(false);
+              navi("/loginForm");
+            }
+          });
+      });
   };
 
   useEffect(() => {
@@ -76,8 +92,15 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("userInfo") !== null) {
       setUserInfo(JSON.parse(localStorage.getItem("userInfo")));
+      if (
+        location.pathname !== "/user/mypage" &&
+        JSON.parse(localStorage.getItem("userInfo")).extraData == false
+      ) {
+        alert("추가 정보 입력이 필요합니다.");
+        navi("/user/mypage");
+      }
     }
-  }, []);
+  }, [location]);
 
   return (
     <div>
@@ -119,16 +142,6 @@ function App() {
           }
         ></Route>
         <Route
-          path="/extraJoin"
-          element={
-            <ExtraJoin
-              navi={navi}
-              userInfo={userInfo}
-              getToken={getToken}
-            ></ExtraJoin>
-          }
-        />
-        <Route
           path="/user/mypage"
           element={
             localStorage.getItem("userInfo") ? (
@@ -136,6 +149,7 @@ function App() {
                 userInfo={userInfo}
                 setUserInfo={setUserInfo}
                 navi={navi}
+                tokenRefresh={tokenRefresh}
               ></MyPage>
             ) : (
               <LoginForm

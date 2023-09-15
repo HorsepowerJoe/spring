@@ -12,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.toyproject.spring.jwt.JwtAuthenticationFilter;
 import com.toyproject.spring.jwt.JwtAuthorizationFilter;
+import com.toyproject.spring.repository.TokenRepository;
 import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -39,7 +41,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager)) // AuthenticationManager
+                .addFilter(new JwtAuthenticationFilter(authenticationManager, tokenRepository)) // AuthenticationManager
                 .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository))
                 .authorizeRequests()
                 .antMatchers("/api/upload/**").permitAll()

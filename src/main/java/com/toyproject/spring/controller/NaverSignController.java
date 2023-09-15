@@ -174,8 +174,10 @@ public class NaverSignController {
         // 네이버 로그인 접근 토큰;
         String apiURL = "https://openapi.naver.com/v1/nid/me";
         String headerStr = "Bearer " + token.replace("=", ""); // Bearer 다음에 공백 추가
-        String res = requestToServer(apiURL, headerStr);
-        return res;
+        Token tokenDto = objm.readValue(requestToServer(apiURL, headerStr), Token.class);
+        Token findToken = tokenRepository.findByRefreshToken(tokenDto.getRefreshToken());
+
+        return objm.writeValueAsString(findToken);
     }
 
     /**
@@ -279,11 +281,13 @@ public class NaverSignController {
                         .withClaim("username", customerEntity.getUsername()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                         .withClaim("customerName", customerEntity.getCustomerName()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                         .withClaim("customerEmail", customerEntity.getCustomerEmail()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
+                        .withClaim("extraData", customerEntity.getCustomerAddress().equals("null") ? false : true)
                         .withClaim("role", customerEntity.getRole()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                         .sign(Algorithm.HMAC512("HorsepowerJo"));
 
                 String refreshToken = JWT.create()
                         .withClaim("id", customerEntity.getCustomerNum())
+                        .withClaim("username", customerEntity.getUsername())
                         .withIssuedAt(new Date(System.currentTimeMillis()))
                         .withExpiresAt(new Date(System.currentTimeMillis() + 604800000))
                         .sign(Algorithm.HMAC512("HorsepowerJo"));
@@ -296,6 +300,7 @@ public class NaverSignController {
                     tokenRepository.save(tokenDto);
                 } else {
                     System.out.println("중복실행방지");
+                    return objm.writeValueAsString(tokenDto);
                 }
                 return objm.writeValueAsString(tokenDto);
 

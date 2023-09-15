@@ -19,6 +19,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.spring.auth.PrincipalDetails;
 import com.toyproject.spring.model.Customer;
+import com.toyproject.spring.model.Token;
+import com.toyproject.spring.repository.TokenRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,9 +29,8 @@ import lombok.RequiredArgsConstructor;
 // UsernamePasswordAuthenticationFIlter가 동작함
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
     private final AuthenticationManager authenticationManager;
-    // private final JwtTokenProvider jwtTokenProvider;
+    private final TokenRepository tokenRepository;
 
     // attemptAuthentication 실행 후 인증이 정상적으로 되었으면 successfulAuthentication 함수가 실행됨.
     // JWT 토큰을 만들어서 request 요청한 사용자에게 JWT토큰을 response 해주면 됨.
@@ -94,17 +95,35 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("successfulAuthentication 실행됨 : 인증이 완료되었음.");
 
         String jwtToken = JWT.create()
-                .withSubject(principalDetails.getUsername()) // 토큰 이름
+                .withSubject(principalDetails.getCustomer().getUsername())
+                .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + (60000 * 10))) // 만료시간
                 .withClaim("id", principalDetails.getCustomer().getCustomerNum()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                 .withClaim("username", principalDetails.getCustomer().getUsername()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
-                .withClaim("customerEmail", principalDetails.getCustomer().getCustomerEmail()) // 비공개 클레임 넣고싶은 Key,
-                                                                                               // Value 넣으면 됨.
                 .withClaim("customerName", principalDetails.getCustomer().getCustomerName()) // 비공개 클레임 넣고싶은 Key, Value
                                                                                              // 넣으면 됨.
+                .withClaim("customerEmail", principalDetails.getCustomer().getCustomerEmail()) // 비공개 클레임 넣고싶은 Key,
+                                                                                               // Value 넣으면 됨.
+                .withClaim("extraData",
+                        principalDetails.getCustomer().getCustomerAddress().equals("null") ? false : true)
+                .withClaim("role", principalDetails.getCustomer().getRole()) // 비공개 클레임 넣고싶은 Key, Value 넣으면 됨.
                 .sign(Algorithm.HMAC512("HorsepowerJo"));
 
+        String refreshToken = JWT.create()
+                .withClaim("id", principalDetails.getCustomer().getCustomerNum())
+                .withClaim("username", principalDetails.getCustomer().getUsername())
+                .withIssuedAt(new Date(System.currentTimeMillis()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 604800000))
+                .sign(Algorithm.HMAC512("HorsepowerJo"));
+
+        Token tokenDto = new Token();
+        tokenDto.setJwtToken(jwtToken);
+        tokenDto.setRefreshToken(refreshToken);
+
+        tokenRepository.save(tokenDto);
+
         response.addHeader("Authorization", "Bearer " + jwtToken); // Bearer뒤에 한 칸 띄워야 함
+        response.addHeader("RefreshToken", refreshToken); // Bearer뒤에 한 칸 띄워야 함
     }
 
 }

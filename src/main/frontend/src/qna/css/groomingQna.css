@@ -33,7 +33,7 @@
 }
 
 .pagination li:hover{
-    background-color: #fff;
+    background-color: lightgray;
 }
 
 .pagination li.active:hover{
@@ -52,6 +52,6 @@ td, th {
 }
 
 .clickable:hover{
-    background-color: #fff;
+    background-color: lightgray;
 }
 

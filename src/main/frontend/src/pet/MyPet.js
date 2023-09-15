@@ -1,4 +1,5 @@
 import axios from "axios";
+import "../reservation/css/findReservationCss.css";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 
@@ -89,7 +90,13 @@ function MyPet(props) {
           >
             나의 애견
           </legend>
-          <table style={{ width: "800px", textAlign: "center" }}>
+          <table
+            className="bordered-table"
+            style={{
+              width: "800px",
+              textAlign: "center",
+            }}
+          >
             <tr>
               <th style={{ minWidth: "50px" }}>이름</th>
               <th style={{ minWidth: "50px" }}>견종</th>

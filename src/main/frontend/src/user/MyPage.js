@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
@@ -70,7 +71,8 @@ function MyPage(props) {
     axios
       .post("/api/user/modifyUserInfo", body, axiosConfig)
       .then((data) => {
-        if (data.data === 1) {
+        if (data.status == 200) {
+          props.tokenRefresh();
           alert("수정되었습니다.");
           props.navi("/");
         }
