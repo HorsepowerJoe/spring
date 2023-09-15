@@ -7,6 +7,25 @@ function GroomingQnaDetails(props) {
   const { groomingQnaNum } = useParams();
   const [boardDetails, setBoardDetails] = useState("");
   const [comment, setComment] = useState();
+
+  const updateQna = () => {
+    props.navi(`/updateQnaForm/grooming/${groomingQnaNum}`);
+  };
+
+  const deleteQna = () => {
+    const bool = window.confirm("정말로 삭제하시겠습니까?");
+    if (bool) {
+      axios
+        .post("/api/board/deleteGroomingQna", boardDetails, props.axiosConfig)
+        .then((data) => {
+          if (data.status == 200) {
+            alert("삭제되었습니다.");
+            props.navi("/groomingQna");
+          }
+        });
+    }
+  };
+
   useEffect(() => {
     axios
       .get(
@@ -15,7 +34,6 @@ function GroomingQnaDetails(props) {
       )
       .then((data) => {
         setBoardDetails(data.data);
-        console.log("boarddata", data.data);
       });
   }, []);
 
@@ -166,12 +184,28 @@ function GroomingQnaDetails(props) {
           )}
           <br />
           {boardDetails.customerNum ==
-          JSON.parse(localStorage.getItem("userInfo"))?.id ? (
-            <div style={{ float: "right", marginBottom: "30px" }}>
-              <Button variant="secondary" style={{ marginRight: "5px" }}>
+          JSON.parse(localStorage.getItem("userInfo")).id ? (
+            <Button
+              variant="secondary"
+              onClick={deleteQna}
+              style={{ float: "right", marginBottom: "30px" }}
+            >
+              삭제
+            </Button>
+          ) : null}
+          {boardDetails.customerNum ==
+            JSON.parse(localStorage.getItem("userInfo"))?.id &&
+          boardDetails.answered == false ? (
+            <div
+              style={{
+                float: "right",
+                marginRight: "5px",
+                marginBottom: "30px",
+              }}
+            >
+              <Button variant="secondary" onClick={updateQna}>
                 수정
               </Button>
-              <Button variant="secondary">삭제</Button>
             </div>
           ) : null}
         </fieldset>

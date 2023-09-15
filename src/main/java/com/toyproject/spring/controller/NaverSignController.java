@@ -49,67 +49,6 @@ public class NaverSignController {
     private final ObjectMapper objm;
 
     /**
-     * 로그인 화면이 있는 페이지 컨트롤
-     * 
-     * @param session
-     * @param model
-     * @return
-     * @throws UnsupportedEncodingException
-     * @throws UnknownHostException
-     */
-    @RequestMapping("/naver")
-    public String testNaver(HttpSession session, Model model)
-            throws UnsupportedEncodingException, UnknownHostException {
-        String redirectURI = URLEncoder.encode("http://localhost:8080/naver/callback1", "UTF-8");
-        SecureRandom random = new SecureRandom();
-        String state = new BigInteger(130, random).toString();
-        String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-        apiURL += String.format("&client_id=%s&redirect_uri=%s&state=%s",
-                CLIENT_ID, redirectURI, state);
-        session.setAttribute("state", state);
-        model.addAttribute("apiURL", apiURL);
-        return "test-naver";
-    }
-
-    /**
-     * 콜백 페이지 컨트롤러
-     * 
-     * @param session
-     * @param request
-     * @param model
-     * @return
-     * @throws IOException
-     * @throws ParseException
-     */
-    @RequestMapping("/naver/callback1")
-    public String naverCallback1(HttpSession session, HttpServletRequest request, Model model)
-            throws IOException, ParseException {
-        String code = request.getParameter("code");
-        String state = request.getParameter("state");
-        String redirectURI = URLEncoder.encode("http://localhost:8080/naver/callback1", "UTF-8");
-        String apiURL;
-        apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
-        apiURL += "client_id=" + CLIENT_ID;
-        apiURL += "&client_secret=" + CLI_SECRET;
-        apiURL += "&redirect_uri=" + redirectURI;
-        apiURL += "&code=" + code;
-        apiURL += "&state=" + state;
-        System.out.println("apiURL=" + apiURL);
-        String res = requestToServer(apiURL);
-        if (res != null && !res.equals("")) {
-            model.addAttribute("res", res);
-            Map<String, Object> parsedJson = new JSONParser(res).parseObject();
-            System.out.println(parsedJson);
-            session.setAttribute("currentUser", res);
-            session.setAttribute("currentAT", parsedJson.get("access_token"));
-            session.setAttribute("currentRT", parsedJson.get("refresh_token"));
-        } else {
-            model.addAttribute("res", "Login failed!");
-        }
-        return "test-naver-callback";
-    }
-
-    /**
      * 토큰 갱신 요청 페이지 컨트롤러
      * 
      * @param session

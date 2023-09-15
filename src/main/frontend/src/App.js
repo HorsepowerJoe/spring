@@ -23,6 +23,7 @@ import JoinForm from "./sign/JoinForm";
 import LoginForm from "./sign/LoginForm";
 import NaverLoginSuccessed from "./sign/NaverLoginSuccessed";
 import MyPage from "./user/MyPage";
+import UpdateQnaForm from "qna/UpdateQnaForm";
 
 function App() {
   const navi = useNavigate();
@@ -74,6 +75,7 @@ function App() {
               localStorage.removeItem("refreshToken");
               setUserInfo("");
               setIsLogined(false);
+              clearInterval(tokenRefresh);
               navi("/loginForm");
             }
           });
@@ -110,6 +112,7 @@ function App() {
         setUserInfo={setUserInfo}
         axiosConfig={axiosConfig}
         setIsLogined={setIsLogined}
+        tokenRefresh={tokenRefresh}
       ></Header>
       <Routes>
         <Route path="/" element={<FacebookFeed />} />
@@ -324,6 +327,27 @@ function App() {
                 navi={navi}
                 axiosConfig={axiosConfig}
               ></HotelqnaForm>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/UpdateQnaForm/:category/:num"
+          element={
+            localStorage.getItem("userInfo") ? (
+              <UpdateQnaForm
+                navi={navi}
+                axiosConfig={axiosConfig}
+              ></UpdateQnaForm>
             ) : (
               <LoginForm
                 navi={navi}

@@ -1,6 +1,7 @@
 package com.toyproject.spring.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -8,10 +9,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.spring.dto.GroomingQnaDto;
 import com.toyproject.spring.dto.HotelQnaDto;
+import com.toyproject.spring.model.Customer;
 import com.toyproject.spring.model.GroomingQna;
 import com.toyproject.spring.model.HotelQna;
 import com.toyproject.spring.repository.GroomingQnaRepository;
@@ -122,5 +125,74 @@ public class BoardService {
     public String writeHotelQna(HotelQna hotelQna) {
         hotelQnaRepository.save(hotelQna);
         return "1";
+    }
+
+    public String updateGroomingQna(GroomingQna groomingQna, String auth) {
+        auth = auth.replace("Bearer ", "");
+        Long decodedId = JWT.decode(auth).getClaim("id").asLong();
+        Optional<Customer> findCustomer = userRepository.findById(decodedId);
+        if (findCustomer.isPresent() && findCustomer.get().getCustomerNum() == groomingQna.getCustomerNum()) {
+            GroomingQna findQna = groomingQnaRepository.findById(groomingQna.getGroomingQnaNum()).get();
+            findQna.setGroomingQnaContent(groomingQna.getGroomingQnaContent());
+            findQna.setGroomingQnaTitle(groomingQna.getGroomingQnaTitle());
+            groomingQnaRepository.save(findQna);
+            try {
+                return objm.writeValueAsString(findQna);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public String updateHotelQna(HotelQna hotelQna, String auth) {
+        auth = auth.replace("Bearer ", "");
+        Long decodedId = JWT.decode(auth).getClaim("id").asLong();
+        Optional<Customer> findCustomer = userRepository.findById(decodedId);
+        if (findCustomer.isPresent() && findCustomer.get().getCustomerNum() == hotelQna.getCustomerNum()) {
+            HotelQna findQna = hotelQnaRepository.findById(hotelQna.getHotelQnaNum()).get();
+            findQna.setHotelQnaContent(hotelQna.getHotelQnaContent());
+            findQna.setHotelQnaTitle(hotelQna.getHotelQnaTitle());
+            hotelQnaRepository.save(findQna);
+            try {
+                return objm.writeValueAsString(findQna);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public String deleteGroomingQna(GroomingQna groomingQna, String auth) {
+        auth = auth.replace("Bearer ", "");
+        Long decodedId = JWT.decode(auth).getClaim("id").asLong();
+        Optional<Customer> findCustomer = userRepository.findById(decodedId);
+        if (findCustomer.isPresent() && findCustomer.get().getCustomerNum() == groomingQna.getCustomerNum()) {
+            groomingQnaRepository.delete(groomingQna);
+            return null;
+        }
+        try {
+            throw new Exception("삭제 실패!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String deleteHotelQna(HotelQna hotelQna, String auth) {
+        auth = auth.replace("Bearer ", "");
+        Long decodedId = JWT.decode(auth).getClaim("id").asLong();
+        Optional<Customer> findCustomer = userRepository.findById(decodedId);
+        if (findCustomer.isPresent() && findCustomer.get().getCustomerNum() == hotelQna.getCustomerNum()) {
+            hotelQnaRepository.delete(hotelQna);
+            return null;
+        }
+        try {
+            throw new Exception("삭제 실패!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

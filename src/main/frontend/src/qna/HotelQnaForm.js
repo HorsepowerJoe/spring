@@ -13,7 +13,7 @@ function HotelqnaForm(props) {
       .post("/api/board/writeHotelQna", body, props.axiosConfig)
       .then((data) => {
         if (data.status == 200) {
-          props.navi("/");
+          props.navi("/hotelQna");
           alert("작성되었습니다.");
         }
       });

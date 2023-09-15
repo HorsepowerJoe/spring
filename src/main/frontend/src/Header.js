@@ -258,6 +258,7 @@ function Header(props) {
               localStorage.removeItem("refreshToken");
               props.setUserInfo("");
               props.setIsLogined(false);
+              clearInterval(props.tokenRefresh);
             }}
           >
             로그아웃
