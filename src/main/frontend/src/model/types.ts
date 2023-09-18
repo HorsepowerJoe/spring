@@ -20,3 +20,23 @@ export interface Intro{
     introCategory:string,
     isUsed:boolean
 }
+
+export interface Reservation {
+    r_num: number;
+    r_regDate: string;
+    visitDate: string;
+    petNum: number;
+    customerNum: number;
+    g_num: number;
+    r_expired: boolean;
+    r_filnalAmount: number;
+  }
+
+
+  export interface PageInfo{
+    pageNumber: number,
+    pageSize: number,
+    totalElement: number,
+    totalPages: number,
+  }
+  

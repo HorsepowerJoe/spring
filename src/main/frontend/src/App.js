@@ -24,6 +24,7 @@ import LoginForm from "./sign/LoginForm";
 import NaverLoginSuccessed from "./sign/NaverLoginSuccessed";
 import MyPage from "./user/MyPage";
 import UpdateQnaForm from "qna/UpdateQnaForm";
+import ReservationList from "admin/ReservationList";
 
 function App() {
   const navi = useNavigate();
@@ -415,6 +416,30 @@ function App() {
             JSON.parse(localStorage.getItem("userInfo"))?.role ==
             "ROLE_ADMIN" ? (
               <ChooseIntro
+                navi={navi}
+                userInfo={userInfo}
+                axiosConfig={axiosConfig}
+                getToken={getToken}
+              />
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/admin/reservationList"
+          element={
+            JSON.parse(localStorage.getItem("userInfo"))?.role ==
+            "ROLE_ADMIN" ? (
+              <ReservationList
                 navi={navi}
                 userInfo={userInfo}
                 axiosConfig={axiosConfig}

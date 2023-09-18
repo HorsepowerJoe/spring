@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.websocket.server.PathParam;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +44,13 @@ public class AdminController {
     public String deleteIntro(@RequestBody Intro intro) {
 
         return adminService.deleteIntro(intro);
+    }
+
+    @GetMapping(value = "findReservationList")
+    public String findReservationList(@RequestParam("page") int page, @RequestParam("size") int size,
+            Pageable pageable) {
+        System.out.println("작동");
+        return adminService.findReservationList(pageable);
     }
 
 }

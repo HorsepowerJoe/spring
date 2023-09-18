@@ -2,15 +2,20 @@ package com.toyproject.spring.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.spring.model.Intro;
+import com.toyproject.spring.model.Reservation;
 import com.toyproject.spring.repository.IntroRepository;
+import com.toyproject.spring.repository.ReservationRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminService {
     private final IntroRepository introRepository;
+    private final ReservationRepository reservationRepository;
     private final ObjectMapper objm;
 
     public String modifyIntro(List<MultipartFile> files, String category) {
@@ -82,6 +88,18 @@ public class AdminService {
     public String deleteIntro(Intro intro) {
         introRepository.delete(intro);
         return getIntroImages(intro.getIntroCategory());
+    }
+
+    public String findReservationList(Pageable pageable) {
+
+        Page<Reservation> findPage = reservationRepository
+                .findAll(pageable);
+        try {
+            return objm.writeValueAsString(findPage);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

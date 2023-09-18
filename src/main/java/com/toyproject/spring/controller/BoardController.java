@@ -46,8 +46,6 @@ public class BoardController {
     @GetMapping(value = "findAllHotelQna")
     public String findAllHotelQna(@RequestParam("page") int page, @RequestParam("size") int size,
             Pageable pageable) throws JsonProcessingException {
-        System.out.println("작동");
-
         return boardService.findAllHotelQna(pageable);
     }
 
