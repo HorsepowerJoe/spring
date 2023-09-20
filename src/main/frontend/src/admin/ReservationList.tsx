@@ -2,6 +2,7 @@ import axios from 'axios';
 import { AdminPageProps } from 'model/props';
 import { PageInfo, Reservation } from 'model/types';
 import React, { useEffect, useState } from 'react';
+import './css/ReservationListStyle.css';
 
 const ReservationList:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosConfig}) => {
     const [reserves, setReserves] = useState<Reservation[]>([]);
@@ -25,39 +26,40 @@ const ReservationList:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
     },[])
 
 
-    const ReservationList = reserves?.map(reserve => (
-<tr key={reserve.r_num}>
-              <td>{reserve.r_num}</td>
-              <td>{reserve.r_regDate}</td>
-              <td>{reserve.visitDate}</td>
-              <td>{reserve.petNum}</td>
-              <td>{reserve.customerNum}</td>
-              <td>{reserve.g_num}</td>
-              <td>{reserve.r_expired ? 'Yes' : 'No'}</td>
-              <td>{reserve.r_filnalAmount}</td>
-            </tr>
+    const ReservationList = reserves?.map((reserve) => (
+      <tr key={reserve.r_num}>
+        <td>{reserve.r_num}</td>
+        <td>{new Date(reserve.r_regDate).toLocaleString()}</td>
+        <td>{new Date(reserve.visitDate).toLocaleString()}</td>
+        <td>{reserve.petName}</td>
+        <td>{reserve.customerName}</td>
+        <td>{reserve.g_name}</td>
+        <td>{reserve.r_expired ? 'Yes' : 'No'}</td>
+        <td>{reserve.r_filnalAmount}</td>
+      </tr>
     ));
-    
-    
 
-
-  return (
-    <>
-        <table>
-        <tr>
-            <th>Reservation Number</th>
-            <th>Registration Date</th>
-            <th>Visit Date</th>
-            <th>Pet Number</th>
-            <th>Customer Number</th>
-            <th>Grooming Number</th>
-            <th>Expired</th>
-            <th>Final Amount</th>
-          </tr>
+   
+    
+    return (
+      <>
+        <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
+          <thead>
+            <tr>
+              <th>Reservation Number</th>
+              <th>Registration Date</th>
+              <th>Visit Date</th>
+              <th>Pet Name</th>
+              <th>Customer Name</th>
+              <th>Grooming Style Name</th>
+              <th>Expired</th>
+              <th>Final Amount</th>
+            </tr>
+          </thead>
+          <tbody>{ReservationList}</tbody>
         </table>
-        {ReservationList}
-    </>
-  )
+      </>
+    );
 }
 
 export default ReservationList

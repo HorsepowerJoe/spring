@@ -2,7 +2,6 @@ package com.toyproject.spring.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -12,10 +11,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toyproject.spring.dto.FindReservationDto;
 import com.toyproject.spring.model.Intro;
 import com.toyproject.spring.model.Reservation;
+import com.toyproject.spring.repository.GroomingRepository;
 import com.toyproject.spring.repository.IntroRepository;
+import com.toyproject.spring.repository.PetRepository;
 import com.toyproject.spring.repository.ReservationRepository;
+import com.toyproject.spring.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +27,9 @@ import lombok.RequiredArgsConstructor;
 public class AdminService {
     private final IntroRepository introRepository;
     private final ReservationRepository reservationRepository;
+    private final PetRepository petRepository;
+    private final UserRepository userRepository;
+    private final GroomingRepository groomingRepository;
     private final ObjectMapper objm;
 
     public String modifyIntro(List<MultipartFile> files, String category) {
@@ -94,6 +100,13 @@ public class AdminService {
 
         Page<Reservation> findPage = reservationRepository
                 .findAll(pageable);
+
+        findPage.getContent().forEach(content -> {
+            content.setCustomerName(userRepository.findById(content.getCustomerNum()).get().getCustomerName());
+            content.setPetName(petRepository.findById(content.getPetNum()).get().getPetName());
+            content.setG_name(groomingRepository.findById(content.getG_num()).get().getG_styleName());
+
+        });
         try {
             return objm.writeValueAsString(findPage);
         } catch (JsonProcessingException e) {

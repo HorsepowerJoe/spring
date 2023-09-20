@@ -46,4 +46,8 @@ public class Reservation {
 
     private BigDecimal r_filnalAmount;
 
+    private String customerName;
+    private String petName;
+    private String g_name;
+
 }

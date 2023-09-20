@@ -23,10 +23,13 @@ export interface Intro{
 
 export interface Reservation {
     r_num: number;
-    r_regDate: string;
-    visitDate: string;
+    r_regDate: Date;
+    visitDate: Date;
     petNum: number;
     customerNum: number;
+    customerName: string;
+    petName: string;
+    g_name: string;
     g_num: number;
     r_expired: boolean;
     r_filnalAmount: number;
