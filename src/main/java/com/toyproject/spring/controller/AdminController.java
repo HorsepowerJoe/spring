@@ -49,8 +49,13 @@ public class AdminController {
     @GetMapping(value = "findReservationList")
     public String findReservationList(@RequestParam("page") int page, @RequestParam("size") int size,
             Pageable pageable) {
-        System.out.println("작동");
         return adminService.findReservationList(pageable);
+    }
+
+    @GetMapping(value = "findUserList")
+    public String findUserList(@RequestParam("page") int page, @RequestParam("size") int size,
+            Pageable pageable) {
+        return adminService.findUserList(pageable);
     }
 
 }

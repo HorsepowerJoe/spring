@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toyproject.spring.dto.FindReservationDto;
+import com.toyproject.spring.model.Customer;
 import com.toyproject.spring.model.Intro;
 import com.toyproject.spring.model.Reservation;
 import com.toyproject.spring.repository.GroomingRepository;
@@ -106,6 +106,22 @@ public class AdminService {
             content.setPetName(petRepository.findById(content.getPetNum()).get().getPetName());
             content.setG_name(groomingRepository.findById(content.getG_num()).get().getG_styleName());
 
+        });
+        try {
+            return objm.writeValueAsString(findPage);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String findUserList(Pageable pageable) {
+
+        Page<Customer> findPage = userRepository
+                .findAll(pageable);
+
+        findPage.getContent().forEach(content -> {
+            content.setCustomerPassword(null);
         });
         try {
             return objm.writeValueAsString(findPage);

@@ -34,6 +34,20 @@ export interface Reservation {
     r_expired: boolean;
     r_filnalAmount: number;
   }
+export interface Customer {
+    customerNum: number;
+    customerRegDate: Date;
+    customerName: string;
+    customerEmail: string;
+    customerGender: string;
+    customerAge: number;
+    customerPhone: string;
+    customerAddress: string;
+    customerIsWithdrawal: boolean;
+    role: string;
+    provider: string;
+    providerId: string;
+  }
 
 
   export interface PageInfo{
