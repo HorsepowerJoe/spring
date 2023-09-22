@@ -82,7 +82,7 @@ function MobileHeader(props) {
         style={{
           width: "100%",
           display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
+          gridTemplateColumns: "0.8fr 1fr 1fr",
           backgroundColor: "#f7f7f7",
           height: "130px",
           marginBottom: "10px",
@@ -103,7 +103,14 @@ function MobileHeader(props) {
             size="2x"
           />
         </button>
-        <a href="/" style={{ margin: "0 auto", marginTop: "12.5px" }}>
+        <a
+          href="/"
+          style={{
+            margin: "0 auto",
+            marginTop: "12.5px",
+            justifySelf: "center",
+          }}
+        >
           <img
             src={logoImg}
             alt="logoImage"
@@ -111,7 +118,13 @@ function MobileHeader(props) {
           />
         </a>
         {props.userInfo == "" ? (
-          <div style={{ position: "absolute", right: "10px", top: "25px" }}>
+          <div
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "25px",
+            }}
+          >
             <button
               style={{
                 ...loginButtonStyle,
@@ -146,6 +159,7 @@ function MobileHeader(props) {
               color: "black",
               position: "relative",
               right: "0",
+              justifySelf: "end",
             }}
           >
             <span
