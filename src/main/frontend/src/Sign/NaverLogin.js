@@ -15,7 +15,7 @@ const NaverLogin = ({ setGetToken, setUserInfo, NAVER_KEY }) => {
     loginButton: {
       color: "green",
       type: 3,
-      height: 53,
+      height: 58,
     },
     callbackHandle: true,
   });

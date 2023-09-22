@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -6,14 +6,10 @@ import FacebookLogin from "react-facebook-login";
 import * as config from "../global_variables";
 import NaverLogin from "./NaverLogin";
 import jwtDecode from "jwt-decode";
-import Form from "react-bootstrap/Form";
 
 function Login(props) {
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPassword, setCustomerPassword] = useState("");
-  const [isHoverGoogle, setIsHoverGoogle] = useState(false);
-  const [isHoverFacebook, setIsHoverFacebook] = useState(false);
-  const [isHoverNaver, setIsHoverNaver] = useState(false);
   const [isHoverLoginBtn, setIsHoverLoginBtn] = useState(false);
   const GOOGLE_KEY = config.GOOGLE_KEY;
   const FACEBOOK_KEY = config.FACEBOOK_KEY;
@@ -149,7 +145,8 @@ function Login(props) {
           </button>
           <GoogleOAuthProvider clientId={`${GOOGLE_KEY}`}>
             <GoogleLogin
-              width="246px"
+              width="266px"
+              size="large"
               clientId={`${GOOGLE_KEY}`}
               onSuccess={responseGoogle}
               onFailure={responseGoogle}
@@ -165,13 +162,12 @@ function Login(props) {
               )}
             />
           </GoogleOAuthProvider>
-          <span
-            onMouseOver={() => setIsHoverFacebook(true)}
-            onMouseOut={() => setIsHoverFacebook(false)}
-          >
+          <span>
             <FacebookLogin
-              buttonStyle={{ width: "246px", borderRadius: "5px" }}
-              size="small"
+              buttonStyle={{
+                borderRadius: "5px",
+                height: " 58px",
+              }}
               appId={`${FACEBOOK_KEY}`}
               autoLoad={false}
               fields="name,first_name,last_name,email"
