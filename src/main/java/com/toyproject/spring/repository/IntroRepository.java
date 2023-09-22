@@ -10,4 +10,6 @@ public interface IntroRepository extends JpaRepository<Intro, Integer> {
 
     List<Intro> findAllByIntroCategoryAndIsUsed(String category, boolean isUsed);
 
+    List<Intro> findAllByIntroCategory(String category);
+
 }

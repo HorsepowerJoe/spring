@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function HotelQnaDetails(props) {
   const { hotelQnaNum } = useParams();
   const [boardDetails, setBoardDetails] = useState("");
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState({ hotelQnaComment: "대기중" });
 
   const updateQna = () => {
     props.navi(`/updateQnaForm/hotel/${hotelQnaNum}`);
@@ -57,7 +57,7 @@ function HotelQnaDetails(props) {
     const body = {
       hotelQnaComment: event.target.hotelQnaComment.value,
       hotelQnaNum: boardDetails.hotelQnaNum,
-      customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+      customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
     };
     axios
       .post("/api/comment/addHotelComment", body, props.axiosConfig)
@@ -179,13 +179,12 @@ function HotelQnaDetails(props) {
                 marginTop: "30px",
                 minHeight: "300px",
               }}
-            >
-              {boardDetails.answered ? comment.hotelQnaComment : "대기중"}
-            </textarea>
+              value={comment?.hotelQnaComment}
+            ></textarea>
           )}
           <br />
           {boardDetails.customerNum ==
-          JSON.parse(localStorage.getItem("userInfo")).id ? (
+          JSON.parse(localStorage.getItem("userInfo"))?.id ? (
             <Button
               variant="secondary"
               onClick={deleteQna}

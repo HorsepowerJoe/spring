@@ -66,7 +66,7 @@ const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosCo
             <button id='myHoverBtn' type='button' onClick={()=>{deleteIntroHandler(image)}}>삭제하기</button>
             <br />
             <br />
-            <img src={'/api'+image.introFileUrl.replace('/Users/jml/Documents','')} alt={`privew${image.introFileName}`} width={"100%"} height={"100%"} />
+            <img src={'/api'+image.introFileUrl.replace('/Users/jml/Documents','')} alt={`privew${image.introFileName}`} />
             <hr />
         </li>
     ));

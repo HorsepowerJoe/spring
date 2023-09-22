@@ -20,9 +20,6 @@ public class DummyDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Grooming grooming = new Grooming();
-        Grooming grooming2 = new Grooming();
-        Grooming grooming3 = new Grooming();
 
         for (int i = 0; i < 50; i++) {
             GroomingQna qna = new GroomingQna();
@@ -31,19 +28,6 @@ public class DummyDataLoader implements CommandLineRunner {
             qna.setGroomingQnaTitle(i + "test");
             groomingQnaRepository.save(qna);
         }
-
-        grooming.setG_pricePerWeight(new BigDecimal("20000"));
-        grooming.setG_styleName("스포팅");
-
-        grooming2.setG_pricePerWeight(new BigDecimal("30000"));
-        grooming2.setG_styleName("가위컷");
-
-        grooming3.setG_pricePerWeight(new BigDecimal("15000"));
-        grooming3.setG_styleName("위생미용");
-
-        groomingRepository.save(grooming);
-        groomingRepository.save(grooming2);
-        groomingRepository.save(grooming3);
 
     }
 

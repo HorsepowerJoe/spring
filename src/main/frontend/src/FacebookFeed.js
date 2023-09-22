@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import logoImg from "/Users/jml/Documents/vscode/spring/src/main/frontend/src/img/logo/logo.png";
+import { Button } from "react-bootstrap";
 
 function FacebookFeed(props) {
   const [posts, setPosts] = useState([]);
+  const [isClose, setIsClose] = useState(false);
   useEffect(() => {
     axios.get("/api/getFeed").then((data) => {
       console.log(data.data.posts.data);
@@ -54,7 +56,37 @@ function FacebookFeed(props) {
     </div>
   ));
 
-  return <div className="facebook-feed">{post}</div>;
+  return (
+    <>
+      {isClose ? null : (
+        <h1
+          style={{
+            textAlign: "center",
+            backgroundColor: "black",
+            color: "white",
+            padding: "100px",
+          }}
+        >
+          테스트용 어드민 계정입니다. <br /> ID : test@test.com <br /> PW : test
+          <br />
+          <br />
+          테스트용 유저 계정입니다. <br /> ID : asdf@asdf.com <br /> PW : asdf{" "}
+          <br />
+          <br />
+          <Button
+            style={{ margin: "10px", width: "30%" }}
+            variant="secondary"
+            onClick={() => {
+              setIsClose(true);
+            }}
+          >
+            닫기
+          </Button>
+        </h1>
+      )}
+      <div className="facebook-feed">{post}</div>
+    </>
+  );
 }
 
 export default FacebookFeed;

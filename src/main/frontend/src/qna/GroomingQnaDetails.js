@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function GroomingQnaDetails(props) {
   const { groomingQnaNum } = useParams();
   const [boardDetails, setBoardDetails] = useState("");
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState({ groomingQnaComment: "대기중" });
 
   const updateQna = () => {
     props.navi(`/updateQnaForm/grooming/${groomingQnaNum}`);
@@ -56,7 +56,7 @@ function GroomingQnaDetails(props) {
     const body = {
       groomingQnaComment: event.target.groomingQnaComment.value,
       groomingQnaNum: boardDetails.groomingQnaNum,
-      customerNum: JSON.parse(localStorage.getItem("userInfo")).id,
+      customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
     };
     axios
       .post("/api/comment/addGroomingComment", body, props.axiosConfig)
@@ -181,13 +181,12 @@ function GroomingQnaDetails(props) {
                 marginTop: "30px",
                 minHeight: "300px",
               }}
-            >
-              {boardDetails.answered ? comment.groomingQnaComment : "대기중"}
-            </textarea>
+              value={comment?.groomingQnaComment}
+            ></textarea>
           )}
           <br />
           {boardDetails.customerNum ==
-          JSON.parse(localStorage.getItem("userInfo")).id ? (
+          JSON.parse(localStorage.getItem("userInfo"))?.id ? (
             <Button
               variant="secondary"
               onClick={deleteQna}

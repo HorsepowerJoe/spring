@@ -60,7 +60,7 @@ public class AdminService {
 
     public String getIntroImages(String category) {
         try {
-            return objm.writeValueAsString(introRepository.findAllByIntroCategoryAndIsUsed(category, false));
+            return objm.writeValueAsString(introRepository.findAllByIntroCategory(category));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

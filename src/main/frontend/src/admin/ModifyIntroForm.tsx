@@ -49,7 +49,7 @@ const ModifyIntroForm:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
 
 
     const previewImage = images?.map((image, index) =>(
-        <li key={index}><p>{image.name}</p><img src={URL.createObjectURL(image)} alt={`privew${image.name}`} width={"100%"} height={"100%"} /></li>
+        <li key={index}><p>{image.name}</p><img src={URL.createObjectURL(image)} alt={`privew${image.name}`}  /></li>
     ));
 
   return (
