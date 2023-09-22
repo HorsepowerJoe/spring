@@ -9,6 +9,7 @@ import DaumPostcode from "react-daum-postcode";
 //나의 예약(/api/user/reservation)
 function MyPage(props) {
   const [openPostcode, setOpenPostcode] = useState(false);
+  const [customerGender, setCustomerGender] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
   const [customerAddressDetail, setCustomerAddressDetail] = useState("");
   const [customerAddressZonecode, setCustomerAddressZonecode] = useState();
@@ -51,6 +52,7 @@ function MyPage(props) {
     let body = {
       username: myPageInfo.username,
       customerNum: myPageInfo.customerNum,
+      customerGender: event.target.customerGender.value,
       customerAddress:
         customerAddress == null || customerAddress == ""
           ? myPageInfo.customerAddress
@@ -64,9 +66,26 @@ function MyPage(props) {
           : event.target.phoneFirst.value +
             event.target.phoneMiddle.value +
             event.target.phoneLast.value,
+      customerAge: parseInt(
+        event.target.customerAgeYear.value +
+          event.target.customerAgeMonth.value +
+          event.target.customerAgeDay.value
+      ),
     };
 
-    console.log(body);
+    if (body.customerGender == "성별") {
+      alert("성별을 선택해주세요.");
+      return;
+    }
+
+    if (
+      event.target.customerAgeYear == "출생년도" ||
+      event.target.customerAgeMonth.value == "월" ||
+      event.target.customerAgeDay.value == "일"
+    ) {
+      event.target.customerAgeYear.focus();
+      return alert("출생년도 또는 월, 일을 선택해주세요.");
+    }
 
     axios
       .post("/api/user/modifyUserInfo", body, axiosConfig)
@@ -89,6 +108,67 @@ function MyPage(props) {
       setCustomerAddressZonecode(data.zonecode);
       setOpenPostcode(false);
     },
+  };
+
+  const onGenderHandler = (event) => {
+    setCustomerGender(event.currentTarget.value);
+  };
+
+  let YearList = () => {
+    let result = [];
+    let Array_Data = [];
+    for (let i = 1900; i <= new Date().getFullYear(); i++) {
+      Array_Data.push(i);
+    }
+
+    Array_Data.map((data, index) => {
+      result.push(
+        <option key={index} value={data}>
+          {data}
+        </option>
+      );
+    });
+    return result;
+  };
+  let MonthList = () => {
+    let result = [];
+    let Array_Data = [];
+    for (let i = 1; i <= 12; i++) {
+      if (i < 10) {
+        Array_Data.push("0" + i);
+      } else {
+        Array_Data.push(i);
+      }
+    }
+
+    Array_Data.map((data, index) => {
+      result.push(
+        <option key={index} value={data}>
+          {data}
+        </option>
+      );
+    });
+    return result;
+  };
+  let DayList = () => {
+    let result = [];
+    let Array_Data = [];
+    for (let i = 1; i <= 31; i++) {
+      if (i < 10) {
+        Array_Data.push("0" + i);
+      } else {
+        Array_Data.push(i);
+      }
+    }
+
+    Array_Data.map((data, index) => {
+      result.push(
+        <option key={index} value={data}>
+          {data}
+        </option>
+      );
+    });
+    return result;
   };
 
   return (
@@ -129,6 +209,37 @@ function MyPage(props) {
               value={myPageInfo.customerName}
             />
 
+            <label>Gender</label>
+            <select name="customerGender" onChange={onGenderHandler}>
+              <option disabled selected>
+                성별
+              </option>
+              <option value="male">남성</option>
+              <option value="female">여성</option>
+            </select>
+            <label>Age</label>
+            <div
+              style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}
+            >
+              <select name="customerAgeYear">
+                <option selected disabled>
+                  출생년도
+                </option>
+                {YearList()}
+              </select>
+              <select name="customerAgeMonth">
+                <option selected disabled>
+                  월
+                </option>
+                {MonthList()}
+              </select>
+              <select name="customerAgeDay">
+                <option selected disabled>
+                  일
+                </option>
+                {DayList()}
+              </select>
+            </div>
             <label>Phone Number</label>
             <div>
               {" "}

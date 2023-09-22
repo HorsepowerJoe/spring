@@ -23,14 +23,30 @@ function AddPet(props) {
       customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
     };
 
-    axios.post("/api/user/addPet", body, axiosConfig).then((data) => {
-      if (data.status == 200) {
-        alert("등록되었습니다.");
-        props.navi("/");
-      } else {
+    if (body.petGender == "성별") {
+      alert("성별을 선택해주세요.");
+      return;
+    }
+
+    if (body.petAge == "나이") {
+      alert("나이를 선택해주세요.");
+      return;
+    }
+
+    axios
+      .post("/api/user/addPet", body, axiosConfig)
+      .then((data) => {
+        if (data.status == 200) {
+          alert("등록되었습니다.");
+          props.navi("/");
+        } else {
+          alert("서버 통신 에러!");
+        }
+      })
+      .catch((er) => {
+        console.log(er);
         alert("서버 통신 에러!");
-      }
-    });
+      });
   };
 
   let YearList = () => {
@@ -99,6 +115,7 @@ function AddPet(props) {
               type="text"
               name="petBreed"
               placeholder="견종을 입력해주세요."
+              required
             />
             <label>Pet Age</label>
             <div>
@@ -117,27 +134,28 @@ function AddPet(props) {
                 step={0.1}
                 placeholder="Kg단위로 입력해주세요."
                 style={{ width: "98.5%" }}
+                required
               />
             </div>
             <br />
             <br />
             <label>Snitchy</label>
             <label>
-              <input type="radio" name="petSnitchy" value="true" />
+              <input type="radio" name="petSnitchy" value="true" required />
               입질있음
             </label>
             <label>
-              <input type="radio" name="petSnitchy" value="false" />
+              <input type="radio" name="petSnitchy" value="false" required />
               입질없음
             </label>
             <br />
             <label>Neutered</label>
             <label>
-              <input type="radio" name="petNeutered" value="true" />
+              <input type="radio" name="petNeutered" value="true" required />
               중성화 되어 있음
             </label>
             <label>
-              <input type="radio" name="petNeutered" value="false" />
+              <input type="radio" name="petNeutered" value="false" required />
               중성화 하지 않음
             </label>
             <br />

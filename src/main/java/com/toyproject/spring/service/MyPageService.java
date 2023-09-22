@@ -29,12 +29,16 @@ public class MyPageService {
         Customer findCustomer = userRepository.findByUsername(customer.getUsername());
         if (findCustomer != null && findCustomer.getCustomerNum() == customer.getCustomerNum()
                 && findCustomer.getCustomerPhone().equals(customer.getCustomerPhone())
-                && findCustomer.getCustomerAddress().equals(customer.getCustomerAddress())) {
+                && findCustomer.getCustomerAddress().equals(customer.getCustomerAddress())
+                && findCustomer.getCustomerGender().equals(customer.getCustomerGender())
+                && findCustomer.getCustomerAge() == customer.getCustomerAge()) {
             return "1";
         }
 
         findCustomer.setCustomerPhone(customer.getCustomerPhone());
         findCustomer.setCustomerAddress(customer.getCustomerAddress());
+        findCustomer.setCustomerGender(customer.getCustomerGender());
+        findCustomer.setCustomerAge(customer.getCustomerAge());
         userRepository.save(findCustomer);
         return "1";
     }

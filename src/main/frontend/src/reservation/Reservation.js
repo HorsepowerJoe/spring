@@ -53,6 +53,17 @@ function Reservation(props) {
         customerNum: props.userInfo?.id,
         g_num: event.target.g_num.value,
       };
+
+      if (body.petNum == "미용하실 애견을 선택해주세요.") {
+        alert(body.petNum);
+        return;
+      }
+
+      if (body.g_num == "미용 스타일을 선택해주세요.") {
+        alert(body.g_num);
+        return;
+      }
+
       axios
         .post("/api/reserve/reservation", body, props.axiosConfig)
         .then((data) => {
@@ -193,7 +204,7 @@ function Reservation(props) {
           >
             <label>Pet Name</label>
             <select name="petNum" onChange={nameChangeHandler}>
-              <option disabled selected>
+              <option value={null} disabled selected>
                 미용하실 애견을 선택해주세요.
               </option>
               {pet}
