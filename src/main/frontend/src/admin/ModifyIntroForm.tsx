@@ -49,7 +49,7 @@ const ModifyIntroForm:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
 
 
     const previewImage = images?.map((image, index) =>(
-        <li key={index}><p>{image.name}</p><img src={URL.createObjectURL(image)} alt={`privew${image.name}`} width={600} height={400} /></li>
+        <li key={index}><p>{image.name}</p><img src={URL.createObjectURL(image)} alt={`privew${image.name}`} width={"100%"} height={"100%"} /></li>
     ));
 
   return (
@@ -63,7 +63,7 @@ const ModifyIntroForm:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
           height: "80%",
         }}
       >
-        <fieldset>
+        <fieldset style={{width:"100%"}}>
           <legend
             style={{
               textAlign: "center",
@@ -75,7 +75,7 @@ const ModifyIntroForm:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
             회사 소개 변경
           </legend>
           <form
-            style={{ display: "flex", flexDirection: "column", margin: "10px", textAlign: "center", minWidth: "600px" }}
+            style={{ display: "flex", flexDirection: "column", margin: "10px", textAlign: "center", }}
             onSubmit={onSubmitHandler}
           >
             <label >카테고리</label>

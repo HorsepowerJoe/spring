@@ -66,7 +66,7 @@ const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosCo
             <button id='myHoverBtn' type='button' onClick={()=>{deleteIntroHandler(image)}}>삭제하기</button>
             <br />
             <br />
-            <img src={'/api'+image.introFileUrl.replace('/Users/jml/Documents','')} alt={`privew${image.introFileName}`} width={600} height={400} />
+            <img src={'/api'+image.introFileUrl.replace('/Users/jml/Documents','')} alt={`privew${image.introFileName}`} width={"100%"} height={"100%"} />
             <hr />
         </li>
     ));
@@ -80,21 +80,24 @@ const ChooseIntro:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosCo
         alignItems: "center",
         width: "100%",
         height: "80%",
+        
       }}
     >
-      <fieldset>
+      <fieldset style={{width:"100%"}}>
         <legend
           style={{
             textAlign: "center",
             backgroundColor: "lightgray",
             border: "1px solid black",
             borderBottom: "0",
+            
+          
           }}
         >
           회사 소개 선택
         </legend>
         <form
-          style={{ display: "flex", flexDirection: "column", margin: "10px", textAlign: "center", minWidth: "600px" }}
+          style={{ display: "flex", flexDirection: "column", margin: "10px", textAlign: "center", }}
           onSubmit={onSubmitHandler}
         >
           <label >카테고리</label>

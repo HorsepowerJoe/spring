@@ -76,7 +76,7 @@ function FindReservation(props) {
           height: "80%",
         }}
       >
-        <fieldset>
+        <fieldset style={{ width: "100%" }}>
           <legend
             style={{
               textAlign: "center",
@@ -90,19 +90,18 @@ function FindReservation(props) {
           <table
             className="bordered-table"
             style={{
-              width: "800px",
               textAlign: "center",
             }}
           >
             <tr>
-              <th style={{ minWidth: "50px" }}>번호</th>
-              <th style={{ minWidth: "50px" }}>예약번호</th>
-              <th style={{ minWidth: "50px" }}>방문 시간</th>
-              <th style={{ minWidth: "50px" }}>애견 이름</th>
-              <th style={{ minWidth: "50px" }}>미용 종류</th>
-              <th style={{ minWidth: "50px" }}>Kg당 가격</th>
-              <th style={{ minWidth: "50px" }}>최종 금액</th>
-              <th style={{ minWidth: "50px" }}>예약 취소</th>
+              <th>번호</th>
+              <th>예약번호</th>
+              <th>방문 시간</th>
+              <th>애견 이름</th>
+              <th>미용 종류</th>
+              <th>Kg당 가격</th>
+              <th>최종 금액</th>
+              <th>예약 취소</th>
             </tr>
             {reserve}
           </table>

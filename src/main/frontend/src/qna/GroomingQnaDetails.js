@@ -79,7 +79,7 @@ function GroomingQnaDetails(props) {
           height: "80%",
         }}
       >
-        <fieldset>
+        <fieldset style={{ width: "100%" }}>
           <legend
             style={{
               textAlign: "center",
@@ -149,9 +149,10 @@ function GroomingQnaDetails(props) {
               <textarea
                 name="groomingQnaComment"
                 style={{
-                  width: "800px",
-                  minHeight: "300px",
+                  width: "100%",
                   marginBottom: "30px",
+                  marginTop: "30px",
+                  minHeight: "300px",
                 }}
                 readOnly={boardDetails.answered ? true : false}
                 placeholder={boardDetails?.answered ? null : "답변 대기중"}
@@ -175,9 +176,10 @@ function GroomingQnaDetails(props) {
             <textarea
               readOnly
               style={{
-                width: "800px",
-                minHeight: "300px",
+                width: "100%",
                 marginBottom: "30px",
+                marginTop: "30px",
+                minHeight: "300px",
               }}
             >
               {boardDetails.answered ? comment.groomingQnaComment : "대기중"}

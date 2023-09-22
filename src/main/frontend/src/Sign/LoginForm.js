@@ -30,6 +30,7 @@ function Login(props) {
   };
 
   const buttonStyle = {
+    width: "266px",
     padding: "10px 20px",
     backgroundColor: isHoverLoginBtn ? "#ff69b4" : "#c33586",
     color: "#ffffff",
@@ -125,12 +126,18 @@ function Login(props) {
           onSubmit={onSubmitHandler}
         >
           <label>Email</label>
-          <input type="email" value={customerEmail} onChange={onEmailHandler} />
+          <input
+            type="email"
+            value={customerEmail}
+            onChange={onEmailHandler}
+            style={{ width: "266px" }}
+          />
           <label>Password</label>
           <input
             type="password"
             value={customerPassword}
             onChange={onPasswordHandler}
+            style={{ width: "266px" }}
           />
           <br /> <br /> <br /> <br />
           <button

@@ -66,24 +66,27 @@ function HotelQna(props) {
           height: "80%",
         }}
       >
-        <fieldset>
+        <fieldset style={{ width: "100%" }}>
           <legend
             style={{
               textAlign: "center",
               border: "1px solid black",
               borderBottom: "0px",
               backgroundColor: "lightgray",
+              minWidth: "500px",
             }}
           >
             호텔 문의
           </legend>
-          <table style={{ width: "800px", textAlign: "center" }}>
+          <table
+            style={{ width: "100%", textAlign: "center", minWidth: "500px" }}
+          >
             <tr>
-              <th style={{ minWidth: "50px" }}>번호</th>
-              <th style={{ minWidth: "50px" }}>제목</th>
-              <th style={{ minWidth: "50px" }}>작성자</th>
-              <th style={{ minWidth: "50px" }}>답변</th>
-              <th style={{ minWidth: "50px" }}>작성일</th>
+              <th style={{ minWidth: "100px" }}>번호</th>
+              <th style={{ minWidth: "100px" }}>제목</th>
+              <th style={{ minWidth: "100px" }}>작성자</th>
+              <th style={{ minWidth: "100px" }}>답변</th>
+              <th style={{ minWidth: "100px" }}>작성일</th>
             </tr>
             {hotelQna}
           </table>

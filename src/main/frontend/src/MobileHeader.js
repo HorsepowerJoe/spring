@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logoImg from "/Users/jml/Documents/vscode/spring/src/main/frontend/src/img/logo/logo.png";
 import MyHoverBtn from "./myBtn/MyHoverBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 function MobileHeader(props) {
@@ -86,6 +86,7 @@ function MobileHeader(props) {
           backgroundColor: "#f7f7f7",
           height: "130px",
           marginBottom: "10px",
+          borderBottom: isMobileMenuOpen ? "1px solid black" : "",
         }}
       >
         <button
@@ -97,7 +98,10 @@ function MobileHeader(props) {
           }}
           onClick={toggleMobileMenu}
         >
-          <FontAwesomeIcon icon={faBars} size="2x" />
+          <FontAwesomeIcon
+            icon={isMobileMenuOpen ? faClose : faBars}
+            size="2x"
+          />
         </button>
         <a href="/" style={{ margin: "0 auto", marginTop: "12.5px" }}>
           <img
@@ -107,7 +111,7 @@ function MobileHeader(props) {
           />
         </a>
         {props.userInfo == "" ? (
-          <div style={{ position: "absolute", right: "10px", top: "10px" }}>
+          <div style={{ position: "absolute", right: "10px", top: "25px" }}>
             <button
               style={{
                 ...loginButtonStyle,

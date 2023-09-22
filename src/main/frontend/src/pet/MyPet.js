@@ -79,7 +79,7 @@ function MyPet(props) {
           height: "80%",
         }}
       >
-        <fieldset>
+        <fieldset style={{ width: "100%" }}>
           <legend
             style={{
               textAlign: "center",
@@ -93,19 +93,18 @@ function MyPet(props) {
           <table
             className="bordered-table"
             style={{
-              width: "800px",
               textAlign: "center",
             }}
           >
             <tr>
-              <th style={{ minWidth: "50px" }}>이름</th>
-              <th style={{ minWidth: "50px" }}>견종</th>
-              <th style={{ minWidth: "50px" }}>나이</th>
-              <th style={{ minWidth: "50px" }}>체중</th>
-              <th style={{ minWidth: "50px" }}>입질</th>
-              <th style={{ minWidth: "50px" }}>중성화</th>
-              <th style={{ minWidth: "50px" }}>기타</th>
-              <th style={{ minWidth: "50px" }}>삭제</th>
+              <th>이름</th>
+              <th>견종</th>
+              <th>나이</th>
+              <th>체중</th>
+              <th>입질</th>
+              <th>중성화</th>
+              <th>기타</th>
+              <th>삭제</th>
             </tr>
             {pet}
           </table>

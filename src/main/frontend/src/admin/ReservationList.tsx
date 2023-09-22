@@ -44,7 +44,7 @@ const ReservationList:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axi
     return (
       <>
         <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd' }}>
-          <thead>
+          <thead >
             <tr>
               <th>Reservation Number</th>
               <th>Registration Date</th>
