@@ -66,10 +66,14 @@ function App() {
       .catch((er) => {
         alert("만료된 인증입니다.");
         axios
-          .post("/api/logout", {
-            jwtToken: localStorage.getItem("jwtToken"),
-            refreshToken: localStorage.getItem("refreshToken"),
-          })
+          .post(
+            "/api/logout",
+            {
+              jwtToken: localStorage.getItem("jwtToken"),
+              refreshToken: localStorage.getItem("refreshToken"),
+            },
+            axiosConfig
+          )
           .then((data) => {
             if (data.status == 200) {
               localStorage.removeItem("userInfo");
