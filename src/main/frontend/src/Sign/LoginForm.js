@@ -167,6 +167,7 @@ function Login(props) {
               buttonStyle={{
                 borderRadius: "5px",
                 height: " 58px",
+                width: "266px",
               }}
               appId={`${FACEBOOK_KEY}`}
               autoLoad={false}
