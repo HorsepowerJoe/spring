@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 public class SignController {
 
-    @GetMapping(value = { "/loginForm", "joinForm", "/" })
+    @GetMapping(value = { "/loginForm", "joinForm" })
     public String loginFrom() {
         return "forward:/index.html";
     }

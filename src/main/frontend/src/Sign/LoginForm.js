@@ -71,7 +71,8 @@ function Login(props) {
         props.navi("/");
       })
       .catch((er) => {
-        alert(er);
+        alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+        console.log(er);
       });
   };
 
@@ -131,6 +132,7 @@ function Login(props) {
             value={customerEmail}
             onChange={onEmailHandler}
             style={{ width: "266px" }}
+            required
           />
           <label>Password</label>
           <input
@@ -138,6 +140,7 @@ function Login(props) {
             value={customerPassword}
             onChange={onPasswordHandler}
             style={{ width: "266px" }}
+            required
           />
           <br /> <br /> <br /> <br />
           <button

@@ -52,7 +52,9 @@ function FacebookFeed(props) {
           />
         )
       )}
-      <div className="post-content">{post?.message}</div>
+      <div className="post-content" style={{ whiteSpace: "pre-line" }}>
+        {post?.message}
+      </div>
     </div>
   ));
 

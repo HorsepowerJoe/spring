@@ -66,14 +66,10 @@ function App() {
       .catch((er) => {
         alert("만료된 인증입니다.");
         axios
-          .post(
-            "/api/logout",
-            {
-              jwtToken: localStorage.getItem("jwtToken"),
-              refreshToken: localStorage.getItem("refreshToken"),
-            },
-            axiosConfig
-          )
+          .post("/api/logout", {
+            jwtToken: localStorage.getItem("jwtToken"),
+            refreshToken: localStorage.getItem("refreshToken"),
+          })
           .then((data) => {
             if (data.status == 200) {
               localStorage.removeItem("userInfo");
@@ -84,6 +80,16 @@ function App() {
               clearInterval(tokenRefresh);
               navi("/loginForm");
             }
+          })
+          .catch((er) => {
+            alert("만료된 인증입니다.");
+            localStorage.removeItem("userInfo");
+            localStorage.removeItem("jwtToken");
+            localStorage.removeItem("refreshToken");
+            setUserInfo("");
+            setIsLogined(false);
+            clearInterval(tokenRefresh);
+            navi("/loginForm");
           });
       });
   };
