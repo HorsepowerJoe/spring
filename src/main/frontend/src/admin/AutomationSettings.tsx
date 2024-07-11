@@ -3,7 +3,6 @@ import { AdminPageProps } from 'model/props';
 import { AutomationDto } from 'model/types';
 import React, { useState } from 'react';
 import './css/ReservationListStyle.css';
-import MyHoverBtn from 'myBtn/MyHoverBtn';
 
 const AutomationSettings: React.FC<AdminPageProps> = ({ navi, userInfo, getToken, axiosConfig }) => {
   const [keyword, setKeyword] = useState<string>("");
@@ -26,10 +25,13 @@ const AutomationSettings: React.FC<AdminPageProps> = ({ navi, userInfo, getToken
 
       if (response.status === 200) {
         console.log("크롤링 동작 성공");
+        //얼럿 없으면 허전함
+        alert("완료되었습니다.");
       }
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
-      // 오류 처리
+      //오류 처리
+      alert("오류 발생! 키워드가 검색되지 않았거나 서버에 문제가 있어 API 호출 중 오류가 발생하였습니다.");
     }
   }
 

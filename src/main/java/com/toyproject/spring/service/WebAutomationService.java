@@ -90,7 +90,6 @@ public class WebAutomationService {
                 System.out.println("Exception 발생: " + e.getMessage());
             }
         }
-        quitWebDriver();
     }
 
     public void quitWebDriver() {
