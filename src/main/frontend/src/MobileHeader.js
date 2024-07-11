@@ -367,19 +367,19 @@ function MobileHeader(props) {
                     호텔 문의
                   </button>
                 </li>
-                <li>
-                  <button
-                    style={innerButtonStyle}
-                    onClick={() => {
-                      props.navi("/freeBoard");
-                      toggleMobileMenu();
-                    }}
-                  >
-                    자유게시판
-                  </button>
-                </li>
               </ul>
             )}
+          </li>
+          <li>
+            <button
+              style={innerButtonStyle}
+              onClick={() => {
+                props.navi("/freeBoard");
+                toggleMobileMenu();
+              }}
+            >
+              자유게시판
+            </button>
           </li>
         </ul>
       </div>

@@ -35,10 +35,11 @@ const AutomationSettings: React.FC<AdminPageProps> = ({ navi, userInfo, getToken
 
   return (
     <>
-      <textarea name="keyword" id="keyword" onChange={keywordChangeHandler} placeholder='키워드'></textarea>
+      <textarea name="keyword" id="keyword" onChange={keywordChangeHandler} placeholder='키워드' style={{ width: "90%", margin: "5%", minHeight: "100px" }}></textarea>
       <br />
-      <textarea name="comment" id="comment" onChange={commentChangeHandler} placeholder='코멘트'></textarea>
-      <button id='myHoverBtn' type='button' onClick={onSubmitHandler}>제출</button>
+      <textarea name="comment" id="comment" onChange={commentChangeHandler} placeholder='코멘트' style={{ width: "90%", margin: "5%", minHeight: "100px" }}></textarea>
+      <br />
+      <button id='myHoverBtn' type='button' onClick={onSubmitHandler} style={{ width: "100px", height: "30px", borderRadius: "4px", margin: "0px 37%" }}>제출</button>
     </>
   );
 }
