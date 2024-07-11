@@ -57,13 +57,12 @@ function FreeBoardDetails(props) {
     const body = {
       freeBoardReply: event.target.freeBoardReply.value,
       freeBoardNum: boardDetails.freeBoardNum,
-      customerNum: JSON.parse(localStorage.getItem("userInfo"))?.id,
+      freeBoardReplyName: event.target.freeBoardReplyName.value,
     };
     axios
       .post("/api/comment/addFreeBoardReply", body, props.axiosConfig)
       .then((data) => {
         if (data.status == 200) {
-          alert("작성되었습니다.");
           setBoardDetails(data.data);
           window.location.reload();
         }
@@ -76,7 +75,7 @@ function FreeBoardDetails(props) {
         <ul className="comment-list">
           {replies.map((reply) => (
             <li key={reply.freeBoardReplyNum}>
-              <span className="author">{reply.customerName}</span> |{" "}
+              <span className="author">{reply.freeBoardReplyName}</span> |{" "}
               <span className="date">
                 {new Date(reply.freeBoardReplyDate).toLocaleString()}
               </span>
@@ -148,7 +147,7 @@ function FreeBoardDetails(props) {
               width: "100%",
               marginBottom: "30px",
               marginTop: "30px",
-              minHeight: "300px",
+              minHeight: "150px",
             }}
           ></textarea>
           <hr />
@@ -162,27 +161,37 @@ function FreeBoardDetails(props) {
           </legend>
           <br />
           <br />
-          {JSON.parse(localStorage.getItem("userInfo")) ? (
-            <form onSubmit={commentSubmitHandler}>
-              <textarea
-                name="freeBoardReply"
-                style={{
-                  width: "100%",
-                  marginBottom: "30px",
-                  marginTop: "30px",
-                  minHeight: "300px",
-                }}
-                placeholder={"리플을 입력하세요."}
-              ></textarea>
-              <br />
+          <form onSubmit={commentSubmitHandler}>
+            <input
+              type="text"
+              className="freeBoardReplyName"
+              name="freeBoardReplyName"
+              placeholder="닉네임"
+            />
+            <textarea
+              id="commentInput"
+              name="freeBoardReply"
+              style={{
+                width: "100%",
+                marginBottom: "30px",
+                marginTop: "30px",
+                minHeight: "150px",
+              }}
+              placeholder={"리플을 입력하세요."}
+            ></textarea>
+            <br />
 
-              <Button id="myHoverBtn" style={{ float: "right" }} type="submit">
-                리플 작성
-              </Button>
+            <Button
+              id="myHoverBtn"
+              className="commentSubmit"
+              style={{ float: "right", zIndex: 9999 }}
+              type="submit"
+            >
+              리플 작성
+            </Button>
 
-              <br />
-            </form>
-          ) : null}
+            <br />
+          </form>
           <br />
           <ReplyList replies={replies} />
         </fieldset>

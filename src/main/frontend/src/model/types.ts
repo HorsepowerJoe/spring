@@ -56,4 +56,9 @@ export interface Customer {
     totalElement: number,
     totalPages: number,
   }
+
+  export interface AutomationDto{
+    keyword: string,
+    comment: string,
+  }
   

@@ -33,6 +33,9 @@ const AdminPage:React.FC<AdminPageProps> = ({navi, userInfo, getToken, axiosConf
        <button id='myHoverBtn' style={{borderBottom:"1px solid black"}} onClick={():void=>{navi('/admin/reservationList')}}>예약 목록 보기</button>
        <button id='myHoverBtn' onClick={():void=>{navi('/admin/userList')}}>회원 목록 보기</button>
      
+     <hr />
+     <p style={{textAlign:'center'}}>웹 자동화</p>
+     <button id='myHoverBtn' style={{borderBottom:"1px solid black"}} onClick={():void=>{navi('/admin/automationSettings')}}>자동 댓글 설정</button>
     </div>
       </fieldset>
     </div>

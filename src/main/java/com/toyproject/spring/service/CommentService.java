@@ -94,8 +94,7 @@ public class CommentService {
         List<FreeBoardReplyDto> dtos = new ArrayList<>();
         findReplies.forEach(reply -> {
             FreeBoardReplyDto dto = new FreeBoardReplyDto();
-            dto.setCustomerName(userRepository.findById(reply.getCustomerNum()).get().getCustomerName());
-            dto.setCustomerNum(reply.getCustomerNum());
+            dto.setFreeBoardReplyName(reply.getFreeBoardReplyName());
             dto.setFreeBoardNum(freeBoardNum);
             dto.setFreeBoardReply(reply.getFreeBoardReply());
             dto.setFreeBoardReplyDate(reply.getFreeBoardReplyDate());
@@ -111,7 +110,9 @@ public class CommentService {
     }
 
     public String addFreeBoardReply(FreeBoardReply freeBoardReply) {
-        if (userRepository.findById(freeBoardReply.getCustomerNum()).isPresent()) {
+        System.out.println("\n" + freeBoardReply.getFreeBoardReplyName());
+        System.out.println("\n" + freeBoardReply.getFreeBoardReply());
+        if (freeBoardReply.getFreeBoardReplyName() != null && freeBoardReply.getFreeBoardReply() != null) {
             freeBoardReplyRepository.save(freeBoardReply);
             try {
                 return objm.writeValueAsString(

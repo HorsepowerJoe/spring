@@ -24,7 +24,7 @@ public class FreeBoardReply {
     @JoinColumn(name = "FREEBOARDTABLE_FREEBOARDNUM")
     Long freeBoardNum;
 
-    Long customerNum;
+    String freeBoardReplyName;
     String freeBoardReply;
     @CreationTimestamp
     Timestamp freeBoardReplyDate;

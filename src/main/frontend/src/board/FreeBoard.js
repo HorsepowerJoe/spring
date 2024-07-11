@@ -44,7 +44,7 @@ function FreeBoard(props) {
       style={{ cursor: "pointer" }}
     >
       <td>{contents.freeBoardNum}</td>
-      <td>{contents.freeBoardTitle}</td>
+      <td id="title">{contents.freeBoardTitle}</td>
       <td>{contents.customerName}</td>
       <td>{contents.freeBoardReplyCount}</td>
       <td>{new Date(contents.freeBoardRegDate).toLocaleString()}</td>
@@ -79,6 +79,7 @@ function FreeBoard(props) {
             자유게시판
           </legend>
           <table
+            id="freeBoardTable"
             style={{ width: "100%", textAlign: "center", minWidth: "500px" }}
           >
             <tr>

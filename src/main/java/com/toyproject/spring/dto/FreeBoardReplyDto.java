@@ -11,9 +11,7 @@ public class FreeBoardReplyDto {
 
     Long freeBoardNum;
 
-    Long customerNum;
-
-    String customerName;
+    String freeBoardReplyName;
 
     String freeBoardReply;
 

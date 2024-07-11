@@ -128,6 +128,7 @@ function Login(props) {
         >
           <label>Email</label>
           <input
+            id="email"
             type="email"
             value={customerEmail}
             onChange={onEmailHandler}
@@ -136,6 +137,7 @@ function Login(props) {
           />
           <label>Password</label>
           <input
+            id="password"
             type="password"
             value={customerPassword}
             onChange={onPasswordHandler}
@@ -144,6 +146,7 @@ function Login(props) {
           />
           <br /> <br /> <br /> <br />
           <button
+            id="loginButton"
             onMouseOver={() => {
               setIsHoverLoginBtn(true);
             }}

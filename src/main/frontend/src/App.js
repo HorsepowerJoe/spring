@@ -29,6 +29,7 @@ import UserList from "admin/UserList";
 import FreeBoardDetails from "board/FreeBoardDetails";
 import FreeBoardForm from "board/FreeBoardForm";
 import FreeBoard from "board/FreeBoard";
+import AutomationSettings from "admin/AutomationSettings";
 
 function App() {
   const navi = useNavigate();
@@ -298,19 +299,7 @@ function App() {
         <Route
           path="/freeBoard"
           element={
-            localStorage.getItem("userInfo") ? (
-              <FreeBoard navi={navi} axiosConfig={axiosConfig}></FreeBoard>
-            ) : (
-              <LoginForm
-                navi={navi}
-                setGetToken={setGetToken}
-                setUserInfo={setUserInfo}
-                userInfo={userInfo}
-                getToken={getToken}
-                tokenRefresh={tokenRefresh}
-                setIsLogined={setIsLogined}
-              />
-            )
+            <FreeBoard navi={navi} axiosConfig={axiosConfig}></FreeBoard>
           }
         />
         <Route
@@ -526,6 +515,30 @@ function App() {
             JSON.parse(localStorage.getItem("userInfo"))?.role ==
             "ROLE_ADMIN" ? (
               <UserList
+                navi={navi}
+                userInfo={userInfo}
+                axiosConfig={axiosConfig}
+                getToken={getToken}
+              />
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/admin/automationSettings"
+          element={
+            JSON.parse(localStorage.getItem("userInfo"))?.role ==
+            "ROLE_ADMIN" ? (
+              <AutomationSettings
                 navi={navi}
                 userInfo={userInfo}
                 axiosConfig={axiosConfig}
