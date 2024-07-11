@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.toyproject.spring.model.FreeBoard;
 import com.toyproject.spring.model.GroomingQna;
 import com.toyproject.spring.model.HotelQna;
 import com.toyproject.spring.service.BoardService;
@@ -82,6 +83,28 @@ public class BoardController {
     public String deleteHotelQna(@RequestBody HotelQna hotelQna, @RequestHeader("Authorization") String auth) {
 
         return boardService.deleteHotelQna(hotelQna, auth);
+    }
+
+    @PostMapping(value = "deleteFreeBoard")
+    public String deleteFreeBoard(@RequestBody FreeBoard freeBoard, @RequestHeader("Authorization") String auth) {
+
+        return boardService.deleteFreeBoard(freeBoard, auth);
+    }
+
+    @GetMapping("findAllFreeBoard")
+    public String findAllFreeBoard(@RequestParam("page") int page, @RequestParam("size") int size,
+            Pageable pageable) throws JsonProcessingException {
+        return boardService.findAllFreeBoard(pageable);
+    }
+
+    @PostMapping("writeFreeBoard")
+    public String writeFreeBoard(@RequestBody FreeBoard freeBoard) {
+        return boardService.writeFreeBoard(freeBoard);
+    }
+
+    @GetMapping(value = "findFreeBoardDetails")
+    public String findFreeBoardDetails(@RequestParam("freeBoardNum") Long freeBoardNum) throws JsonProcessingException {
+        return boardService.findFreeBoardDetails(freeBoardNum);
     }
 
 }

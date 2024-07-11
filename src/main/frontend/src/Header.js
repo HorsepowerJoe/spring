@@ -10,6 +10,7 @@ function Header(props) {
   const [showDropdownIntro, setShowDropdownIntro] = useState(false);
   const [showDropdownBeauty, setShowDropdownBeauty] = useState(false);
   const [showDropdownCenter, setShowDropdownCenter] = useState(false);
+  const [showDropdownBoard, setShowDropdownBoard] = useState(false);
   const [showDropdownPet, setShowDropdownPet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -206,6 +207,11 @@ function Header(props) {
                 </div>
               )}
             </button>
+            <MyHoverBtn
+              onClick="/freeBoard"
+              navi={props.navi}
+              name="자유게시판"
+            />
           </div>
           {props.userInfo == "" ? (
             <div style={signButtonContainerStyle}>

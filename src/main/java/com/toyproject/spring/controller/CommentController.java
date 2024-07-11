@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.toyproject.spring.model.FreeBoardReply;
 import com.toyproject.spring.model.GroomingQnaComment;
 import com.toyproject.spring.model.HotelQnaComment;
 import com.toyproject.spring.service.CommentService;
@@ -29,6 +30,11 @@ public class CommentController {
         return commentService.findHotelBoardComment(hotelQnaNum);
     }
 
+    @GetMapping(value = "findFreeBoardReply")
+    public String findFreeBoardReply(@RequestParam("freeBoardNum") Long freeBoardNum) {
+        return commentService.findFreeBoardReply(freeBoardNum);
+    }
+
     @PostMapping(value = "addGroomingComment")
     public String addGroomingComment(@RequestBody GroomingQnaComment groomingQnaComment) {
         return commentService.addGroomingComment(groomingQnaComment);
@@ -37,6 +43,11 @@ public class CommentController {
     @PostMapping(value = "addHotelComment")
     public String addHotelComment(@RequestBody HotelQnaComment hotelQnaComment) {
         return commentService.addHotelComment(hotelQnaComment);
+    }
+
+    @PostMapping(value = "addFreeBoardReply")
+    public String addFreeBoardReply(@RequestBody FreeBoardReply freeBoardReply) {
+        return commentService.addFreeBoardReply(freeBoardReply);
     }
 
 }

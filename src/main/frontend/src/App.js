@@ -26,6 +26,9 @@ import MyPage from "./user/MyPage";
 import UpdateQnaForm from "qna/UpdateQnaForm";
 import ReservationList from "admin/ReservationList";
 import UserList from "admin/UserList";
+import FreeBoardDetails from "board/FreeBoardDetails";
+import FreeBoardForm from "board/FreeBoardForm";
+import FreeBoard from "board/FreeBoard";
 
 function App() {
   const navi = useNavigate();
@@ -293,6 +296,24 @@ function App() {
           }
         />
         <Route
+          path="/freeBoard"
+          element={
+            localStorage.getItem("userInfo") ? (
+              <FreeBoard navi={navi} axiosConfig={axiosConfig}></FreeBoard>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
           path="/groomingQna/:groomingQnaNum"
           element={
             <GroomingQnaDetails
@@ -308,6 +329,15 @@ function App() {
               navi={navi}
               axiosConfig={axiosConfig}
             ></HotelQnaDetails>
+          }
+        />
+        <Route
+          path="/freeBoard/:freeBoardNum"
+          element={
+            <FreeBoardDetails
+              navi={navi}
+              axiosConfig={axiosConfig}
+            ></FreeBoardDetails>
           }
         />
         <Route
@@ -339,6 +369,27 @@ function App() {
                 navi={navi}
                 axiosConfig={axiosConfig}
               ></HotelqnaForm>
+            ) : (
+              <LoginForm
+                navi={navi}
+                setGetToken={setGetToken}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+                getToken={getToken}
+                tokenRefresh={tokenRefresh}
+                setIsLogined={setIsLogined}
+              />
+            )
+          }
+        />
+        <Route
+          path="/freeBoardForm"
+          element={
+            localStorage.getItem("userInfo") ? (
+              <FreeBoardForm
+                navi={navi}
+                axiosConfig={axiosConfig}
+              ></FreeBoardForm>
             ) : (
               <LoginForm
                 navi={navi}

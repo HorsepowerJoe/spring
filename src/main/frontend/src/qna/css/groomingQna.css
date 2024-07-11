@@ -56,3 +56,60 @@ td, th {
     background-color: lightgray;
 }
 
+pagination a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.pagination li.active {
+    background-color: #c33586;
+    color: white;
+}
+
+.pagination li:hover {
+    background-color: lightgray;
+}
+
+.pagination li.active:hover {
+    background-color: #ff69b4;
+    color: white;
+}
+
+/* Table styles (already provided) */
+
+table {
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+td, th {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+
+.comment-list {
+    margin-top: 10px;
+}
+
+.comment-list li {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    list-style-type: none;
+}
+
+.comment-list .author {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-list .date {
+    color: #666;
+    font-size: 0.9em;
+}

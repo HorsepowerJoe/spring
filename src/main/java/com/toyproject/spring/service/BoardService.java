@@ -12,11 +12,15 @@ import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toyproject.spring.dto.FreeBoardDto;
 import com.toyproject.spring.dto.GroomingQnaDto;
 import com.toyproject.spring.dto.HotelQnaDto;
 import com.toyproject.spring.model.Customer;
+import com.toyproject.spring.model.FreeBoard;
 import com.toyproject.spring.model.GroomingQna;
 import com.toyproject.spring.model.HotelQna;
+import com.toyproject.spring.repository.FreeBoardReplyRepository;
+import com.toyproject.spring.repository.FreeBoardRepository;
 import com.toyproject.spring.repository.GroomingQnaRepository;
 import com.toyproject.spring.repository.HotelQnaCommentRepository;
 import com.toyproject.spring.repository.HotelQnaRepository;
@@ -29,9 +33,11 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
     private final GroomingQnaRepository groomingQnaRepository;
     private final HotelQnaRepository hotelQnaRepository;
-    private final HotelQnaCommentRepository groomingQnaCommentRepository;
+    private final HotelQnaCommentRepository hotelQnaCommentRepository;
     private final UserRepository userRepository;
     private final ObjectMapper objm;
+    private final FreeBoardReplyRepository freeBoardReplyRepository;
+    private final FreeBoardRepository freeBoardRepository;
 
     public String findAllGroomingQna(Pageable pageable) throws JsonProcessingException {
         Page<GroomingQna> findPage = groomingQnaRepository.findAllByOrderByGroomingQnaRegDateDesc(pageable);
@@ -74,6 +80,19 @@ public class BoardService {
         return hotelQnaDto;
     }
 
+    private List<FreeBoardDto> reWriteForDtoReplyCount(Page<FreeBoard> findFreeBoardPage) {
+        List<FreeBoardDto> freeBoardDto = findFreeBoardPage.stream().map(freeBoard -> {
+            Long customerNum = freeBoard.getCustomerNum();
+            String customerName = userRepository.findById(customerNum).get().getCustomerName();
+            customerName = customerName.replace(customerName.substring(1, 2), "*");
+            Long freeBoardReplyCount = freeBoardReplyRepository.countByFreeBoardNum(freeBoard.getFreeBoardNum());
+
+            return getMadeDto(freeBoard, customerName, freeBoardReplyCount);
+        }).collect(Collectors.toList());
+
+        return freeBoardDto;
+    }
+
     private GroomingQnaDto getMadeDto(GroomingQna groomingQna, String customerName) {
         GroomingQnaDto madeDto = new GroomingQnaDto();
         madeDto.setAnswered(groomingQna.isAnswered());
@@ -95,6 +114,18 @@ public class BoardService {
         madeDto.setHotelQnaRegDate(hotelQna.getHotelQnaRegDate());
         madeDto.setHotelQnaTitle(hotelQna.getHotelQnaTitle());
         madeDto.setCustomerNum(hotelQna.getCustomerNum());
+        return madeDto;
+    }
+
+    private FreeBoardDto getMadeDto(FreeBoard freeBoard, String customerName, Long freeBoardReplyCount) {
+        FreeBoardDto madeDto = new FreeBoardDto();
+        madeDto.setCustomerName(customerName);
+        madeDto.setFreeBoardContent(freeBoard.getFreeBoardContent());
+        madeDto.setFreeBoardNum(freeBoard.getFreeBoardNum());
+        madeDto.setFreeBoardRegDate(freeBoard.getFreeBoardRegDate());
+        madeDto.setFreeBoardTitle(freeBoard.getFreeBoardTitle());
+        madeDto.setCustomerNum(freeBoard.getCustomerNum());
+        madeDto.setFreeBoardReplyCount(freeBoardReplyCount);
         return madeDto;
     }
 
@@ -194,5 +225,46 @@ public class BoardService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String findAllFreeBoard(Pageable pageable) throws JsonProcessingException {
+        Page<FreeBoard> findPage = freeBoardRepository.findAllByOrderByFreeBoardRegDateDesc(pageable);
+        List<FreeBoardDto> freeBoardDto = reWriteForDtoReplyCount(findPage);
+
+        return objm.writeValueAsString(new PageImpl<>(freeBoardDto, pageable, findPage.getTotalElements()));
+
+    }
+
+    public String writeFreeBoard(FreeBoard freeBoard) {
+        freeBoardRepository.save(freeBoard);
+        return "1";
+    }
+
+    public String deleteFreeBoard(FreeBoard freeBoard, String auth) {
+        auth = auth.replace("Bearer ", "");
+        Long decodedId = JWT.decode(auth).getClaim("id").asLong();
+        Optional<Customer> findCustomer = userRepository.findById(decodedId);
+        if (findCustomer.isPresent() && findCustomer.get().getCustomerNum() == freeBoard.getCustomerNum()) {
+            freeBoardRepository.delete(freeBoard);
+            return null;
+        }
+        try {
+            throw new Exception("삭제 실패!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String findFreeBoardDetails(Long freeBoardNum) throws JsonProcessingException {
+        FreeBoard findFreeBoard = freeBoardRepository.findById(freeBoardNum).get();
+
+        Long customerNum = findFreeBoard.getCustomerNum();
+        String customerName = userRepository.findById(customerNum).get().getCustomerName();
+        customerName = customerName.replace(customerName.substring(1, 2), "*");
+
+        FreeBoardDto madeDto = getMadeDto(findFreeBoard, customerName,
+                freeBoardReplyRepository.countByFreeBoardNum(freeBoardNum));
+        return objm.writeValueAsString(madeDto);
     }
 }

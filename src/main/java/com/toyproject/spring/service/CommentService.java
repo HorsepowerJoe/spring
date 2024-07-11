@@ -1,13 +1,20 @@
 package com.toyproject.spring.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toyproject.spring.dto.FreeBoardReplyDto;
+import com.toyproject.spring.model.FreeBoardReply;
 import com.toyproject.spring.model.GroomingQna;
 import com.toyproject.spring.model.GroomingQnaComment;
 import com.toyproject.spring.model.HotelQna;
 import com.toyproject.spring.model.HotelQnaComment;
+import com.toyproject.spring.repository.FreeBoardReplyRepository;
+import com.toyproject.spring.repository.FreeBoardRepository;
 import com.toyproject.spring.repository.GroomingQnaCommentRepository;
 import com.toyproject.spring.repository.GroomingQnaRepository;
 import com.toyproject.spring.repository.HotelQnaCommentRepository;
@@ -24,6 +31,8 @@ public class CommentService {
     private final HotelQnaCommentRepository hotelQnaCommentRepository;
     private final HotelQnaRepository hotelQnaRepository;
     private final UserRepository userRepository;
+    private final FreeBoardReplyRepository freeBoardReplyRepository;
+    private final FreeBoardRepository freeBoardRepository;
     private final ObjectMapper objm;
 
     public String findGroomingBoardComment(Long groomingQnaNum) {
@@ -73,6 +82,40 @@ public class CommentService {
             try {
                 return objm.writeValueAsString(
                         hotelQnaRepository.findById(hotelQnaComment.getHotelQnaNum()));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public String findFreeBoardReply(Long freeBoardNum) {
+        List<FreeBoardReply> findReplies = freeBoardReplyRepository.findAllByFreeBoardNum(freeBoardNum);
+        List<FreeBoardReplyDto> dtos = new ArrayList<>();
+        findReplies.forEach(reply -> {
+            FreeBoardReplyDto dto = new FreeBoardReplyDto();
+            dto.setCustomerName(userRepository.findById(reply.getCustomerNum()).get().getCustomerName());
+            dto.setCustomerNum(reply.getCustomerNum());
+            dto.setFreeBoardNum(freeBoardNum);
+            dto.setFreeBoardReply(reply.getFreeBoardReply());
+            dto.setFreeBoardReplyDate(reply.getFreeBoardReplyDate());
+            dto.setFreeBoardReplyNum(reply.getFreeBoardReplyNum());
+            dtos.add(dto);
+        });
+        try {
+            return objm.writeValueAsString(dtos);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String addFreeBoardReply(FreeBoardReply freeBoardReply) {
+        if (userRepository.findById(freeBoardReply.getCustomerNum()).isPresent()) {
+            freeBoardReplyRepository.save(freeBoardReply);
+            try {
+                return objm.writeValueAsString(
+                        freeBoardRepository.findById(freeBoardReply.getFreeBoardNum()));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
